@@ -19,14 +19,14 @@ void ControlsWindow::run(){
     sf::Texture wizardTexture;
     wizardTexture.loadFromFile("sprites/wizard-dance.png");
     wizardAnimation.setTexture(wizardTexture,WIZARD_DANCE_WIDTH);
-    wizardAnimation.setPosition(562,496);
+    wizardAnimation.setPosition(WIZARD_INITIAL_X,WIZARD_INITIAL_Y);
 
     Animation alchemistAnimation;
     alchemistAnimation.setNumPhotograms(6);
     alchemistAnimation.setPingPong(true);
     alchemistAnimation.setDelay(15);
     alchemistAnimation.setPingPong(true);
-    alchemistAnimation.setPosition(180,480);
+    alchemistAnimation.setPosition(ALCHEMIST_INITIAL_X,ALCHEMIST_INITIAL_Y);
 
     sf::Texture alchemistTexture;
     alchemistTexture.loadFromFile("sprites/alchemist-dance.png");

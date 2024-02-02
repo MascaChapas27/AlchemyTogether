@@ -40,6 +40,10 @@ class Animation : public sf::Drawable{
         void setPingPong(bool pingPong);
         void setPosition(int x, int y);
         void setDelay(int delay);
+        sf::Vector2f getPosition();
+        sf::IntRect getHitbox();
+        void resetToStart();
+        double getWidth();
         void update();
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;
 };

@@ -31,7 +31,12 @@ void Animation::setPosition(int x, int y){
 
 void Animation::update(){
 
-    if(numPhotograms == 0) return;
+    if(numPhotograms == 0){
+        sf::IntRect textureRectangle = this->sprite.getTextureRect();
+        textureRectangle.left = 0;
+        this->sprite.setTextureRect(textureRectangle);
+        return;
+    }
 
     sf::IntRect textureRectangle = this->sprite.getTextureRect();
     textureRectangle.left = currentPhotogram * textureRectangle.width;
@@ -61,6 +66,24 @@ void Animation::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     r.draw(this->sprite,s);
 }
 
+void Animation::resetToStart(){
+    sf::IntRect textureRectangle = this->sprite.getTextureRect();
+    textureRectangle.left = 0;
+    this->sprite.setTextureRect(textureRectangle);
+}
+
 void Animation::setDelay(int delay){
     this->delay = delay;
+}
+
+sf::Vector2f Animation::getPosition(){
+    return sprite.getPosition();
+}
+
+sf::IntRect Animation::getHitbox(){
+    return sprite.getTextureRect();
+}
+
+double Animation::getWidth(){
+    return sprite.getTextureRect().width;
 }

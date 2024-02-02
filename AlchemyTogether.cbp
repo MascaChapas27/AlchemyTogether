@@ -42,8 +42,14 @@
 		</Linker>
 		<Unit filename="Animation.cpp" />
 		<Unit filename="Animation.hpp" />
+		<Unit filename="Character.cpp" />
+		<Unit filename="Character.hpp" />
 		<Unit filename="ControlsWindow.cpp" />
 		<Unit filename="ControlsWindow.hpp" />
+		<Unit filename="FallingItem.cpp" />
+		<Unit filename="FallingItem.hpp" />
+		<Unit filename="Game.cpp" />
+		<Unit filename="Game.hpp" />
 		<Unit filename="Utilities.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>

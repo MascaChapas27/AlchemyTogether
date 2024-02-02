@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include "Utilities.hpp"
 #include "ControlsWindow.hpp"
-
+#include "Game.hpp"
 
 // Global variable in Utilities.hpp
 sf::RenderWindow mainWindow;
@@ -14,10 +14,11 @@ int main(){
 
     // Show initial window with controls and stuff
     ControlsWindow controlsWindow;
-
     controlsWindow.run();
 
     // Game
+    Game game;
+    game.run();
 
     // The end
     return EXIT_SUCCESS;
