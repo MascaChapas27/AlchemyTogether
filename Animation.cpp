@@ -25,7 +25,7 @@ void Animation::setPingPong(bool pingPong){
     this->pingPong = pingPong;
 }
 
-void Animation::setPosition(int x, int y){
+void Animation::setPosition(double x, double y){
     this->sprite.setPosition(x,y);
 }
 
@@ -81,7 +81,10 @@ sf::Vector2f Animation::getPosition(){
 }
 
 sf::IntRect Animation::getHitbox(){
-    return sprite.getTextureRect();
+    sf::IntRect hitbox = sprite.getTextureRect();
+    hitbox.left = sprite.getPosition().x;
+    hitbox.top = sprite.getPosition().y;
+    return hitbox;
 }
 
 double Animation::getWidth(){

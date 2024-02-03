@@ -24,7 +24,8 @@ void Game::run(){
     wizard.setHitSprite(hitWizard);
 
     wizard.setKeys(sf::Keyboard::J, sf::Keyboard::L);
-    wizard.setSpeed(2.5);
+    wizard.setSpeed(3);
+    wizard.setName(WIZARD_NAME);
 
     // Prepare the alchemist
 
@@ -49,6 +50,7 @@ void Game::run(){
 
     alchemist.setKeys(sf::Keyboard::A, sf::Keyboard::D);
     alchemist.setSpeed(2);
+    alchemist.setName(ALCHEMIST_NAME);
 
     // Prepare the background
 
@@ -56,6 +58,21 @@ void Game::run(){
     backgroundTexture.loadFromFile("sprites/background.png");
     background.setTexture(backgroundTexture);
     background.scale(2.f,2.f);
+
+    // Prepare the animations for the falling stuff
+    Animation fallingBookAnimation;
+    sf::Texture fallingBookTexture;
+    fallingBookTexture.loadFromFile("sprites/book.png");
+    fallingBookAnimation.setTexture(fallingBookTexture,24);
+    fallingBookAnimation.setDelay(1);
+    fallingBookAnimation.setNumPhotograms(2);
+
+    FallingItem fallingBook;
+    fallingBook.setAnimation(fallingBookAnimation);
+    fallingBook.setGravity(0.05);
+    fallingBook.setType(BOOK_TYPE);
+
+    int difficulty = 100;
 
     while(true){
 
@@ -67,8 +84,25 @@ void Game::run(){
             }
         }
 
+        if(rand()%difficulty==0){
+            sf::Vector2f position = fallingBook.getPosition();
+            position.y = -fallingBook.getHitbox().height;
+            position.x = rand()%(MAIN_WINDOW_HEIGHT-fallingBook.getHitbox().width);
+            fallingBook.setPosition(position);
+            fallingItems.insert(fallingItems.begin(),fallingBook);
+        }
+
         wizard.update(fallingItems);
         alchemist.update(fallingItems);
+
+        auto iter = fallingItems.begin();
+        while(iter != fallingItems.end()){
+            if(iter->isOut()) iter=fallingItems.erase(iter);
+            else {
+                iter->update();
+                iter++;
+            }
+        }
 
         mainWindow.clear();
 

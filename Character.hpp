@@ -7,6 +7,10 @@
 
 class Character : public sf::Drawable {
     private:
+
+        // Name of the character
+        std::string name;
+
         // Animation for the character
         Animation animation;
 
@@ -25,7 +29,7 @@ class Character : public sf::Drawable {
 
     public:
         Character();
-
+        void setName(std::string name);
         void setAnimation(Animation animation);
         void setHitSprite(sf::Sprite hitSprite);
         void setSpeed(double speed);

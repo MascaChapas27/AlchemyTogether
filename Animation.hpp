@@ -38,7 +38,7 @@ class Animation : public sf::Drawable{
         void setNumPhotograms(int numPhotograms);
         void setTexture(sf::Texture& texture, int width);
         void setPingPong(bool pingPong);
-        void setPosition(int x, int y);
+        void setPosition(double x, double y);
         void setDelay(int delay);
         sf::Vector2f getPosition();
         sf::IntRect getHitbox();

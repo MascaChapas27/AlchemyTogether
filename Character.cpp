@@ -1,5 +1,6 @@
 #include "Character.hpp"
 #include "Utilities.hpp"
+#include <iostream>
 
 Character::Character(){
     invincibilityCounter = -1;
@@ -26,7 +27,6 @@ void Character::update(std::list<FallingItem> fallingItems)
     // First, move the character
     bool moved = false;
     sf::Vector2f newPosition = animation.getPosition();
-
     if(sf::Keyboard::isKeyPressed(leftKey)){
         moved = true;
         newPosition.x -= speed;
@@ -64,7 +64,7 @@ void Character::update(std::list<FallingItem> fallingItems)
     if(invincibilityCounter >= 0  && invincibilityCounter <= INVINCIBILITY_FRAMES){
         hitSprite.setPosition(animation.getPosition());
         invincibilityCounter++;
-    }
+    } else if (invincibilityCounter == INVINCIBILITY_FRAMES) invincibilityCounter = -1;
 }
 
 void Character::setHitSprite(sf::Sprite hitSprite){
@@ -73,8 +73,12 @@ void Character::setHitSprite(sf::Sprite hitSprite){
 
 void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     if(invincibilityCounter == -1) r.draw(animation,s);
-    else if (invincibilityCounter%INVINCINILITY_FLICKER==0){
+    else if (invincibilityCounter%2==0){
         if(invincibilityCounter < 30) r.draw(hitSprite,s);
         else r.draw(animation,s);
     }
+}
+
+void Character::setName(std::string name){
+    this->name = name;
 }

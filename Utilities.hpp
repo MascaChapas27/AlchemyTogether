@@ -27,4 +27,10 @@ const int ALCHEMIST_INITIAL_Y = 480;
 const int WIZARD_GAME_WIDTH = 30;
 const int ALCHEMIST_GAME_WIDTH = 31;
 
+const std::string WIZARD_NAME = "Daniela";
+const std::string ALCHEMIST_NAME = "Gabriela";
+
+const std::string BOOK_TYPE = "Book";
+const std::string MAGIC_TYPE = "Magic";
+
 #endif // __UTILITIES_HPP__

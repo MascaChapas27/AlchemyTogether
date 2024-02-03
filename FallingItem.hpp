@@ -6,6 +6,10 @@
 
 class FallingItem : public sf::Drawable {
     private:
+
+        // Type of the falling item
+        std::string type;
+
         // Animation for the falling item
         Animation animation;
 
@@ -18,10 +22,14 @@ class FallingItem : public sf::Drawable {
     public:
         FallingItem();
 
+        void setType(std::string type);
         void setAnimation(Animation animation);
         void setGravity(double gravity);
         sf::IntRect getHitbox();
+        sf::Vector2f getPosition();
+        void setPosition(sf::Vector2f position);
         void update();
+        bool isOut();
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;
 
 };
