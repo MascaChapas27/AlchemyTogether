@@ -27,6 +27,10 @@ class Character : public sf::Drawable {
         sf::Keyboard::Key leftKey;
         sf::Keyboard::Key rightKey;
 
+        // Current and max amount of items the character has
+        int currentItems;
+        int maxItems;
+
     public:
         Character();
         void setName(std::string name);
@@ -34,7 +38,12 @@ class Character : public sf::Drawable {
         void setHitSprite(sf::Sprite hitSprite);
         void setSpeed(double speed);
         void setKeys(sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey);
-        void update(std::list<FallingItem>& fallingItems);
+        void setCurrentItems(int currentItems);
+        void setMaxItems(int maxItems);
+        int getCurrentItems();
+        int getMaxItems();
+        sf::Vector2f getPosition();
+        int update(std::list<FallingItem>& fallingItems);
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;
 };
 

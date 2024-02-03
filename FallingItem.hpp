@@ -17,7 +17,7 @@ class FallingItem : public sf::Drawable {
         double gravity;
 
         // Current speed of the item
-        double currentSpeed;
+        sf::Vector2f currentSpeed;
 
     public:
         FallingItem();
@@ -29,6 +29,7 @@ class FallingItem : public sf::Drawable {
         sf::Vector2f getPosition();
         void setPosition(sf::Vector2f position);
         void update();
+        void setCurrentSpeed(sf::Vector2f currentSpeed);
         bool isOut();
         std::string getType();
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;

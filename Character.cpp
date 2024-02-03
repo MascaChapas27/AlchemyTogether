@@ -4,6 +4,8 @@
 
 Character::Character(){
     invincibilityCounter = -1;
+    maxItems = 1;
+    currentItems = 0;
 }
 
 void Character::setAnimation(Animation animation)
@@ -22,7 +24,7 @@ void Character::setKeys(sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey)
     this->rightKey = rightKey;
 }
 
-void Character::update(std::list<FallingItem>& fallingItems)
+int Character::update(std::list<FallingItem>& fallingItems)
 {
     // First, move the character
     bool moved = false;
@@ -47,8 +49,11 @@ void Character::update(std::list<FallingItem>& fallingItems)
     else animation.resetToStart();
 
     // Second, check for collisions
+
+    int lostItems = 0;
+
     auto iter = fallingItems.begin();
-    while(iter != fallingItems.end()){
+    while(iter != fallingItems.end() && (invincibilityCounter>=30 || invincibilityCounter==-1)){
         sf::IntRect rect1 = iter->getHitbox();
         sf::IntRect rect2 = animation.getHitbox();
 
@@ -60,11 +65,14 @@ void Character::update(std::list<FallingItem>& fallingItems)
             if(((iter->getType() == BOOK_TYPE && name == WIZARD_NAME) ||
                (iter->getType() == MAGIC_TYPE && name == ALCHEMIST_NAME)) &&
                 invincibilityCounter == -1){
+                lostItems = currentItems;
+                currentItems = 0;
                 invincibilityCounter = 0;
                 iter++;
             } else if((iter->getType() == BOOK_TYPE && name == ALCHEMIST_NAME) ||
                (iter->getType() == MAGIC_TYPE && name == WIZARD_NAME)) {
                 iter=fallingItems.erase(iter);
+                currentItems = currentItems == maxItems ? maxItems : currentItems+1;
             } else {
                 iter++;
             }
@@ -78,6 +86,8 @@ void Character::update(std::list<FallingItem>& fallingItems)
         hitSprite.setPosition(animation.getPosition());
         invincibilityCounter++;
     } else if (invincibilityCounter == INVINCIBILITY_FRAMES) invincibilityCounter = -1;
+
+    return lostItems;
 }
 
 void Character::setHitSprite(sf::Sprite hitSprite){
@@ -90,6 +100,31 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
         if(invincibilityCounter < 30) r.draw(hitSprite,s);
         else r.draw(animation,s);
     }
+}
+
+sf::Vector2f Character::getPosition()
+{
+    return animation.getPosition();
+}
+
+void Character::setCurrentItems(int currentItems)
+{
+    this->currentItems = currentItems;
+}
+
+void Character::setMaxItems(int maxItems)
+{
+    this->maxItems = maxItems;
+}
+
+int Character::getCurrentItems()
+{
+    return currentItems;
+}
+
+int Character::getMaxItems()
+{
+    return maxItems;
 }
 
 void Character::setName(std::string name){

@@ -2,7 +2,7 @@
 #include "Utilities.hpp"
 
 FallingItem::FallingItem(){
-    currentSpeed = 0;
+    currentSpeed = sf::Vector2f(0,0);
 }
 
 void FallingItem::setAnimation(Animation animation){
@@ -22,8 +22,8 @@ sf::IntRect FallingItem::getHitbox(){
 }
 
 void FallingItem::update(){
-    currentSpeed+=gravity;
-    animation.setPosition(animation.getPosition().x,animation.getPosition().y+currentSpeed);
+    currentSpeed.y+=gravity;
+    animation.setPosition(animation.getPosition().x+currentSpeed.x,animation.getPosition().y+currentSpeed.y);
     animation.update();
 }
 
@@ -43,6 +43,11 @@ bool FallingItem::isOut(){
 
 void FallingItem::setType(std::string type){
     this->type = type;
+}
+
+void FallingItem::setCurrentSpeed(sf::Vector2f currentSpeed)
+{
+    this->currentSpeed = currentSpeed;
 }
 
 std::string FallingItem::getType(){
