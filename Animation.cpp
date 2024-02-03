@@ -76,11 +76,11 @@ void Animation::setDelay(int delay){
     this->delay = delay;
 }
 
-sf::Vector2f Animation::getPosition(){
+sf::Vector2f Animation::getPosition() const{
     return sprite.getPosition();
 }
 
-sf::IntRect Animation::getHitbox(){
+sf::IntRect Animation::getHitbox() const{
     sf::IntRect hitbox = sprite.getTextureRect();
     hitbox.left = sprite.getPosition().x;
     hitbox.top = sprite.getPosition().y;

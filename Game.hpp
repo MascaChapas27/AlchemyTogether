@@ -5,12 +5,16 @@
 #include "Character.hpp"
 #include "FallingItem.hpp"
 #include <SFML/Graphics.hpp>
+#include "Boss.hpp"
 
 class Game {
     private:
         // Characters
         Character alchemist;
         Character wizard;
+
+        // Boss
+        Boss boss;
 
         // List of falling items
         std::list<FallingItem> fallingItems;

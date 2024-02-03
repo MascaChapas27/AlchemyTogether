@@ -4,7 +4,7 @@
 
 Character::Character(){
     invincibilityCounter = -1;
-    maxItems = 1;
+    maxItems = 10;
     currentItems = 0;
 }
 
@@ -100,6 +100,16 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
         if(invincibilityCounter < 30) r.draw(hitSprite,s);
         else r.draw(animation,s);
     }
+
+    sf::RectangleShape backgroundRectangle(sf::Vector2f(animation.getHitbox().width*2,10));
+    backgroundRectangle.setFillColor(name == WIZARD_NAME ? sf::Color(100,100,000) : sf::Color(100,100,100));
+    backgroundRectangle.setPosition(animation.getPosition().x,animation.getPosition().y-10);
+    r.draw(backgroundRectangle,s);
+
+    sf::RectangleShape rectangle(sf::Vector2f(((double)currentItems/maxItems)*animation.getHitbox().width*2,10));
+    rectangle.setFillColor(name == WIZARD_NAME ? sf::Color::Yellow : sf::Color::White);
+    rectangle.setPosition(animation.getPosition().x,animation.getPosition().y-10);
+    r.draw(rectangle,s);
 }
 
 sf::Vector2f Character::getPosition()
