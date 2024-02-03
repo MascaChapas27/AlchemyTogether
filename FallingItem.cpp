@@ -44,3 +44,7 @@ bool FallingItem::isOut(){
 void FallingItem::setType(std::string type){
     this->type = type;
 }
+
+std::string FallingItem::getType(){
+    return this->type;
+}

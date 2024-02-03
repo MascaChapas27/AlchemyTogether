@@ -34,7 +34,7 @@ class Character : public sf::Drawable {
         void setHitSprite(sf::Sprite hitSprite);
         void setSpeed(double speed);
         void setKeys(sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey);
-        void update(std::list<FallingItem> fallingItems);
+        void update(std::list<FallingItem>& fallingItems);
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;
 };
 

@@ -30,6 +30,7 @@ class FallingItem : public sf::Drawable {
         void setPosition(sf::Vector2f position);
         void update();
         bool isOut();
+        std::string getType();
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;
 
 };

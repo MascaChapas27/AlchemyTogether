@@ -22,7 +22,7 @@ void Character::setKeys(sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey)
     this->rightKey = rightKey;
 }
 
-void Character::update(std::list<FallingItem> fallingItems)
+void Character::update(std::list<FallingItem>& fallingItems)
 {
     // First, move the character
     bool moved = false;
@@ -47,21 +47,34 @@ void Character::update(std::list<FallingItem> fallingItems)
     else animation.resetToStart();
 
     // Second, check for collisions
-    for(FallingItem& fallingItem : fallingItems){
-        sf::IntRect rect1 = fallingItem.getHitbox();
+    auto iter = fallingItems.begin();
+    while(iter != fallingItems.end()){
+        sf::IntRect rect1 = iter->getHitbox();
         sf::IntRect rect2 = animation.getHitbox();
 
-        if(rect1.left < rect2.left+rect2.width &&
-           rect1.left+rect1.width > rect2.left &&
-           rect1.top > rect2.top+rect2.height &&
-           rect1.top+rect1.height < rect2.top){
+        if((rect1.left < (rect2.left+rect2.width)) &&
+           ((rect1.left+rect1.width) > rect2.left) &&
+           (rect1.top < (rect2.top+rect2.height) &&
+           ((rect1.top+rect1.height) > rect2.top))){
 
-               invincibilityCounter = 0;
-           }
+            if(((iter->getType() == BOOK_TYPE && name == WIZARD_NAME) ||
+               (iter->getType() == MAGIC_TYPE && name == ALCHEMIST_NAME)) &&
+                invincibilityCounter == -1){
+                invincibilityCounter = 0;
+                iter++;
+            } else if((iter->getType() == BOOK_TYPE && name == ALCHEMIST_NAME) ||
+               (iter->getType() == MAGIC_TYPE && name == WIZARD_NAME)) {
+                iter=fallingItems.erase(iter);
+            } else {
+                iter++;
+            }
+        } else {
+            iter++;
+        }
     }
 
     // Third, update the animation
-    if(invincibilityCounter >= 0  && invincibilityCounter <= INVINCIBILITY_FRAMES){
+    if(invincibilityCounter >= 0  && invincibilityCounter < INVINCIBILITY_FRAMES){
         hitSprite.setPosition(animation.getPosition());
         invincibilityCounter++;
     } else if (invincibilityCounter == INVINCIBILITY_FRAMES) invincibilityCounter = -1;

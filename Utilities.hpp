@@ -17,7 +17,7 @@ const int MAX_FPS = 100;
 const std::string MAIN_WINDOW_NAME = "Alchemy Together";
 
 const int INVINCIBILITY_FRAMES = 200;
-const int INVINCINILITY_FLICKER = 10;
+const int INVINCINILITY_FLICKER = 2;
 
 const int WIZARD_INITIAL_X = 562;
 const int WIZARD_INITIAL_Y = 496;
