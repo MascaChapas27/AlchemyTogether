@@ -7,6 +7,8 @@
 
 extern sf::RenderWindow mainWindow;
 extern sf::RenderWindow auxWindow;
+extern sf::Texture hitWizardTexture;
+extern sf::Texture hitAlchemistTexture;
 
 const bool DEBUG = false;
 
@@ -63,5 +65,7 @@ const int WIZARD_STRENGTH = 5;
 
 const int FALLING_TRAIL_MAX_LENGTH = 2;
 const int FALLING_TRAIL_MAX_COUNTER = 5;
+
+const double GRAVITY = 0.05;
 
 #endif // __UTILITIES_HPP__

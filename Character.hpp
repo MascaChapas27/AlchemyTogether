@@ -49,6 +49,9 @@ class Character : public sf::Drawable {
         int currentItems;
         int maxItems;
 
+        // Indicates if the character is dead
+        bool dead;
+
     public:
         Character();
         void setName(std::string name);

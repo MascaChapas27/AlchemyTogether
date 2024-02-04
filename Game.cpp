@@ -27,7 +27,6 @@ void Game::run(){
     wizard.setShootingAnimation(shootingWizard);
 
     sf::Sprite hitWizard;
-    sf::Texture hitWizardTexture;
     hitWizardTexture.loadFromFile("sprites/wizard-hit.png");
     hitWizard.setTexture(hitWizardTexture);
     hitWizard.scale(2.f,2.f);
@@ -61,7 +60,6 @@ void Game::run(){
     alchemist.setShootingAnimation(shootingAlchemist);
 
     sf::Sprite hitAlchemist;
-    sf::Texture hitAlchemistTexture;
     hitAlchemistTexture.loadFromFile("sprites/alchemist-hit.png");
     hitAlchemist.setTexture(hitAlchemistTexture);
     hitAlchemist.scale(2.f,2.f);
@@ -120,7 +118,7 @@ void Game::run(){
     fallingBookAnimation.setNumPhotograms(2);
 
     FallingItem::fallingBook.setAnimation(fallingBookAnimation);
-    FallingItem::fallingBook.setGravity(0.05);
+    FallingItem::fallingBook.setGravity(GRAVITY);
     FallingItem::fallingBook.setType(BOOK_TYPE);
 
     Animation fallingMagicAnimation;
@@ -131,7 +129,7 @@ void Game::run(){
     fallingMagicAnimation.setNumPhotograms(2);
 
     FallingItem::fallingMagic.setAnimation(fallingMagicAnimation);
-    FallingItem::fallingMagic.setGravity(0.05);
+    FallingItem::fallingMagic.setGravity(GRAVITY);
     FallingItem::fallingMagic.setType(MAGIC_TYPE);
 
     Animation fallingFireAnimation;
@@ -142,7 +140,7 @@ void Game::run(){
     fallingFireAnimation.setNumPhotograms(2);
 
     FallingItem::fallingFire.setAnimation(fallingFireAnimation);
-    FallingItem::fallingFire.setGravity(0.05);
+    FallingItem::fallingFire.setGravity(GRAVITY);
     FallingItem::fallingFire.setType(FIRE_TYPE);
 
     // Prepare the font to write the time

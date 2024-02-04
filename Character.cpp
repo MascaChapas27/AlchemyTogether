@@ -10,6 +10,7 @@ Character::Character(){
     shootingAngle = INITIAL_SHOOTING_ANGLE + rand()%(FINAL_SHOOTING_ANGLE-INITIAL_SHOOTING_ANGLE+1);
     shootingAngleGoingDown = false;
     shootingCooldown = 0;
+    dead = false;
 }
 
 void Character::setWalkingAnimation(Animation walkingAnimation)
@@ -36,6 +37,8 @@ void Character::setKeys(sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey, s
 
 int Character::update(std::list<FallingItem>& fallingItems)
 {
+    if(dead) return 0;
+
     // First, move the character
     Animation& animation = shooting ? shootingAnimation : walkingAnimation;
     bool moved = false;
@@ -77,10 +80,29 @@ int Character::update(std::list<FallingItem>& fallingItems)
                (iter->getType() == MAGIC_TYPE && name == ALCHEMIST_NAME) ||
                (iter->getType() == FIRE_TYPE)) &&
                 invincibilityCounter == -1){
-                lostItems = currentItems;
-                currentItems = 0;
-                invincibilityCounter = 0;
-                iter++;
+                if(currentItems == 0){
+                    Animation deadCharacter;
+                    deadCharacter.setDelay(1);
+                    deadCharacter.setNumPhotograms(1);
+                    deadCharacter.setPosition(getPosition());
+                    deadCharacter.setTexture(name == WIZARD_NAME ? hitWizardTexture : hitAlchemistTexture,name == WIZARD_NAME ? WIZARD_GAME_WIDTH : ALCHEMIST_GAME_WIDTH);
+                    FallingItem fallingCorpse;
+
+                    fallingCorpse.setAnimation(deadCharacter);
+                    fallingCorpse.setPosition(getPosition());
+                    fallingCorpse.setCurrentSpeed(sf::Vector2f((-10+rand()%30)/10.0,(-80+rand()%30)/10.0));
+                    fallingCorpse.setGravity(GRAVITY*2);
+                    fallingCorpse.setRotationSpeed((-10+rand()%21)/10.0);
+
+                    fallingItems.insert(iter,fallingCorpse);
+                    dead = true;
+                    return 0;
+                } else {
+                    lostItems = currentItems;
+                    currentItems = 0;
+                    invincibilityCounter = 0;
+                    iter++;
+                }
             } else if((iter->getType() == BOOK_TYPE && name == ALCHEMIST_NAME) ||
                (iter->getType() == MAGIC_TYPE && name == WIZARD_NAME)) {
                 iter=fallingItems.erase(iter);
@@ -141,6 +163,9 @@ void Character::setHitSprite(sf::Sprite hitSprite){
 }
 
 void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
+
+    if(dead) return;
+
     Animation animation = shooting ? shootingAnimation : walkingAnimation;
     if(invincibilityCounter == -1) r.draw(animation,s);
     else if (invincibilityCounter%2==0){

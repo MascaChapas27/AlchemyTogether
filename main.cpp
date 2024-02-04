@@ -6,6 +6,8 @@
 // Global variables in Utilities.hpp
 sf::RenderWindow mainWindow;
 sf::RenderWindow auxWindow;
+sf::Texture hitWizardTexture;
+sf::Texture hitAlchemistTexture;
 
 int main(){
 
