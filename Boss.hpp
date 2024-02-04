@@ -21,11 +21,17 @@ class Boss : public sf::Drawable {
         double initialY;
         double finalY;
 
-        // Current speed for the boss
-        double currentSpeed;
+        // Initial and final positions on the X axis
+        double initialX;
+        double finalX;
 
-        // Tells if the boss is going up or down
+        // Current speed for the boss
+        double currentSpeedY;
+        double currentSpeedX;
+
+        // Tells if the boss is going up or down, and left of right
         bool goingDown;
+        bool goingRight;
 
         // Health for the boss
         int health;

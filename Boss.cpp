@@ -4,8 +4,10 @@
 
 Boss::Boss(){
     invincibilityCounter = -1;
-    currentSpeed = 0;
+    currentSpeedX = 0;
+    currentSpeedY = 0;
     goingDown = true;
+    goingRight = true;
     health = BOSS_INITIAL_HEALTH;
 }
 
@@ -43,10 +45,10 @@ void Boss::update(std::list<FallingItem>& fallingItems){
 
     // First, move the boss
     sf::Vector2f newPosition = animation.getPosition();
-    currentSpeed = currentSpeed + (goingDown ? BOSS_SPEED : -BOSS_SPEED);
-    if(currentSpeed > BOSS_MAX_SPEED) currentSpeed = BOSS_MAX_SPEED;
-    if(currentSpeed < -BOSS_MAX_SPEED) currentSpeed = -BOSS_MAX_SPEED;
-    newPosition.y+=currentSpeed;
+    currentSpeedY = currentSpeedY + (goingDown ? BOSS_SPEED : -BOSS_SPEED);
+    if(currentSpeedY > BOSS_MAX_SPEED) currentSpeedY = BOSS_MAX_SPEED;
+    if(currentSpeedY < -BOSS_MAX_SPEED) currentSpeedY = -BOSS_MAX_SPEED;
+    newPosition.y+=currentSpeedY;
 
     animation.setPosition(newPosition.x,newPosition.y);
 
@@ -61,7 +63,6 @@ void Boss::update(std::list<FallingItem>& fallingItems){
     }
 
     // Third, check for collisions
-
     auto iter = fallingItems.begin();
     while(iter != fallingItems.end() && (invincibilityCounter>=10 || invincibilityCounter==-1)){
         sf::IntRect rect1 = iter->getHitbox();

@@ -105,7 +105,7 @@ sf::IntRect Animation::getHitbox() const{
 void Animation::addTransparency()
 {
     sf::Color newColor = this->sprite.getColor();
-    newColor.a/=2;
+    newColor.a/=3;
     this->sprite.setColor(newColor);
 }
 

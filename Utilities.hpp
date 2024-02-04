@@ -32,8 +32,8 @@ const int WIZARD_INITIAL_Y = 548;
 const int ALCHEMIST_INITIAL_X = 210;
 const int ALCHEMIST_INITIAL_Y = 540;
 const int BOSS_X = 650;
-const int BOSS_INITIAL_Y = 100;
-const int BOSS_FINAL_Y = 300;
+const int BOSS_INITIAL_Y = 150;
+const int BOSS_FINAL_Y = 350;
 const int BOSS_INITIAL_HEALTH = 50;
 
 const double BOSS_SPEED = 0.05;
