@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Animation.hpp"
+#include <list>
 
 class FallingItem : public sf::Drawable {
     private:
@@ -18,6 +19,15 @@ class FallingItem : public sf::Drawable {
 
         // Current speed of the item
         sf::Vector2f currentSpeed;
+
+        // Rotation speed for the animation
+        double rotationSpeed;
+
+        // Trail for a super cool speed effect
+        std::list<Animation> trail;
+
+        // Counter to avoid trail effects from being too close
+        int trailCounter;
 
     public:
         FallingItem();
@@ -36,6 +46,7 @@ class FallingItem : public sf::Drawable {
         void update();
         void setCurrentSpeed(sf::Vector2f currentSpeed);
         bool isOut();
+        void setRotationSpeed(double rotationSpeed);
         std::string getType();
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;
 

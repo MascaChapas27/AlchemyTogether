@@ -3,6 +3,7 @@
 
 FallingItem::FallingItem(){
     currentSpeed = sf::Vector2f(0,0);
+    trailCounter = 0;
 }
 
 // Definition of static members (default constructor called)
@@ -19,6 +20,11 @@ void FallingItem::setGravity(double gravity){
 }
 
 void FallingItem::draw(sf::RenderTarget& r, sf::RenderStates s) const{
+
+    for(Animation anim : trail){
+        r.draw(anim,s);
+    }
+
     r.draw(this->animation,s);
 }
 
@@ -27,6 +33,21 @@ sf::IntRect FallingItem::getHitbox(){
 }
 
 void FallingItem::update(){
+
+    trailCounter++;
+
+    if(trailCounter == FALLING_TRAIL_MAX_COUNTER){
+        trailCounter=0;
+        trail.insert(trail.begin(),animation);
+        if(trail.size() > FALLING_TRAIL_MAX_LENGTH) trail.erase(prev(trail.end()));
+
+        for(Animation& anim : trail){
+            anim.addTransparency();
+        }
+    }
+
+    animation.addRotation(rotationSpeed);
+
     currentSpeed.y+=gravity;
     animation.setPosition(animation.getPosition().x+currentSpeed.x,animation.getPosition().y+currentSpeed.y);
     animation.update();
@@ -57,6 +78,11 @@ void FallingItem::setType(std::string type){
 void FallingItem::setCurrentSpeed(sf::Vector2f currentSpeed)
 {
     this->currentSpeed = currentSpeed;
+}
+
+void FallingItem::setRotationSpeed(double rotationSpeed)
+{
+    this->rotationSpeed = rotationSpeed;
 }
 
 std::string FallingItem::getType(){

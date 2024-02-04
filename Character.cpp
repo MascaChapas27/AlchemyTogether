@@ -48,10 +48,10 @@ int Character::update(std::list<FallingItem>& fallingItems)
         newPosition.x += speed;
     }
 
-    if(newPosition.x + animation.getWidth()*2 > MAIN_WINDOW_WIDTH){
-        newPosition.x = MAIN_WINDOW_WIDTH - animation.getWidth()*2;
-    } else if (animation.getPosition().x < 0){
-        newPosition.x = 0;
+    if(newPosition.x + animation.getWidth() > MAIN_WINDOW_WIDTH){
+        newPosition.x = MAIN_WINDOW_WIDTH - animation.getWidth();
+    } else if (animation.getPosition().x-animation.getWidth() < 0){
+        newPosition.x = animation.getWidth();
     }
 
     animation.setPosition(newPosition.x,newPosition.y);
@@ -95,7 +95,7 @@ int Character::update(std::list<FallingItem>& fallingItems)
 
     // Third, update the animation
     if(invincibilityCounter >= 0  && invincibilityCounter < INVINCIBILITY_FRAMES){
-        hitSprite.setPosition(animation.getPosition());
+        hitSprite.setPosition(animation.getPosition().x-animation.getHitbox().width,animation.getPosition().y-animation.getHitbox().height);
         invincibilityCounter++;
     } else if (invincibilityCounter == INVINCIBILITY_FRAMES) invincibilityCounter = -1;
 
@@ -118,11 +118,11 @@ int Character::update(std::list<FallingItem>& fallingItems)
     if(shooting){
         if(shootingCooldown == 0 && currentItems > 0 && sf::Keyboard::isKeyPressed(shootingKey)){
             if(name == ALCHEMIST_NAME){
-                FallingItem::fallingBook.setPosition(animation.getPosition().x+animation.getHitbox().width*2+10,animation.getPosition().y);
+                FallingItem::fallingBook.setPosition(animation.getPosition().x+animation.getHitbox().width+10,animation.getPosition().y-animation.getHitbox().height);
                 FallingItem::fallingBook.setCurrentSpeed(sf::Vector2f(cos(shootingAngle*PI/180)*ALCHEMIST_STRENGTH,-sin(shootingAngle*PI/180)*ALCHEMIST_STRENGTH));
                 fallingItems.insert(fallingItems.begin(),FallingItem::fallingBook);
             } else {
-                FallingItem::fallingMagic.setPosition(animation.getPosition().x+animation.getHitbox().width*2+10,animation.getPosition().y);
+                FallingItem::fallingMagic.setPosition(animation.getPosition().x+animation.getHitbox().width+10,animation.getPosition().y-animation.getHitbox().height);
                 FallingItem::fallingMagic.setCurrentSpeed(sf::Vector2f(cos(shootingAngle*PI/180)*WIZARD_STRENGTH,-sin(shootingAngle*PI/180)*WIZARD_STRENGTH));
                 fallingItems.insert(fallingItems.begin(),FallingItem::fallingMagic);
             }
@@ -151,12 +151,12 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     // Draw the amount of items left
     sf::RectangleShape backgroundRectangle(sf::Vector2f(animation.getHitbox().width*2,10));
     backgroundRectangle.setFillColor(name == WIZARD_NAME ? sf::Color(100,100,000) : sf::Color(100,100,100));
-    backgroundRectangle.setPosition(animation.getPosition().x,animation.getPosition().y-10);
+    backgroundRectangle.setPosition(animation.getPosition().x-animation.getHitbox().width,animation.getPosition().y-animation.getHitbox().height-10);
     r.draw(backgroundRectangle,s);
 
     sf::RectangleShape rectangle(sf::Vector2f(((double)currentItems/maxItems)*animation.getHitbox().width*2,10));
     rectangle.setFillColor(name == WIZARD_NAME ? sf::Color::Yellow : sf::Color::White);
-    rectangle.setPosition(animation.getPosition().x,animation.getPosition().y-10);
+    rectangle.setPosition(animation.getPosition().x-animation.getHitbox().width,animation.getPosition().y-animation.getHitbox().height-10);
     r.draw(rectangle,s);
 
     // Draw the shooting angle
@@ -165,7 +165,7 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
         if(name == WIZARD_NAME) line.setFillColor(sf::Color::Yellow);
         line.setOrigin(0.f,2.f);
         line.rotate(-shootingAngle);
-        line.setPosition(animation.getPosition().x+animation.getHitbox().width*2+10,animation.getPosition().y);
+        line.setPosition(animation.getPosition().x+animation.getHitbox().width+10,animation.getPosition().y-animation.getHitbox().height);
         r.draw(line,s);
     }
 }

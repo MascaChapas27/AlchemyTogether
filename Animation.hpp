@@ -44,6 +44,8 @@ class Animation : public sf::Drawable{
         sf::Vector2f getPosition() const;
         sf::IntRect getHitbox() const;
         void resetToStart();
+        void addTransparency();
+        void addRotation(double rotation);
         double getWidth();
         void update();
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;

@@ -8,11 +8,11 @@ void Game::run(){
     Animation walkingWizard;
     walkingWizard.setDelay(10);
     walkingWizard.setNumPhotograms(2);
-    walkingWizard.setPosition(WIZARD_INITIAL_X,WIZARD_INITIAL_Y);
 
     sf::Texture walkingWizardTexture;
     walkingWizardTexture.loadFromFile("sprites/wizard-walk.png");
     walkingWizard.setTexture(walkingWizardTexture,WIZARD_GAME_WIDTH);
+    walkingWizard.setPosition(WIZARD_INITIAL_X,MAIN_WINDOW_HEIGHT-walkingWizard.getHitbox().height);
 
     wizard.setWalkingAnimation(walkingWizard);
 
@@ -42,11 +42,11 @@ void Game::run(){
     Animation walkingAlchemist;
     walkingAlchemist.setDelay(15);
     walkingAlchemist.setNumPhotograms(2);
-    walkingAlchemist.setPosition(ALCHEMIST_INITIAL_X,ALCHEMIST_INITIAL_Y);
 
     sf::Texture walkingAlchemistTexture;
     walkingAlchemistTexture.loadFromFile("sprites/alchemist-walk.png");
     walkingAlchemist.setTexture(walkingAlchemistTexture,ALCHEMIST_GAME_WIDTH);
+    walkingAlchemist.setPosition(ALCHEMIST_INITIAL_X,MAIN_WINDOW_HEIGHT-walkingAlchemist.getHitbox().height);
 
     alchemist.setWalkingAnimation(walkingAlchemist);
 
@@ -189,6 +189,7 @@ void Game::run(){
                     position.x = rand()%(MAIN_WINDOW_HEIGHT-FallingItem::fallingBook.getHitbox().width);
                     FallingItem::fallingBook.setPosition(position);
                     FallingItem::fallingBook.setCurrentSpeed(sf::Vector2f(0,0));
+                    FallingItem::fallingBook.setRotationSpeed((-10+rand()%21)/10.0);
                     fallingItems.insert(fallingItems.begin(),FallingItem::fallingBook);
                 } else {
                     sf::Vector2f position;
@@ -196,11 +197,13 @@ void Game::run(){
                     position.x = rand()%(MAIN_WINDOW_HEIGHT-FallingItem::fallingMagic.getHitbox().width);
                     FallingItem::fallingMagic.setPosition(position);
                     FallingItem::fallingMagic.setCurrentSpeed(sf::Vector2f(0,0));
+                    FallingItem::fallingMagic.setRotationSpeed((-10+rand()%21)/10.0);
                     fallingItems.insert(fallingItems.begin(),FallingItem::fallingMagic);
                 }
             } else {
                 FallingItem::fallingFire.setPosition(boss.getPosition());
                 FallingItem::fallingFire.setCurrentSpeed(sf::Vector2f((-40+rand()%45)/10.0,(-40+rand()%20)/10.0));
+                FallingItem::fallingFire.setRotationSpeed((-10+rand()%21)/10.0);
                 fallingItems.insert(fallingItems.begin(),FallingItem::fallingFire);
             }
         }
@@ -212,6 +215,7 @@ void Game::run(){
             for(int i=0;i<wizardLostItems;i++){
                 FallingItem::fallingMagic.setPosition(wizard.getPosition());
                 FallingItem::fallingMagic.setCurrentSpeed(sf::Vector2f((-10+rand()%30)/10.0,(-80+rand()%30)/10.0));
+                FallingItem::fallingMagic.setRotationSpeed((-10+rand()%21)/10.0);
                 fallingItems.insert(fallingItems.begin(),FallingItem::fallingMagic);
             }
         }
@@ -223,6 +227,7 @@ void Game::run(){
             for(int i=0;i<alchemistLostItems;i++){
                 FallingItem::fallingBook.setPosition(alchemist.getPosition());
                 FallingItem::fallingBook.setCurrentSpeed(sf::Vector2f((-10+rand()%30)/10.0,(-80+rand()%30)/10.0));
+                FallingItem::fallingBook.setRotationSpeed((-10+rand()%21)/10.0);
                 fallingItems.insert(fallingItems.begin(),FallingItem::fallingBook);
             }
         }

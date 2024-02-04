@@ -8,6 +8,8 @@
 extern sf::RenderWindow mainWindow;
 extern sf::RenderWindow auxWindow;
 
+const bool DEBUG = false;
+
 const int MAIN_WINDOW_WIDTH = 800;
 const int MAIN_WINDOW_HEIGHT = 600;
 
@@ -25,11 +27,11 @@ const int INVINCIBILITY_FRAMES = 200;
 const int INVINCINILITY_FLICKER = 2;
 const int BOSS_INVINCIBILITY_FRAMES = 30;
 
-const int WIZARD_INITIAL_X = 562;
-const int WIZARD_INITIAL_Y = 496;
-const int ALCHEMIST_INITIAL_X = 180;
-const int ALCHEMIST_INITIAL_Y = 480;
-const int BOSS_X = 600;
+const int WIZARD_INITIAL_X = 590;
+const int WIZARD_INITIAL_Y = 548;
+const int ALCHEMIST_INITIAL_X = 210;
+const int ALCHEMIST_INITIAL_Y = 540;
+const int BOSS_X = 650;
 const int BOSS_INITIAL_Y = 100;
 const int BOSS_FINAL_Y = 300;
 const int BOSS_INITIAL_HEALTH = 50;
@@ -58,5 +60,8 @@ const double PI = 3.14159265;
 
 const int ALCHEMIST_STRENGTH = 7;
 const int WIZARD_STRENGTH = 5;
+
+const int FALLING_TRAIL_MAX_LENGTH = 2;
+const int FALLING_TRAIL_MAX_COUNTER = 5;
 
 #endif // __UTILITIES_HPP__

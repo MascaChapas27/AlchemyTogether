@@ -1,5 +1,6 @@
 #include "Animation.hpp"
 #include <iostream>
+#include "Utilities.hpp"
 
 Animation::Animation(){
     currentPhotogram = 0;
@@ -14,11 +15,12 @@ void Animation::setNumPhotograms(int numPhotograms){
 }
 
 void Animation::setTexture(sf::Texture& texture, int width){
-    this->sprite.setTexture(texture);
-    this->sprite.scale(2.f,2.f);
-    sf::IntRect textureRectangle = this->sprite.getTextureRect();
+    sprite.setTexture(texture);
+    sprite.scale(2.f,2.f);
+    sf::IntRect textureRectangle = sprite.getTextureRect();
     textureRectangle.width = width;
-    this->sprite.setTextureRect(textureRectangle);
+    sprite.setTextureRect(textureRectangle);
+    sprite.setOrigin(sprite.getTextureRect().width/2,sprite.getTextureRect().height/2);
 }
 
 void Animation::setPingPong(bool pingPong){
@@ -68,6 +70,15 @@ void Animation::update(){
 
 void Animation::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     r.draw(this->sprite,s);
+
+    if(DEBUG){
+        sf::RectangleShape rectangle = sf::RectangleShape(sf::Vector2f(getHitbox().width,getHitbox().height));
+        rectangle.setPosition(getHitbox().left,getHitbox().top);
+        rectangle.setOutlineColor(sf::Color::Red);
+        rectangle.setOutlineThickness(1);
+        rectangle.setFillColor(sf::Color::Transparent);
+        r.draw(rectangle,s);
+    }
 }
 
 void Animation::resetToStart(){
@@ -86,9 +97,21 @@ sf::Vector2f Animation::getPosition() const{
 
 sf::IntRect Animation::getHitbox() const{
     sf::IntRect hitbox = sprite.getTextureRect();
-    hitbox.left = sprite.getPosition().x;
-    hitbox.top = sprite.getPosition().y;
+    hitbox.left = sprite.getPosition().x-hitbox.width/2;
+    hitbox.top = sprite.getPosition().y-hitbox.height/2;
     return hitbox;
+}
+
+void Animation::addTransparency()
+{
+    sf::Color newColor = this->sprite.getColor();
+    newColor.a/=2;
+    this->sprite.setColor(newColor);
+}
+
+void Animation::addRotation(double rotation)
+{
+    sprite.rotate(rotation);
 }
 
 double Animation::getWidth(){

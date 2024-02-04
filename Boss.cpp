@@ -87,7 +87,7 @@ void Boss::update(std::list<FallingItem>& fallingItems){
 
     // Fourth, update the animation
     if(invincibilityCounter >= 0  && invincibilityCounter < BOSS_INVINCIBILITY_FRAMES){
-        hitSprite.setPosition(animation.getPosition());
+        hitSprite.setPosition(animation.getPosition().x-animation.getHitbox().width,animation.getPosition().y-animation.getHitbox().height);
         invincibilityCounter++;
     } else if (invincibilityCounter == BOSS_INVINCIBILITY_FRAMES) invincibilityCounter = -1;
 }
@@ -101,11 +101,11 @@ void Boss::draw(sf::RenderTarget& r, sf::RenderStates s) const{
 
     sf::RectangleShape backgroundRectangle(sf::Vector2f(animation.getHitbox().width*2,10));
     backgroundRectangle.setFillColor(sf::Color(0,0,100));
-    backgroundRectangle.setPosition(animation.getPosition().x,animation.getPosition().y-10);
+    backgroundRectangle.setPosition(animation.getPosition().x-animation.getHitbox().width,animation.getPosition().y-animation.getHitbox().height-10);
     r.draw(backgroundRectangle,s);
 
     sf::RectangleShape rectangle(sf::Vector2f(((double)health/BOSS_INITIAL_HEALTH)*animation.getHitbox().width*2,10));
     rectangle.setFillColor(sf::Color::Blue);
-    rectangle.setPosition(animation.getPosition().x,animation.getPosition().y-10);
+    rectangle.setPosition(animation.getPosition().x-animation.getHitbox().width,animation.getPosition().y-animation.getHitbox().height-10);
     r.draw(rectangle,s);
 }
