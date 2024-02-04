@@ -3,8 +3,9 @@
 #include "ControlsWindow.hpp"
 #include "Game.hpp"
 
-// Global variable in Utilities.hpp
+// Global variables in Utilities.hpp
 sf::RenderWindow mainWindow;
+sf::RenderWindow auxWindow;
 
 int main(){
 
@@ -15,6 +16,11 @@ int main(){
     // Show initial window with controls and stuff
     ControlsWindow controlsWindow;
     controlsWindow.run();
+
+    // Configure the aux window
+    auxWindow.create(sf::VideoMode(AUX_WINDOW_WIDTH,AUX_WINDOW_HEIGHT),AUX_WINDOW_NAME);
+    auxWindow.setFramerateLimit(MAX_FPS);
+    auxWindow.setPosition(sf::Vector2i(mainWindow.getPosition().x-AUX_WINDOW_WIDTH-20,mainWindow.getPosition().y));
 
     // Game
     Game game;

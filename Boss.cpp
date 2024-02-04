@@ -66,6 +66,7 @@ void Boss::update(std::list<FallingItem>& fallingItems){
     while(iter != fallingItems.end() && (invincibilityCounter>=10 || invincibilityCounter==-1)){
         sf::IntRect rect1 = iter->getHitbox();
         sf::IntRect rect2 = animation.getHitbox();
+        rect2.height*=2;
 
         if((rect1.left < (rect2.left+rect2.width)) &&
            ((rect1.left+rect1.width) > rect2.left) &&
@@ -73,7 +74,7 @@ void Boss::update(std::list<FallingItem>& fallingItems){
            ((rect1.top+rect1.height) > rect2.top))){
 
             if(iter->getType() == BOOK_TYPE || iter->getType() == MAGIC_TYPE){
-                health-=10;
+                health--;
                 iter=fallingItems.erase(iter);
                 invincibilityCounter=0;
             } else {

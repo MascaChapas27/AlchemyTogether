@@ -6,7 +6,7 @@ void Game::run(){
 
     // Prepare the wizard
     Animation walkingWizard;
-    walkingWizard.setDelay(20);
+    walkingWizard.setDelay(10);
     walkingWizard.setNumPhotograms(2);
     walkingWizard.setPosition(WIZARD_INITIAL_X,WIZARD_INITIAL_Y);
 
@@ -14,7 +14,17 @@ void Game::run(){
     walkingWizardTexture.loadFromFile("sprites/wizard-walk.png");
     walkingWizard.setTexture(walkingWizardTexture,WIZARD_GAME_WIDTH);
 
-    wizard.setAnimation(walkingWizard);
+    wizard.setWalkingAnimation(walkingWizard);
+
+    Animation shootingWizard;
+    shootingWizard.setDelay(10);
+    shootingWizard.setNumPhotograms(2);
+
+    sf::Texture shootingWizardTexture;
+    shootingWizardTexture.loadFromFile("sprites/wizard-shoot.png");
+    shootingWizard.setTexture(shootingWizardTexture,WIZARD_GAME_WIDTH);
+
+    wizard.setShootingAnimation(shootingWizard);
 
     sf::Sprite hitWizard;
     sf::Texture hitWizardTexture;
@@ -24,14 +34,13 @@ void Game::run(){
 
     wizard.setHitSprite(hitWizard);
 
-    wizard.setKeys(sf::Keyboard::J, sf::Keyboard::L);
+    wizard.setKeys(sf::Keyboard::J, sf::Keyboard::L, sf::Keyboard::I);
     wizard.setSpeed(3);
     wizard.setName(WIZARD_NAME);
 
     // Prepare the alchemist
-
     Animation walkingAlchemist;
-    walkingAlchemist.setDelay(25);
+    walkingAlchemist.setDelay(15);
     walkingAlchemist.setNumPhotograms(2);
     walkingAlchemist.setPosition(ALCHEMIST_INITIAL_X,ALCHEMIST_INITIAL_Y);
 
@@ -39,7 +48,17 @@ void Game::run(){
     walkingAlchemistTexture.loadFromFile("sprites/alchemist-walk.png");
     walkingAlchemist.setTexture(walkingAlchemistTexture,ALCHEMIST_GAME_WIDTH);
 
-    alchemist.setAnimation(walkingAlchemist);
+    alchemist.setWalkingAnimation(walkingAlchemist);
+
+    Animation shootingAlchemist;
+    shootingAlchemist.setDelay(15);
+    shootingAlchemist.setNumPhotograms(2);
+
+    sf::Texture shootingAlchemistTexture;
+    shootingAlchemistTexture.loadFromFile("sprites/alchemist-shoot.png");
+    shootingAlchemist.setTexture(shootingAlchemistTexture,ALCHEMIST_GAME_WIDTH);
+
+    alchemist.setShootingAnimation(shootingAlchemist);
 
     sf::Sprite hitAlchemist;
     sf::Texture hitAlchemistTexture;
@@ -49,7 +68,7 @@ void Game::run(){
 
     alchemist.setHitSprite(hitAlchemist);
 
-    alchemist.setKeys(sf::Keyboard::A, sf::Keyboard::D);
+    alchemist.setKeys(sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W);
     alchemist.setSpeed(3);
     alchemist.setName(ALCHEMIST_NAME);
 
@@ -74,12 +93,23 @@ void Game::run(){
 
     boss.setHitSprite(hitBoss);
 
-    // Prepare the background
-
+    // Prepare the backgrounds
     sf::Texture backgroundTexture;
     backgroundTexture.loadFromFile("sprites/background.png");
     background.setTexture(backgroundTexture);
     background.scale(2.f,2.f);
+
+    sf::Texture walkingBackgroundTexture;
+    walkingBackgroundTexture.loadFromFile("sprites/walking-background.png");
+    sf::Sprite walkingBackground;
+    walkingBackground.setTexture(walkingBackgroundTexture);
+    walkingBackground.scale(2.f,2.f);
+
+    sf::Texture shootingBackgroundTexture;
+    shootingBackgroundTexture.loadFromFile("sprites/shooting-background.png");
+    sf::Sprite shootingBackground;
+    shootingBackground.setTexture(shootingBackgroundTexture);
+    shootingBackground.scale(2.f,2.f);
 
     // Prepare the animations for the falling stuff
     Animation fallingBookAnimation;
@@ -89,10 +119,9 @@ void Game::run(){
     fallingBookAnimation.setDelay(1);
     fallingBookAnimation.setNumPhotograms(2);
 
-    FallingItem fallingBook;
-    fallingBook.setAnimation(fallingBookAnimation);
-    fallingBook.setGravity(0.05);
-    fallingBook.setType(BOOK_TYPE);
+    FallingItem::fallingBook.setAnimation(fallingBookAnimation);
+    FallingItem::fallingBook.setGravity(0.05);
+    FallingItem::fallingBook.setType(BOOK_TYPE);
 
     Animation fallingMagicAnimation;
     sf::Texture fallingMagicTexture;
@@ -101,49 +130,52 @@ void Game::run(){
     fallingMagicAnimation.setDelay(10);
     fallingMagicAnimation.setNumPhotograms(2);
 
-    FallingItem fallingMagic;
-    fallingMagic.setAnimation(fallingMagicAnimation);
-    fallingMagic.setGravity(0.05);
-    fallingMagic.setType(MAGIC_TYPE);
+    FallingItem::fallingMagic.setAnimation(fallingMagicAnimation);
+    FallingItem::fallingMagic.setGravity(0.05);
+    FallingItem::fallingMagic.setType(MAGIC_TYPE);
 
-    // Prepare the fonts to draw stuff
-    sf::Font alchemistFont;
-    alchemistFont.loadFromFile("fonts/gabriela.ttf");
-    sf::Text alchemistText;
-    alchemistText.setFont(alchemistFont);
-    alchemistText.setFillColor(sf::Color::White);
-    alchemistText.setCharacterSize(20);
-    alchemistText.setString("Books needed: 1");
+    Animation fallingFireAnimation;
+    sf::Texture fallingFireTexture;
+    fallingFireTexture.loadFromFile("sprites/fire.png");
+    fallingFireAnimation.setTexture(fallingFireTexture,24);
+    fallingFireAnimation.setDelay(10);
+    fallingFireAnimation.setNumPhotograms(2);
 
-    sf::Font wizardFont;
-    wizardFont.loadFromFile("fonts/daniela.ttf");
-    sf::Text wizardText;
-    wizardText.setFont(wizardFont);
-    wizardText.setFillColor(sf::Color::Yellow);
-    wizardText.setCharacterSize(20);
-    wizardText.setString("Magic needed: 1");
+    FallingItem::fallingFire.setAnimation(fallingFireAnimation);
+    FallingItem::fallingFire.setGravity(0.05);
+    FallingItem::fallingFire.setType(FIRE_TYPE);
 
+    // Prepare the font to write the time
     sf::Font clockFont;
     clockFont.loadFromFile("fonts/father.ttf");
     sf::Text clockText;
     clockText.setFont(clockFont);
     clockText.setFillColor(sf::Color::Blue);
     clockText.setCharacterSize(22);
-    clockText.setPosition(20,20);
+    clockText.setPosition(26,24);
     clockText.setString("Time left: ");
 
-    int difficulty = 40;
+    int difficulty = 20;
 
     sf::Clock clock;
 
     bool bossHere = false;
 
-    while(true){
+    while(boss.getCurrentHealth()>0){
 
         sf::Event event;
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed){
                 mainWindow.close();
+                auxWindow.close();
+                exit(0);
+            }
+        }
+
+        while(auxWindow.pollEvent(event)){
+            if(event.type == sf::Event::Closed){
+                mainWindow.close();
+                auxWindow.close();
                 exit(0);
             }
         }
@@ -152,20 +184,24 @@ void Game::run(){
         if(rand()%difficulty==0){
             if(!bossHere){
                 if(rand()%2){
-                    sf::Vector2f position = fallingBook.getPosition();
-                    position.y = -fallingBook.getHitbox().height;
-                    position.x = rand()%(MAIN_WINDOW_HEIGHT-fallingBook.getHitbox().width);
-                    fallingBook.setPosition(position);
-                    fallingBook.setCurrentSpeed(sf::Vector2f(0,0));
-                    fallingItems.insert(fallingItems.begin(),fallingBook);
+                    sf::Vector2f position;
+                    position.y = -FallingItem::fallingBook.getHitbox().height;
+                    position.x = rand()%(MAIN_WINDOW_HEIGHT-FallingItem::fallingBook.getHitbox().width);
+                    FallingItem::fallingBook.setPosition(position);
+                    FallingItem::fallingBook.setCurrentSpeed(sf::Vector2f(0,0));
+                    fallingItems.insert(fallingItems.begin(),FallingItem::fallingBook);
                 } else {
-                    sf::Vector2f position = fallingMagic.getPosition();
-                    position.y = -fallingMagic.getHitbox().height;
-                    position.x = rand()%(MAIN_WINDOW_HEIGHT-fallingMagic.getHitbox().width);
-                    fallingMagic.setPosition(position);
-                    fallingMagic.setCurrentSpeed(sf::Vector2f(0,0));
-                    fallingItems.insert(fallingItems.begin(),fallingMagic);
+                    sf::Vector2f position;
+                    position.y = -FallingItem::fallingMagic.getHitbox().height;
+                    position.x = rand()%(MAIN_WINDOW_HEIGHT-FallingItem::fallingMagic.getHitbox().width);
+                    FallingItem::fallingMagic.setPosition(position);
+                    FallingItem::fallingMagic.setCurrentSpeed(sf::Vector2f(0,0));
+                    fallingItems.insert(fallingItems.begin(),FallingItem::fallingMagic);
                 }
+            } else {
+                FallingItem::fallingFire.setPosition(boss.getPosition());
+                FallingItem::fallingFire.setCurrentSpeed(sf::Vector2f((-40+rand()%45)/10.0,(-40+rand()%20)/10.0));
+                fallingItems.insert(fallingItems.begin(),FallingItem::fallingFire);
             }
         }
 
@@ -174,9 +210,9 @@ void Game::run(){
 
         if(wizardLostItems > 0){
             for(int i=0;i<wizardLostItems;i++){
-                fallingMagic.setPosition(wizard.getPosition());
-                fallingMagic.setCurrentSpeed(sf::Vector2f((-10+rand()%30)/10.0,(-80+rand()%30)/10.0));
-                fallingItems.insert(fallingItems.begin(),fallingMagic);
+                FallingItem::fallingMagic.setPosition(wizard.getPosition());
+                FallingItem::fallingMagic.setCurrentSpeed(sf::Vector2f((-10+rand()%30)/10.0,(-80+rand()%30)/10.0));
+                fallingItems.insert(fallingItems.begin(),FallingItem::fallingMagic);
             }
         }
 
@@ -185,9 +221,9 @@ void Game::run(){
 
         if(alchemistLostItems > 0){
             for(int i=0;i<alchemistLostItems;i++){
-                fallingBook.setPosition(alchemist.getPosition());
-                fallingBook.setCurrentSpeed(sf::Vector2f((-10+rand()%30)/10.0,(-80+rand()%30)/10.0));
-                fallingItems.insert(fallingItems.begin(),fallingBook);
+                FallingItem::fallingBook.setPosition(alchemist.getPosition());
+                FallingItem::fallingBook.setCurrentSpeed(sf::Vector2f((-10+rand()%30)/10.0,(-80+rand()%30)/10.0));
+                fallingItems.insert(fallingItems.begin(),FallingItem::fallingBook);
             }
         }
 
@@ -200,12 +236,16 @@ void Game::run(){
                 clock.restart();
                 bossHere=true;
                 boss.setActivated(true);
+                wizard.setShooting(true);
+                alchemist.setShooting(true);
             }
         } else if (bossHere){
             if(clock.getElapsedTime().asSeconds() >= BOSS_TIME){
                 clock.restart();
                 bossHere=false;
                 boss.setActivated(false);
+                wizard.setShooting(false);
+                alchemist.setShooting(false);
             }
         }
 
@@ -226,9 +266,12 @@ void Game::run(){
         flyingBoss.update();
 
         mainWindow.clear();
+        auxWindow.clear();
 
         mainWindow.draw(background);
-        mainWindow.draw(clockText);
+        if(!bossHere) auxWindow.draw(walkingBackground);
+        else auxWindow.draw(shootingBackground);
+        auxWindow.draw(clockText);
         mainWindow.draw(wizard);
         mainWindow.draw(alchemist);
         mainWindow.draw(boss);
@@ -237,5 +280,6 @@ void Game::run(){
         }
 
         mainWindow.display();
+        auxWindow.display();
     }
 }

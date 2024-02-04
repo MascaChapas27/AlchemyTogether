@@ -29,6 +29,10 @@ void Animation::setPosition(double x, double y){
     this->sprite.setPosition(x,y);
 }
 
+void Animation::setPosition(sf::Vector2f position){
+    this->sprite.setPosition(position);
+}
+
 void Animation::update(){
 
     if(numPhotograms == 0){

@@ -5,6 +5,11 @@ FallingItem::FallingItem(){
     currentSpeed = sf::Vector2f(0,0);
 }
 
+// Definition of static members (default constructor called)
+FallingItem FallingItem::fallingBook;
+FallingItem FallingItem::fallingMagic;
+FallingItem FallingItem::fallingFire;
+
 void FallingItem::setAnimation(Animation animation){
     this->animation = animation;
 }
@@ -35,6 +40,10 @@ sf::Vector2f FallingItem::getPosition()
 void FallingItem::setPosition(sf::Vector2f position)
 {
     animation.setPosition(position.x,position.y);
+}
+
+void FallingItem::setPosition(double x, double y){
+    animation.setPosition(x,y);
 }
 
 bool FallingItem::isOut(){

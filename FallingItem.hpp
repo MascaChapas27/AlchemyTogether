@@ -22,12 +22,17 @@ class FallingItem : public sf::Drawable {
     public:
         FallingItem();
 
+        static FallingItem fallingBook;
+        static FallingItem fallingMagic;
+        static FallingItem fallingFire;
+
         void setType(std::string type);
         void setAnimation(Animation animation);
         void setGravity(double gravity);
         sf::IntRect getHitbox();
         sf::Vector2f getPosition();
         void setPosition(sf::Vector2f position);
+        void setPosition(double x, double y);
         void update();
         void setCurrentSpeed(sf::Vector2f currentSpeed);
         bool isOut();

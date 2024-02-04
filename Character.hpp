@@ -11,8 +11,23 @@ class Character : public sf::Drawable {
         // Name of the character
         std::string name;
 
-        // Animation for the character
-        Animation animation;
+        // Animation for the character when it walks
+        Animation walkingAnimation;
+
+        // Animation for the character when it shoots
+        Animation shootingAnimation;
+
+        // Indicates if the character is shooting or walking
+        bool shooting;
+
+        // Indicates the shooting angle
+        int shootingAngle;
+
+        // Indicates if the shooting angle is moving up or down
+        bool shootingAngleGoingDown;
+
+        // Cooldown until you can shoot again
+        int shootingCooldown;
 
         // Sprite for getting hit
         sf::Sprite hitSprite;
@@ -27,6 +42,9 @@ class Character : public sf::Drawable {
         sf::Keyboard::Key leftKey;
         sf::Keyboard::Key rightKey;
 
+        // Key for shooting
+        sf::Keyboard::Key shootingKey;
+
         // Current and max amount of items the character has
         int currentItems;
         int maxItems;
@@ -34,14 +52,16 @@ class Character : public sf::Drawable {
     public:
         Character();
         void setName(std::string name);
-        void setAnimation(Animation animation);
+        void setWalkingAnimation(Animation animation);
+        void setShootingAnimation(Animation animation);
         void setHitSprite(sf::Sprite hitSprite);
         void setSpeed(double speed);
-        void setKeys(sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey);
+        void setKeys(sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey, sf::Keyboard::Key shootingKey);
         void setCurrentItems(int currentItems);
         void setMaxItems(int maxItems);
         int getCurrentItems();
         int getMaxItems();
+        void setShooting(bool shooting);
         sf::Vector2f getPosition();
         int update(std::list<FallingItem>& fallingItems);
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;
