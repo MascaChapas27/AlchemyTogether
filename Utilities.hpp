@@ -5,12 +5,28 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 
+enum class TextureID{
+    alchemist_dance,alchemist_hit,alchemist_side,alchemist_walk,
+    background,book,magic,fire,boss,boss_hit,controls_background,
+    cutscene0_boss,cutscene0_wizard,cutscene0_alchemist,
+    cutscene1_background,cutscene1_alchemist,cutscene1_wizard,
+    wizard_dance,wizard_hit,wizard_shoot,wizard_walk
+};
+
+enum class SoundID {
+
+};
+
+enum class FontID {
+    AlchemistFont, WizardFont, BossFont
+};
+
 extern sf::RenderWindow mainWindow;
 extern sf::RenderWindow auxWindow;
 extern sf::Texture hitWizardTexture;
 extern sf::Texture hitAlchemistTexture;
 
-const bool DEBUG = false;
+const bool DEBUG = true;
 
 const int MAIN_WINDOW_WIDTH = 800;
 const int MAIN_WINDOW_HEIGHT = 600;

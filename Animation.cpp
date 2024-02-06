@@ -23,6 +23,15 @@ void Animation::setTexture(sf::Texture& texture, int width){
     sprite.setOrigin(sprite.getTextureRect().width/2,sprite.getTextureRect().height/2);
 }
 
+void Animation::setTexture(sf::Texture& texture){
+    sprite.setTexture(texture);
+    sprite.scale(2.f,2.f);
+    sf::IntRect textureRectangle = sprite.getTextureRect();
+    textureRectangle.width = textureRectangle.width/numPhotograms;
+    sprite.setTextureRect(textureRectangle);
+    sprite.setOrigin(sprite.getTextureRect().width/2,sprite.getTextureRect().height/2);
+}
+
 void Animation::setPingPong(bool pingPong){
     this->pingPong = pingPong;
 }

@@ -2,6 +2,8 @@
 #include "Utilities.hpp"
 #include "ControlsWindow.hpp"
 #include "Game.hpp"
+#include "TitleScreen.hpp"
+#include "ResourceHolder.hpp"
 
 // Global variables in Utilities.hpp
 sf::RenderWindow mainWindow;
@@ -11,9 +13,18 @@ sf::Texture hitAlchemistTexture;
 
 int main(){
 
+    // Load resources
+    TextureHolder::getTextureInstance()->loadAllTextures();
+    FontHolder::getFontInstance()->loadAllFonts();
+    SoundHolder::getSoundInstance()->loadAllSounds();
+
     // Configure the main window
     mainWindow.create(sf::VideoMode(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT),MAIN_WINDOW_NAME);
     mainWindow.setFramerateLimit(MAX_FPS);
+
+    // Show title screen and initial cutscene
+    TitleScreen titleScreen;
+    titleScreen.run();
 
     // Show initial window with controls and stuff
     ControlsWindow controlsWindow;

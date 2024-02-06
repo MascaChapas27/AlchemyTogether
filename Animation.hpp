@@ -37,6 +37,7 @@ class Animation : public sf::Drawable{
         Animation();
         void setNumPhotograms(int numPhotograms);
         void setTexture(sf::Texture& texture, int width);
+        void setTexture(sf::Texture& texture);
         void setPingPong(bool pingPong);
         void setPosition(double x, double y);
         void setPosition(sf::Vector2f position);
