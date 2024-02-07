@@ -14,7 +14,7 @@ enum class TextureID{
 };
 
 enum class SoundID {
-
+    boss_voice, alchemist_voice
 };
 
 enum class FontID {
@@ -35,12 +35,15 @@ const sf::Vector2f CUTSCENE0_BOSS_POSITION(240,104);
 const sf::Vector2f CUTSCENE0_WIZARD_POSITION(0,MAIN_WINDOW_HEIGHT-123*2);
 const sf::Vector2f CUTSCENE0_ALCHEMIST_POSITION(MAIN_WINDOW_WIDTH-166*2,MAIN_WINDOW_HEIGHT-138*2);
 
+const int SPEAKING_LATENCY = 5;
+
 const int AUX_WINDOW_WIDTH = 109*2;
 const int AUX_WINDOW_HEIGHT = 104*2;
 
 const int WIZARD_DANCE_WIDTH = 30;
 const int ALCHEMIST_DANCE_WIDTH = 32;
 
+const int CUTSCENE_FPS = 30;
 const int MAX_FPS = 100;
 const std::string MAIN_WINDOW_NAME = "Alchemy Together";
 const std::string AUX_WINDOW_NAME = "Help";

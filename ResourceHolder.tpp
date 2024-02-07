@@ -91,7 +91,8 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
 template <class Resource, class Identifier>
 void ResourceHolder<Resource,Identifier>::loadAllSounds()
 {
-
+    load(SoundID::boss_voice,"sounds/boss-voice.wav");
+    load(SoundID::alchemist_voice,"sounds/alchemist-voice.wav");
 }
 
 template <class Resource, class Identifier>

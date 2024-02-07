@@ -20,11 +20,12 @@ int main(){
 
     // Configure the main window
     mainWindow.create(sf::VideoMode(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT),MAIN_WINDOW_NAME);
-    mainWindow.setFramerateLimit(MAX_FPS);
+    mainWindow.setFramerateLimit(CUTSCENE_FPS);
 
     // Show title screen and initial cutscene
     TitleScreen titleScreen;
     titleScreen.run();
+    mainWindow.setFramerateLimit(MAX_FPS);
 
     // Show initial window with controls and stuff
     ControlsWindow controlsWindow;
