@@ -10,26 +10,14 @@ Animation::Animation(){
     currentDelay = 0;
 }
 
-void Animation::setNumPhotograms(int numPhotograms){
+void Animation::setTexture(sf::Texture& texture, int numPhotograms, bool centerOrigin){
     this->numPhotograms = numPhotograms;
-}
-
-void Animation::setTexture(sf::Texture& texture, int width){
-    sprite.setTexture(texture);
-    sprite.scale(2.f,2.f);
-    sf::IntRect textureRectangle = sprite.getTextureRect();
-    textureRectangle.width = width;
-    sprite.setTextureRect(textureRectangle);
-    sprite.setOrigin(sprite.getTextureRect().width/2,sprite.getTextureRect().height/2);
-}
-
-void Animation::setTexture(sf::Texture& texture){
     sprite.setTexture(texture);
     sprite.scale(2.f,2.f);
     sf::IntRect textureRectangle = sprite.getTextureRect();
     textureRectangle.width = textureRectangle.width/numPhotograms;
     sprite.setTextureRect(textureRectangle);
-    sprite.setOrigin(sprite.getTextureRect().width/2,sprite.getTextureRect().height/2);
+    if(centerOrigin) sprite.setOrigin(sprite.getTextureRect().width/2,sprite.getTextureRect().height/2);
 }
 
 void Animation::setPingPong(bool pingPong){
@@ -106,8 +94,9 @@ sf::Vector2f Animation::getPosition() const{
 
 sf::IntRect Animation::getHitbox() const{
     sf::IntRect hitbox = sprite.getTextureRect();
-    hitbox.left = sprite.getPosition().x-hitbox.width/2;
-    hitbox.top = sprite.getPosition().y-hitbox.height/2;
+    bool zeroOrigin = sprite.getOrigin().x == 0 && sprite.getOrigin().y == 0;
+    hitbox.left = sprite.getPosition().x+(zeroOrigin ? hitbox.width/2 : -hitbox.width/2);
+    hitbox.top = sprite.getPosition().y+(zeroOrigin ? hitbox.height/2 : -hitbox.height/2);
     return hitbox;
 }
 

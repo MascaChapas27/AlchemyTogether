@@ -83,9 +83,8 @@ int Character::update(std::list<FallingItem>& fallingItems)
                 if(currentItems == 0){
                     Animation deadCharacter;
                     deadCharacter.setDelay(1);
-                    deadCharacter.setNumPhotograms(1);
                     deadCharacter.setPosition(getPosition());
-                    deadCharacter.setTexture(name == WIZARD_NAME ? hitWizardTexture : hitAlchemistTexture,name == WIZARD_NAME ? WIZARD_GAME_WIDTH : ALCHEMIST_GAME_WIDTH);
+                    deadCharacter.setTexture(name == WIZARD_NAME ? hitWizardTexture : hitAlchemistTexture,1);
                     FallingItem fallingCorpse;
 
                     fallingCorpse.setAnimation(deadCharacter);

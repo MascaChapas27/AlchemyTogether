@@ -12,17 +12,15 @@ void ControlsWindow::run(){
 
     // Now the animations for both characters
     Animation wizardAnimation;
-    wizardAnimation.setNumPhotograms(4);
     wizardAnimation.setDelay(25);
     wizardAnimation.setPingPong(false);
 
     sf::Texture wizardTexture;
     wizardTexture.loadFromFile("sprites/wizard-dance.png");
-    wizardAnimation.setTexture(wizardTexture,WIZARD_DANCE_WIDTH);
+    wizardAnimation.setTexture(wizardTexture,4);
     wizardAnimation.setPosition(WIZARD_INITIAL_X,WIZARD_INITIAL_Y);
 
     Animation alchemistAnimation;
-    alchemistAnimation.setNumPhotograms(6);
     alchemistAnimation.setPingPong(true);
     alchemistAnimation.setDelay(15);
     alchemistAnimation.setPingPong(true);
@@ -30,7 +28,7 @@ void ControlsWindow::run(){
 
     sf::Texture alchemistTexture;
     alchemistTexture.loadFromFile("sprites/alchemist-dance.png");
-    alchemistAnimation.setTexture(alchemistTexture,ALCHEMIST_DANCE_WIDTH);
+    alchemistAnimation.setTexture(alchemistTexture,6);
 
     // Now let's make it work
 

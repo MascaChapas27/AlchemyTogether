@@ -75,6 +75,7 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::boss,"sprites/boss.png");
     load(TextureID::boss_hit,"sprites/boss-hit.png");
     load(TextureID::controls_background,"sprites/controls-background.png");
+    load(TextureID::cutscene0_background,"sprites/cutscene0-background.png");
     load(TextureID::cutscene0_boss,"sprites/cutscene0-boss.png");
     load(TextureID::cutscene0_wizard,"sprites/cutscene0-wizard.png");
     load(TextureID::cutscene0_alchemist,"sprites/cutscene0-alchemist.png");

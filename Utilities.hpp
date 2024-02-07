@@ -8,7 +8,7 @@
 enum class TextureID{
     alchemist_dance,alchemist_hit,alchemist_side,alchemist_walk,
     background,book,magic,fire,boss,boss_hit,controls_background,
-    cutscene0_boss,cutscene0_wizard,cutscene0_alchemist,
+    cutscene0_boss,cutscene0_wizard,cutscene0_alchemist,cutscene0_background,
     cutscene1_background,cutscene1_alchemist,cutscene1_wizard,
     wizard_dance,wizard_hit,wizard_shoot,wizard_walk
 };
@@ -30,6 +30,10 @@ const bool DEBUG = true;
 
 const int MAIN_WINDOW_WIDTH = 800;
 const int MAIN_WINDOW_HEIGHT = 600;
+
+const sf::Vector2f CUTSCENE0_BOSS_POSITION(240,104);
+const sf::Vector2f CUTSCENE0_WIZARD_POSITION(0,MAIN_WINDOW_HEIGHT-123*2);
+const sf::Vector2f CUTSCENE0_ALCHEMIST_POSITION(MAIN_WINDOW_WIDTH-166*2,MAIN_WINDOW_HEIGHT-138*2);
 
 const int AUX_WINDOW_WIDTH = 109*2;
 const int AUX_WINDOW_HEIGHT = 104*2;

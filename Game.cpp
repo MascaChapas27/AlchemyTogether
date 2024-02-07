@@ -1,34 +1,33 @@
 #include "Game.hpp"
 #include "Utilities.hpp"
 #include <iostream>
+#include "ResourceHolder.hpp"
 
 void Game::run(){
 
     // Prepare the wizard
     Animation walkingWizard;
     walkingWizard.setDelay(10);
-    walkingWizard.setNumPhotograms(2);
 
     sf::Texture walkingWizardTexture;
     walkingWizardTexture.loadFromFile("sprites/wizard-walk.png");
-    walkingWizard.setTexture(walkingWizardTexture,WIZARD_GAME_WIDTH);
+    walkingWizard.setTexture(walkingWizardTexture,2);
     walkingWizard.setPosition(WIZARD_INITIAL_X,MAIN_WINDOW_HEIGHT-walkingWizard.getHitbox().height);
 
     wizard.setWalkingAnimation(walkingWizard);
 
     Animation shootingWizard;
     shootingWizard.setDelay(10);
-    shootingWizard.setNumPhotograms(2);
 
     sf::Texture shootingWizardTexture;
     shootingWizardTexture.loadFromFile("sprites/wizard-shoot.png");
-    shootingWizard.setTexture(shootingWizardTexture,WIZARD_GAME_WIDTH);
+    shootingWizard.setTexture(shootingWizardTexture,2);
 
     wizard.setShootingAnimation(shootingWizard);
 
     sf::Sprite hitWizard;
     hitWizardTexture.loadFromFile("sprites/wizard-hit.png");
-    hitWizard.setTexture(hitWizardTexture);
+    hitWizard.setTexture(hitWizardTexture,1);
     hitWizard.scale(2.f,2.f);
 
     wizard.setHitSprite(hitWizard);
@@ -40,22 +39,20 @@ void Game::run(){
     // Prepare the alchemist
     Animation walkingAlchemist;
     walkingAlchemist.setDelay(15);
-    walkingAlchemist.setNumPhotograms(2);
 
     sf::Texture walkingAlchemistTexture;
     walkingAlchemistTexture.loadFromFile("sprites/alchemist-walk.png");
-    walkingAlchemist.setTexture(walkingAlchemistTexture,ALCHEMIST_GAME_WIDTH);
+    walkingAlchemist.setTexture(walkingAlchemistTexture,2);
     walkingAlchemist.setPosition(ALCHEMIST_INITIAL_X,MAIN_WINDOW_HEIGHT-walkingAlchemist.getHitbox().height);
 
     alchemist.setWalkingAnimation(walkingAlchemist);
 
     Animation shootingAlchemist;
     shootingAlchemist.setDelay(15);
-    shootingAlchemist.setNumPhotograms(2);
 
     sf::Texture shootingAlchemistTexture;
     shootingAlchemistTexture.loadFromFile("sprites/alchemist-shoot.png");
-    shootingAlchemist.setTexture(shootingAlchemistTexture,ALCHEMIST_GAME_WIDTH);
+    shootingAlchemist.setTexture(shootingAlchemistTexture,2);
 
     alchemist.setShootingAnimation(shootingAlchemist);
 
@@ -73,12 +70,11 @@ void Game::run(){
     // Prepare the boss
     Animation flyingBoss;
     flyingBoss.setDelay(15);
-    flyingBoss.setNumPhotograms(3);
 
     sf::Texture flyingBossTexture;
     flyingBossTexture.loadFromFile("sprites/boss.png");
 
-    flyingBoss.setTexture(flyingBossTexture,67);
+    flyingBoss.setTexture(flyingBossTexture,3);
     flyingBoss.setPosition(BOSS_X,-flyingBoss.getHitbox().height*2);
 
     boss.setAnimation(flyingBoss);
@@ -112,10 +108,8 @@ void Game::run(){
     // Prepare the animations for the falling stuff
     Animation fallingBookAnimation;
     sf::Texture fallingBookTexture;
-    fallingBookTexture.loadFromFile("sprites/book.png");
-    fallingBookAnimation.setTexture(fallingBookTexture,24);
     fallingBookAnimation.setDelay(1);
-    fallingBookAnimation.setNumPhotograms(2);
+    fallingBookAnimation.setTexture(TextureHolder::getTextureInstance()->get(TextureID::book),2);
 
     FallingItem::fallingBook.setAnimation(fallingBookAnimation);
     FallingItem::fallingBook.setGravity(GRAVITY);
@@ -124,9 +118,8 @@ void Game::run(){
     Animation fallingMagicAnimation;
     sf::Texture fallingMagicTexture;
     fallingMagicTexture.loadFromFile("sprites/magic.png");
-    fallingMagicAnimation.setTexture(fallingMagicTexture,24);
+    fallingMagicAnimation.setTexture(fallingMagicTexture,2);
     fallingMagicAnimation.setDelay(10);
-    fallingMagicAnimation.setNumPhotograms(2);
 
     FallingItem::fallingMagic.setAnimation(fallingMagicAnimation);
     FallingItem::fallingMagic.setGravity(GRAVITY);
@@ -135,9 +128,8 @@ void Game::run(){
     Animation fallingFireAnimation;
     sf::Texture fallingFireTexture;
     fallingFireTexture.loadFromFile("sprites/fire.png");
-    fallingFireAnimation.setTexture(fallingFireTexture,24);
+    fallingFireAnimation.setTexture(fallingFireTexture,2);
     fallingFireAnimation.setDelay(10);
-    fallingFireAnimation.setNumPhotograms(2);
 
     FallingItem::fallingFire.setAnimation(fallingFireAnimation);
     FallingItem::fallingFire.setGravity(GRAVITY);
