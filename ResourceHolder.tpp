@@ -66,7 +66,7 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
 {
     load(TextureID::alchemist_dance,"sprites/alchemist-dance.png");
     load(TextureID::alchemist_hit,"sprites/alchemist-hit.png");
-    load(TextureID::alchemist_side,"sprites/alchemist-side.png");
+    load(TextureID::alchemist_shoot,"sprites/alchemist-shoot.png");
     load(TextureID::alchemist_walk,"sprites/alchemist-walk.png");
     load(TextureID::background,"sprites/background.png");
     load(TextureID::book,"sprites/book.png");
@@ -93,6 +93,8 @@ void ResourceHolder<Resource,Identifier>::loadAllSounds()
 {
     load(SoundID::boss_voice,"sounds/boss-voice.wav");
     load(SoundID::alchemist_voice,"sounds/alchemist-voice.wav");
+    load(SoundID::wizard_voice,"sounds/wizard-voice.wav");
+    load(SoundID::advance_conversation,"sounds/advance-conversation.wav");
 }
 
 template <class Resource, class Identifier>

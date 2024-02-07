@@ -52,6 +52,8 @@
 		<Unit filename="FallingItem.hpp" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.hpp" />
+		<Unit filename="MusicPlayer.cpp" />
+		<Unit filename="MusicPlayer.hpp" />
 		<Unit filename="ResourceHolder.hpp" />
 		<Unit filename="ResourceHolder.tpp" />
 		<Unit filename="TitleScreen.cpp" />

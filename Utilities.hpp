@@ -6,7 +6,7 @@
 #include <memory>
 
 enum class TextureID{
-    alchemist_dance,alchemist_hit,alchemist_side,alchemist_walk,
+    alchemist_dance,alchemist_hit,alchemist_shoot,alchemist_walk,
     background,book,magic,fire,boss,boss_hit,controls_background,
     cutscene0_boss,cutscene0_wizard,cutscene0_alchemist,cutscene0_background,
     cutscene1_background,cutscene1_alchemist,cutscene1_wizard,
@@ -14,11 +14,15 @@ enum class TextureID{
 };
 
 enum class SoundID {
-    boss_voice, alchemist_voice
+    boss_voice, alchemist_voice, wizard_voice, advance_conversation
 };
 
 enum class FontID {
     AlchemistFont, WizardFont, BossFont
+};
+
+enum class MusicID {
+    intro_music, battle_music
 };
 
 extern sf::RenderWindow mainWindow;
@@ -31,9 +35,15 @@ const bool DEBUG = true;
 const int MAIN_WINDOW_WIDTH = 800;
 const int MAIN_WINDOW_HEIGHT = 600;
 
+const int CHARACTER_SIZE = 22;
+
 const sf::Vector2f CUTSCENE0_BOSS_POSITION(240,104);
 const sf::Vector2f CUTSCENE0_WIZARD_POSITION(0,MAIN_WINDOW_HEIGHT-123*2);
 const sf::Vector2f CUTSCENE0_ALCHEMIST_POSITION(MAIN_WINDOW_WIDTH-166*2,MAIN_WINDOW_HEIGHT-138*2);
+
+const sf::Vector2f CUTSCENE1_WIZARD_POSITION(231*2,118*2);
+const sf::Vector2f CUTSCENE1_ALCHEMIST_POSITION(79*2,105*2);
+const sf::Vector2f CUTSCENE1_BACKGROUND_POSITION(100,100);
 
 const int SPEAKING_LATENCY = 5;
 

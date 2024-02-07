@@ -4,6 +4,7 @@
 #include "Game.hpp"
 #include "TitleScreen.hpp"
 #include "ResourceHolder.hpp"
+#include "MusicPlayer.hpp"
 
 // Global variables in Utilities.hpp
 sf::RenderWindow mainWindow;
@@ -17,6 +18,7 @@ int main(){
     TextureHolder::getTextureInstance()->loadAllTextures();
     FontHolder::getFontInstance()->loadAllFonts();
     SoundHolder::getSoundInstance()->loadAllSounds();
+    MusicPlayer::getInstance()->loadAllMusic();
 
     // Configure the main window
     mainWindow.create(sf::VideoMode(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT),MAIN_WINDOW_NAME);
