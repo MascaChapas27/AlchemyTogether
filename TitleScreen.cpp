@@ -28,6 +28,12 @@ void TitleScreen::run(){
     sf::Vector2f finalDownPosition(0,5*MAIN_WINDOW_HEIGHT/6);
     rectangleDown.setPosition(0,MAIN_WINDOW_HEIGHT);
 
+    // Sprite for the title
+    sf::Sprite titleSprite;
+    titleSprite.setTexture(TextureHolder::getTextureInstance()->get(TextureID::title));
+    titleSprite.scale(2,2);
+    titleSprite.setPosition(TITLE_POSITION);
+
     // Rectangle that covers everything
     sf::RectangleShape rectangleCover(sf::Vector2f(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT));
     rectangleCover.setFillColor(sf::Color::Black);
@@ -89,6 +95,7 @@ void TitleScreen::run(){
         mainWindow.draw(cutscene0_boss);
         mainWindow.draw(cutscene0_wizard);
         mainWindow.draw(cutscene0_alchemist);
+        mainWindow.draw(titleSprite);
 
         mainWindow.display();
     }
@@ -97,6 +104,8 @@ void TitleScreen::run(){
 
     // Make the rectangles closer
     while(!nextCutscene){
+
+        titleSprite.move(0,-5);
 
         int correctRectangles = 0;
 
@@ -144,6 +153,7 @@ void TitleScreen::run(){
         mainWindow.draw(rectangleLeft);
         mainWindow.draw(rectangleRight);
         mainWindow.draw(rectangleUp);
+        mainWindow.draw(titleSprite);
 
         mainWindow.display();
 
@@ -159,16 +169,21 @@ void TitleScreen::run(){
     finalText = "¡¡SALUDOS insignificantes terrícolas!!";
     currentLetter = 0;
     int currentText = 0;
+    int wait = 0;
 
     // CUTSCENE 0: Boss says hi :3
 
     while(!nextCutscene){
 
         if(currentLetter<finalText.size()){
-            talkingText.setString(talkingText.getString()+finalText[currentLetter]);
-            currentLetter++;
-            talkingSound.setPitch((5+rand()%10)/10.0);
-            talkingSound.play();
+            if(wait > 0) wait--;
+            else {
+                if(finalText[currentLetter] == '.') wait = TEXT_WAIT;
+                talkingText.setString(talkingText.getString()+finalText[currentLetter]);
+                currentLetter++;
+                talkingSound.setPitch((5+rand()%10)/10.0);
+                talkingSound.play();
+            }
         }
 
         sf::Event event;
@@ -179,25 +194,25 @@ void TitleScreen::run(){
                 switch(currentText){
                 case 0:
                     talkingText.setString("");
-                    finalText = "En un principio vine a este planeta en son de PAZ";
+                    finalText = "Me dedico a vagar por el UNIVERSO";
                     currentLetter = 0;
                     currentText++;
                     break;
                 case 1:
                     talkingText.setString("");
-                    finalText = "Pero me encontré con un grupo de INFORMÁTICOS";
+                    finalText = "Buscando planetas que DESTRUIR";
                     currentLetter = 0;
                     currentText++;
                     break;
                 case 2:
                     talkingText.setString("");
-                    finalText = "Uno de ellos se ha puesto a HABLARME de LOL";
+                    finalText = "Y el vuestro... parece bastante DESTRUIBLE";
                     currentLetter = 0;
                     currentText++;
                     break;
                 case 3:
                     talkingText.setString("");
-                    finalText = "(olía a AJO)";
+                    finalText = "(en mi humilde opinión)";
                     currentLetter = 0;
                     currentText++;
                     break;
@@ -221,7 +236,7 @@ void TitleScreen::run(){
                     break;
                 case 7:
                     talkingText.setString("");
-                    finalText = "¡¡Pero eso NO va a PASAR!!";
+                    finalText = "¡¡Pero confío en que eso NO PASARÁ!!";
                     currentLetter = 0;
                     currentText++;
                     break;
@@ -425,6 +440,85 @@ void TitleScreen::run(){
         mainWindow.draw(rectangleRight);
         mainWindow.draw(rectangleUp);
         mainWindow.draw(talkingText);
+
+        mainWindow.display();
+    }
+
+    talkingText.setString("ni que los libros y la magia cayeran del cielo");
+
+    nextCutscene = false;
+
+    // CUTSCENE 2: oh goodness gracious the books are plentiful
+
+    // Sprites for cutscene 2
+    sf::Sprite cutscene2_wizard;
+    cutscene2_wizard.setTexture(TextureHolder::getTextureInstance()->get(TextureID::cutscene2_wizard));
+    cutscene2_wizard.scale(2,2);
+    cutscene2_wizard.setPosition(CUTSCENE1_WIZARD_POSITION);
+
+    sf::Sprite cutscene2_alchemist;
+    cutscene2_alchemist.setTexture(TextureHolder::getTextureInstance()->get(TextureID::cutscene2_alchemist));
+    cutscene2_alchemist.scale(2,2);
+    cutscene2_alchemist.setPosition(CUTSCENE2_ALCHEMIST_POSITION);
+
+    sf::Sprite cutscene2_background;
+    cutscene2_background.setTexture(TextureHolder::getTextureInstance()->get(TextureID::cutscene2_background));
+    cutscene2_background.setPosition(CUTSCENE1_BACKGROUND_POSITION);
+    cutscene2_background.setScale(2,2);
+
+    MusicPlayer::getInstance()->stop();
+
+    sf::Sound hitSound;
+    hitSound.setBuffer(SoundHolder::getSoundInstance()->get(SoundID::alchemist_damage));
+    hitSound.play();
+
+    int windowMove = WINDOW_SHAKE_FREQUENCY*30;
+
+    wait = 0;
+
+    int opacity = 0;
+
+    while(!nextCutscene){
+
+        sf::Event event;
+        while(mainWindow.pollEvent(event)){
+            if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
+            else if (event.type == sf::Event::KeyPressed) {
+                nextCutscene = true;
+            }
+        }
+
+        if(windowMove%WINDOW_SHAKE_FREQUENCY == 0 && windowMove != -1){
+            sf::Vector2i newPosition = mainWindow.getPosition();
+            newPosition.y += windowMove/WINDOW_SHAKE_FREQUENCY * ((windowMove/WINDOW_SHAKE_FREQUENCY)%2 ? -1 : 1);
+            mainWindow.setPosition(newPosition);
+        }
+
+        if(windowMove > -1){
+            windowMove--;
+        } else if(wait < CUTSCENE2_WAIT){
+            wait++;
+        } else if(opacity < 255){
+            opacity+=5;
+        } else {
+            nextCutscene = true;
+        }
+
+        sf::Color rectangleCoverColor = rectangleCover.getFillColor();
+        rectangleCoverColor.a = opacity;
+        rectangleCover.setFillColor(rectangleCoverColor);
+
+        mainWindow.clear();
+
+        mainWindow.draw(cutscene2_background);
+        mainWindow.draw(cutscene2_wizard);
+        mainWindow.draw(cutscene2_alchemist);
+        mainWindow.draw(rectangleDown);
+        mainWindow.draw(rectangleLeft);
+        mainWindow.draw(rectangleRight);
+        mainWindow.draw(rectangleUp);
+        mainWindow.draw(talkingText);
+        mainWindow.draw(rectangleCover);
 
         mainWindow.display();
     }

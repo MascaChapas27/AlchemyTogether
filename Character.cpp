@@ -161,6 +161,13 @@ void Character::setHitSprite(sf::Sprite hitSprite){
     this->hitSprite = hitSprite;
 }
 
+void Character::setSoundBuffers(sf::SoundBuffer damageSoundBuffer, sf::SoundBuffer collectSoundBuffer, sf::SoundBuffer shootSoundBuffer)
+{
+    damageSound.setBuffer(damageSoundBuffer);
+    collectSound.setBuffer(collectSoundBuffer);
+    shootSound.setBuffer(shootSoundBuffer);
+}
+
 void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
 
     if(dead) return;

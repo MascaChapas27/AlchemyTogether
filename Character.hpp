@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include "FallingItem.hpp"
+#include <SFML/Audio.hpp>
 
 class Character : public sf::Drawable {
     private:
@@ -52,6 +53,16 @@ class Character : public sf::Drawable {
         // Indicates if the character is dead
         bool dead;
 
+        // Sound that plays when you get hit
+        sf::Sound damageSound;
+
+        // Sound that plays when you collect an item
+        sf::Sound collectSound;
+
+        // Sound that plays when you shoot
+        sf::Sound shootSound;
+
+
     public:
         Character();
         void setName(std::string name);
@@ -62,6 +73,7 @@ class Character : public sf::Drawable {
         void setKeys(sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey, sf::Keyboard::Key shootingKey);
         void setCurrentItems(int currentItems);
         void setMaxItems(int maxItems);
+        void setSoundBuffers(sf::SoundBuffer damageSoundBuffer, sf::SoundBuffer collectSoundBuffer, sf::SoundBuffer shootSoundBuffer);
         int getCurrentItems();
         int getMaxItems();
         void setShooting(bool shooting);
