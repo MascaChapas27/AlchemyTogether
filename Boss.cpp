@@ -67,7 +67,8 @@ void Boss::update(std::list<FallingItem>& fallingItems){
     while(iter != fallingItems.end() && (invincibilityCounter>=10 || invincibilityCounter==-1)){
         sf::IntRect rect1 = iter->getHitbox();
         sf::IntRect rect2 = animation.getHitbox();
-        rect2.height*=2;
+        rect2.left-=rect2.width/2;
+        //rect2.height*=2;
 
         if((rect1.left < (rect2.left+rect2.width)) &&
            ((rect1.left+rect1.width) > rect2.left) &&

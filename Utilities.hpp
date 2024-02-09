@@ -6,12 +6,12 @@
 #include <memory>
 
 enum class TextureID{
-    alchemist_dance,alchemist_hit,alchemist_shoot,alchemist_walk,
+    alchemist_dance,alchemist_hit,alchemist_shoot,alchemist_walk,alchemist_hold,alchemist_side,
     background,book,magic,fire,boss,boss_hit,controls_background,
     title,cutscene0_boss,cutscene0_wizard,cutscene0_alchemist,cutscene0_background,
     cutscene1_background,cutscene1_alchemist,cutscene1_wizard,
     cutscene2_alchemist,cutscene2_wizard,cutscene2_background,
-    wizard_dance,wizard_hit,wizard_shoot,wizard_walk
+    wizard_dance,wizard_hit,wizard_shoot,wizard_side,wizard_hold,wizard_walk
 };
 
 enum class SoundID {
@@ -31,8 +31,6 @@ enum class MusicID {
 
 extern sf::RenderWindow mainWindow;
 extern sf::RenderWindow auxWindow;
-extern sf::Texture hitWizardTexture;
-extern sf::Texture hitAlchemistTexture;
 
 const bool DEBUG = false;
 

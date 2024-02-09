@@ -1,6 +1,7 @@
 #include "Character.hpp"
 #include "Utilities.hpp"
 #include <iostream>
+#include "ResourceHolder.hpp"
 
 Character::Character(){
     invincibilityCounter = -1;
@@ -16,11 +17,22 @@ Character::Character(){
 void Character::setWalkingAnimation(Animation walkingAnimation)
 {
     this->walkingAnimation = walkingAnimation;
+    this->position = walkingAnimation.getPosition();
 }
 
 void Character::setShootingAnimation(Animation shootingAnimation)
 {
     this->shootingAnimation = shootingAnimation;
+}
+
+void Character::setHoldingAnimation(Animation animation)
+{
+    this->holdingAnimation = animation;
+}
+
+void Character::setSideAnimation(Animation animation)
+{
+    this->sideAnimation = animation;
 }
 
 void Character::setSpeed(double speed)
@@ -39,28 +51,39 @@ int Character::update(std::list<FallingItem>& fallingItems)
 {
     if(dead) return 0;
 
-    // First, move the character
-    Animation& animation = shooting ? shootingAnimation : walkingAnimation;
     bool moved = false;
-    sf::Vector2f newPosition = animation.getPosition();
     if(sf::Keyboard::isKeyPressed(leftKey)){
         moved = true;
-        newPosition.x -= speed;
+        position.x -= speed;
     } else if(sf::Keyboard::isKeyPressed(rightKey)){
         moved = true;
-        newPosition.x += speed;
+        position.x += speed;
     }
 
-    if(newPosition.x + animation.getWidth() > MAIN_WINDOW_WIDTH){
-        newPosition.x = MAIN_WINDOW_WIDTH - animation.getWidth();
-    } else if (animation.getPosition().x-animation.getWidth() < 0){
-        newPosition.x = animation.getWidth();
+    if(position.x + walkingAnimation.getWidth() > MAIN_WINDOW_WIDTH){
+        position.x = MAIN_WINDOW_WIDTH - walkingAnimation.getWidth();
+    } else if (position.x-walkingAnimation.getWidth() < 0){
+        position.x = walkingAnimation.getWidth();
     }
 
-    animation.setPosition(newPosition.x,newPosition.y);
+    // First, update all animations just in case
+    walkingAnimation.setPosition(position);
+    holdingAnimation.setPosition(position);
+    sideAnimation.setPosition(position);
+    shootingAnimation.setPosition(position);
 
-    if(moved) animation.update();
-    else animation.resetToStart();
+    if(moved) {
+        walkingAnimation.update();
+        shootingAnimation.update();
+        holdingAnimation.update();
+        sideAnimation.update();
+    }
+    else {
+        walkingAnimation.resetToStart();
+        shootingAnimation.resetToStart();
+        holdingAnimation.resetToStart();
+        sideAnimation.resetToStart();
+    }
 
     // Second, check for collisions
 
@@ -69,7 +92,7 @@ int Character::update(std::list<FallingItem>& fallingItems)
     auto iter = fallingItems.begin();
     while(iter != fallingItems.end() && (invincibilityCounter>=30 || invincibilityCounter==-1)){
         sf::IntRect rect1 = iter->getHitbox();
-        sf::IntRect rect2 = animation.getHitbox();
+        sf::IntRect rect2 = walkingAnimation.getHitbox();
 
         if((rect1.left < (rect2.left+rect2.width)) &&
            ((rect1.left+rect1.width) > rect2.left) &&
@@ -84,9 +107,10 @@ int Character::update(std::list<FallingItem>& fallingItems)
                     Animation deadCharacter;
                     deadCharacter.setDelay(1);
                     deadCharacter.setPosition(getPosition());
-                    deadCharacter.setTexture(name == WIZARD_NAME ? hitWizardTexture : hitAlchemistTexture,1);
-                    FallingItem fallingCorpse;
+                    deadCharacter.setTexture(name == WIZARD_NAME ? TextureHolder::getTextureInstance()->get(TextureID::wizard_hit) :
+                                             TextureHolder::getTextureInstance()->get(TextureID::alchemist_hit),1);
 
+                    FallingItem fallingCorpse;
                     fallingCorpse.setAnimation(deadCharacter);
                     fallingCorpse.setPosition(getPosition());
                     fallingCorpse.setCurrentSpeed(sf::Vector2f((-10+rand()%30)/10.0,(-80+rand()%30)/10.0));
@@ -114,13 +138,13 @@ int Character::update(std::list<FallingItem>& fallingItems)
         }
     }
 
-    // Third, update the animation
+    // Third, update the hit sprite
     if(invincibilityCounter >= 0  && invincibilityCounter < INVINCIBILITY_FRAMES){
-        hitSprite.setPosition(animation.getPosition().x-animation.getHitbox().width,animation.getPosition().y-animation.getHitbox().height);
+        hitSprite.setPosition(walkingAnimation.getPosition().x-walkingAnimation.getHitbox().width,walkingAnimation.getPosition().y-walkingAnimation.getHitbox().height);
         invincibilityCounter++;
     } else if (invincibilityCounter == INVINCIBILITY_FRAMES) invincibilityCounter = -1;
 
-    // Fourth, change the shooting angle if shooting
+    // Fourth, change the shooting angle if shooting and update the animations
     if(shooting){
         if(shootingAngleGoingDown){
             shootingAngle--;
@@ -139,11 +163,11 @@ int Character::update(std::list<FallingItem>& fallingItems)
     if(shooting){
         if(shootingCooldown == 0 && currentItems > 0 && sf::Keyboard::isKeyPressed(shootingKey)){
             if(name == ALCHEMIST_NAME){
-                FallingItem::fallingBook.setPosition(animation.getPosition().x+animation.getHitbox().width+10,animation.getPosition().y-animation.getHitbox().height);
+                FallingItem::fallingBook.setPosition(walkingAnimation.getPosition().x+walkingAnimation.getHitbox().width+10,walkingAnimation.getPosition().y-walkingAnimation.getHitbox().height);
                 FallingItem::fallingBook.setCurrentSpeed(sf::Vector2f(cos(shootingAngle*PI/180)*ALCHEMIST_STRENGTH,-sin(shootingAngle*PI/180)*ALCHEMIST_STRENGTH));
                 fallingItems.insert(fallingItems.begin(),FallingItem::fallingBook);
             } else {
-                FallingItem::fallingMagic.setPosition(animation.getPosition().x+animation.getHitbox().width+10,animation.getPosition().y-animation.getHitbox().height);
+                FallingItem::fallingMagic.setPosition(walkingAnimation.getPosition().x+walkingAnimation.getHitbox().width+10,walkingAnimation.getPosition().y-walkingAnimation.getHitbox().height);
                 FallingItem::fallingMagic.setCurrentSpeed(sf::Vector2f(cos(shootingAngle*PI/180)*WIZARD_STRENGTH,-sin(shootingAngle*PI/180)*WIZARD_STRENGTH));
                 fallingItems.insert(fallingItems.begin(),FallingItem::fallingMagic);
             }
@@ -172,7 +196,20 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
 
     if(dead) return;
 
-    Animation animation = shooting ? shootingAnimation : walkingAnimation;
+    Animation animation;
+
+    if(shooting){
+        if(shootingCooldown > MAX_SHOOTING_COOLDOWN/2){
+            animation = shootingAnimation;
+        } else if (currentItems > 0){
+            animation = holdingAnimation;
+        } else {
+            animation = sideAnimation;
+        }
+    } else {
+        animation = walkingAnimation;
+    }
+
     if(invincibilityCounter == -1) r.draw(animation,s);
     else if (invincibilityCounter%2==0){
         if(invincibilityCounter < 30) r.draw(hitSprite,s);
@@ -232,6 +269,9 @@ void Character::setName(std::string name){
 
 void Character::setShooting(bool shooting){
     this->shooting = shooting;
-    if(shooting) shootingAnimation.setPosition(walkingAnimation.getPosition());
-    else walkingAnimation.setPosition(shootingAnimation.getPosition());
+    if(shooting) {
+        holdingAnimation.setPosition(walkingAnimation.getPosition());
+        sideAnimation.setPosition(walkingAnimation.getPosition());
+    }
+    else walkingAnimation.setPosition(sideAnimation.getPosition());
 }

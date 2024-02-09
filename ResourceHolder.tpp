@@ -67,6 +67,8 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::alchemist_dance,"sprites/alchemist-dance.png");
     load(TextureID::alchemist_hit,"sprites/alchemist-hit.png");
     load(TextureID::alchemist_shoot,"sprites/alchemist-shoot.png");
+    load(TextureID::alchemist_side,"sprites/alchemist-side.png");
+    load(TextureID::alchemist_hold,"sprites/alchemist-hold.png");
     load(TextureID::alchemist_walk,"sprites/alchemist-walk.png");
     load(TextureID::title,"sprites/title.png");
     load(TextureID::background,"sprites/background.png");
@@ -89,6 +91,8 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::wizard_dance,"sprites/wizard-dance.png");
     load(TextureID::wizard_hit,"sprites/wizard-hit.png");
     load(TextureID::wizard_shoot,"sprites/wizard-shoot.png");
+    load(TextureID::wizard_side,"sprites/wizard-side.png");
+    load(TextureID::wizard_hold,"sprites/wizard-hold.png");
     load(TextureID::wizard_walk,"sprites/wizard-walk.png");
 }
 
@@ -105,7 +109,7 @@ void ResourceHolder<Resource,Identifier>::loadAllSounds()
     load(SoundID::wizard_damage,"sounds/wizard-damage.wav");
     load(SoundID::wizard_collect,"sounds/wizard-collect.wav");
     load(SoundID::wizard_shoot,"sounds/wizard-shoot.wav");
-    load(SoundID::boss_damage,"sounds/boss-collect.wav");
+    load(SoundID::boss_damage,"sounds/boss-damage.wav");
     load(SoundID::boss_shoot,"sounds/boss-shoot.wav");
 }
 

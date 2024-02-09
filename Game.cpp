@@ -5,31 +5,33 @@
 
 void Game::run(){
 
+    TextureHolder * textureHolder = TextureHolder::getTextureInstance();
+
     // Prepare the wizard
     Animation walkingWizard;
     walkingWizard.setDelay(10);
-
-    sf::Texture walkingWizardTexture;
-    walkingWizardTexture.loadFromFile("sprites/wizard-walk.png");
-    walkingWizard.setTexture(walkingWizardTexture,2);
+    walkingWizard.setTexture(textureHolder->get(TextureID::wizard_walk),2);
     walkingWizard.setPosition(WIZARD_INITIAL_X,MAIN_WINDOW_HEIGHT-walkingWizard.getHitbox().height);
-
     wizard.setWalkingAnimation(walkingWizard);
 
     Animation shootingWizard;
     shootingWizard.setDelay(10);
-
-    sf::Texture shootingWizardTexture;
-    shootingWizardTexture.loadFromFile("sprites/wizard-shoot.png");
-    shootingWizard.setTexture(shootingWizardTexture,2);
-
+    shootingWizard.setTexture(textureHolder->get(TextureID::wizard_shoot),2);
     wizard.setShootingAnimation(shootingWizard);
 
-    sf::Sprite hitWizard;
-    hitWizardTexture.loadFromFile("sprites/wizard-hit.png");
-    hitWizard.setTexture(hitWizardTexture,1);
-    hitWizard.scale(2.f,2.f);
+    Animation holdingWizard;
+    holdingWizard.setDelay(10);
+    holdingWizard.setTexture(textureHolder->get(TextureID::wizard_hold),2);
+    wizard.setHoldingAnimation(holdingWizard);
 
+    Animation sideWizard;
+    sideWizard.setDelay(10);
+    sideWizard.setTexture(textureHolder->get(TextureID::wizard_side),2);
+    wizard.setSideAnimation(sideWizard);
+
+    sf::Sprite hitWizard;
+    hitWizard.setTexture(textureHolder->get(TextureID::wizard_hit),1);
+    hitWizard.scale(2.f,2.f);
     wizard.setHitSprite(hitWizard);
 
     wizard.setKeys(sf::Keyboard::J, sf::Keyboard::L, sf::Keyboard::I);
@@ -39,28 +41,28 @@ void Game::run(){
     // Prepare the alchemist
     Animation walkingAlchemist;
     walkingAlchemist.setDelay(15);
-
-    sf::Texture walkingAlchemistTexture;
-    walkingAlchemistTexture.loadFromFile("sprites/alchemist-walk.png");
-    walkingAlchemist.setTexture(walkingAlchemistTexture,2);
+    walkingAlchemist.setTexture(textureHolder->get(TextureID::alchemist_walk),2);
     walkingAlchemist.setPosition(ALCHEMIST_INITIAL_X,MAIN_WINDOW_HEIGHT-walkingAlchemist.getHitbox().height);
-
     alchemist.setWalkingAnimation(walkingAlchemist);
 
     Animation shootingAlchemist;
     shootingAlchemist.setDelay(15);
-
-    sf::Texture shootingAlchemistTexture;
-    shootingAlchemistTexture.loadFromFile("sprites/alchemist-shoot.png");
-    shootingAlchemist.setTexture(shootingAlchemistTexture,2);
-
+    shootingAlchemist.setTexture(textureHolder->get(TextureID::alchemist_shoot),2);
     alchemist.setShootingAnimation(shootingAlchemist);
 
-    sf::Sprite hitAlchemist;
-    hitAlchemistTexture.loadFromFile("sprites/alchemist-hit.png");
-    hitAlchemist.setTexture(hitAlchemistTexture);
-    hitAlchemist.scale(2.f,2.f);
+    Animation sideAlchemist;
+    sideAlchemist.setDelay(15);
+    sideAlchemist.setTexture(textureHolder->get(TextureID::alchemist_side),2);
+    alchemist.setSideAnimation(sideAlchemist);
 
+    Animation holdingAlchemist;
+    holdingAlchemist.setDelay(15);
+    holdingAlchemist.setTexture(textureHolder->get(TextureID::alchemist_hold),2);
+    alchemist.setHoldingAnimation(holdingAlchemist);
+
+    sf::Sprite hitAlchemist;
+    hitAlchemist.setTexture(textureHolder->get(TextureID::alchemist_hit));
+    hitAlchemist.scale(2.f,2.f);
     alchemist.setHitSprite(hitAlchemist);
 
     alchemist.setKeys(sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W);

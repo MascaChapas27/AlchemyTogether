@@ -18,6 +18,12 @@ class Character : public sf::Drawable {
         // Animation for the character when it shoots
         Animation shootingAnimation;
 
+        // Animation for the character when it holds an item
+        Animation holdingAnimation;
+
+        // Animation for the character when it looks to the side
+        Animation sideAnimation;
+
         // Indicates if the character is shooting or walking
         bool shooting;
 
@@ -62,12 +68,17 @@ class Character : public sf::Drawable {
         // Sound that plays when you shoot
         sf::Sound shootSound;
 
+        // Current position for the character
+        sf::Vector2f position;
+
 
     public:
         Character();
         void setName(std::string name);
         void setWalkingAnimation(Animation animation);
         void setShootingAnimation(Animation animation);
+        void setHoldingAnimation(Animation animation);
+        void setSideAnimation(Animation animation);
         void setHitSprite(sf::Sprite hitSprite);
         void setSpeed(double speed);
         void setKeys(sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey, sf::Keyboard::Key shootingKey);
