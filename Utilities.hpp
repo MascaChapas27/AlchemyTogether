@@ -8,17 +8,18 @@
 enum class TextureID{
     alchemist_dance,alchemist_hit,alchemist_shoot,alchemist_walk,alchemist_hold,alchemist_side,
     background,book,magic,fire,boss,boss_hit,controls_background,
-    title,cutscene0_boss,cutscene0_wizard,cutscene0_alchemist,cutscene0_background,
+    title,press_enter,press_escape,cutscene0_boss,cutscene0_wizard,cutscene0_alchemist,cutscene0_background,
     cutscene1_background,cutscene1_alchemist,cutscene1_wizard,
     cutscene2_alchemist,cutscene2_wizard,cutscene2_background,
-    wizard_dance,wizard_hit,wizard_shoot,wizard_side,wizard_hold,wizard_walk
+    wizard_dance,wizard_hit,wizard_shoot,wizard_side,wizard_hold,wizard_walk,
+    time_frame,alchemist_arrow,wizard_arrow
 };
 
 enum class SoundID {
     boss_voice, alchemist_voice, wizard_voice, advance_conversation,
     alchemist_damage,alchemist_collect,alchemist_shoot,
     wizard_damage,wizard_collect,wizard_shoot,
-    boss_damage,boss_shoot
+    boss_damage,boss_shoot,boss_appear,boss_disappear
 };
 
 enum class FontID {
@@ -33,12 +34,13 @@ enum class AttackType {
     UNIFORM_RAIN, RAIN_WITH_HOLES, CIRCLES, RAIN_LEFT_TO_RIGHT, RANDOM_RAIN
 };
 const int NUM_BOSS_ATTACKS = 5;
-const int NUM_FIRE_CIRCLES = 10;
+const int NUM_FIRE_CIRCLES = 6;
 const int RAIN_LEFT_TO_RIGHT_LATENCY = 20;
 const int NUM_FIRE_RAIN_WITH_HOLES = 15;
+const int RANDOM_RAIN_FIRE_PER_SECOND = 15;
+const int NUM_FIRE_UNIFORM_RAIN = 8;
 
 extern sf::RenderWindow mainWindow;
-extern sf::RenderWindow auxWindow;
 
 const bool DEBUG = false;
 
@@ -113,7 +115,7 @@ const int BOSS_TIME = 15;
 const double PI = 3.14159265;
 
 const int ALCHEMIST_STRENGTH = 7;
-const int WIZARD_STRENGTH = 5;
+const int WIZARD_STRENGTH = 7;
 
 const int FALLING_TRAIL_MAX_LENGTH = 2;
 const int FALLING_TRAIL_MAX_COUNTER = 5;

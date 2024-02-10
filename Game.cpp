@@ -2,11 +2,14 @@
 #include "Utilities.hpp"
 #include <iostream>
 #include "ResourceHolder.hpp"
+#include "MusicPlayer.hpp"
 
 void Game::run(){
 
     TextureHolder * textureHolder = TextureHolder::getTextureInstance();
     SoundHolder * soundHolder = SoundHolder::getSoundInstance();
+
+    MusicPlayer::getInstance()->play(MusicID::battle_music);
 
     // Prepare the wizard
     Animation walkingWizard;
@@ -35,6 +38,8 @@ void Game::run(){
     hitWizard.scale(2.f,2.f);
     wizard.setHitSprite(hitWizard);
 
+    wizard.setShootingArrowTexture(textureHolder->get(TextureID::wizard_arrow));
+
     wizard.setKeys(sf::Keyboard::J, sf::Keyboard::L, sf::Keyboard::I);
     wizard.setSpeed(3);
     wizard.setName(WIZARD_NAME);
@@ -44,7 +49,7 @@ void Game::run(){
     Animation walkingAlchemist;
     walkingAlchemist.setDelay(15);
     walkingAlchemist.setTexture(textureHolder->get(TextureID::alchemist_walk),2);
-    walkingAlchemist.setPosition(ALCHEMIST_INITIAL_X,MAIN_WINDOW_HEIGHT-walkingAlchemist.getHitbox().height);
+    walkingAlchemist.setPosition(ALCHEMIST_INITIAL_X-1,MAIN_WINDOW_HEIGHT-walkingAlchemist.getHitbox().height);
     alchemist.setWalkingAnimation(walkingAlchemist);
 
     Animation shootingAlchemist;
@@ -67,6 +72,8 @@ void Game::run(){
     hitAlchemist.scale(2.f,2.f);
     alchemist.setHitSprite(hitAlchemist);
 
+    alchemist.setShootingArrowTexture(textureHolder->get(TextureID::alchemist_arrow));
+
     alchemist.setKeys(sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W);
     alchemist.setSpeed(3);
     alchemist.setName(ALCHEMIST_NAME);
@@ -83,6 +90,10 @@ void Game::run(){
     flyingBoss.setPosition(BOSS_X,-flyingBoss.getHitbox().height*2);
 
     boss.setAnimation(flyingBoss);
+    boss.setSoundBuffers(soundHolder->get(SoundID::boss_appear),
+                         soundHolder->get(SoundID::boss_disappear),
+                         soundHolder->get(SoundID::boss_damage),
+                         soundHolder->get(SoundID::boss_shoot));
 
     sf::Sprite hitBoss;
     sf::Texture hitBossTexture;
@@ -98,17 +109,10 @@ void Game::run(){
     background.setTexture(backgroundTexture);
     background.scale(2.f,2.f);
 
-    sf::Texture walkingBackgroundTexture;
-    walkingBackgroundTexture.loadFromFile("sprites/walking-background.png");
-    sf::Sprite walkingBackground;
-    walkingBackground.setTexture(walkingBackgroundTexture);
-    walkingBackground.scale(2.f,2.f);
-
-    sf::Texture shootingBackgroundTexture;
-    shootingBackgroundTexture.loadFromFile("sprites/shooting-background.png");
-    sf::Sprite shootingBackground;
-    shootingBackground.setTexture(shootingBackgroundTexture);
-    shootingBackground.scale(2.f,2.f);
+    sf::Sprite timeFrameSprite;
+    timeFrameSprite.setTexture(textureHolder->get(TextureID::time_frame));
+    timeFrameSprite.scale(2.f,2.f);
+    timeFrameSprite.setPosition(20,20);
 
     // Prepare the animations for the falling stuff
     Animation fallingBookAnimation;
@@ -147,7 +151,7 @@ void Game::run(){
     clockText.setFont(clockFont);
     clockText.setFillColor(sf::Color::Blue);
     clockText.setCharacterSize(22);
-    clockText.setPosition(26,24);
+    clockText.setPosition(40,34);
     clockText.setString("Time left: ");
 
     int difficulty = 20;
@@ -162,15 +166,6 @@ void Game::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed){
                 mainWindow.close();
-                auxWindow.close();
-                exit(0);
-            }
-        }
-
-        while(auxWindow.pollEvent(event)){
-            if(event.type == sf::Event::Closed){
-                mainWindow.close();
-                auxWindow.close();
                 exit(0);
             }
         }
@@ -261,20 +256,17 @@ void Game::run(){
         flyingBoss.update();
 
         mainWindow.clear();
-        auxWindow.clear();
 
         mainWindow.draw(background);
-        if(!bossHere) auxWindow.draw(walkingBackground);
-        else auxWindow.draw(shootingBackground);
-        auxWindow.draw(clockText);
         mainWindow.draw(wizard);
         mainWindow.draw(alchemist);
         mainWindow.draw(boss);
         for(FallingItem fallingItem : fallingItems){
             mainWindow.draw(fallingItem);
         }
+        mainWindow.draw(timeFrameSprite);
+        mainWindow.draw(clockText);
 
         mainWindow.display();
-        auxWindow.display();
     }
 }

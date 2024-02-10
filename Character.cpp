@@ -179,6 +179,9 @@ int Character::update(std::list<FallingItem>& fallingItems)
 
         } else if(shootingCooldown > 0)
             shootingCooldown--;
+
+        shootingArrow.setRotation(-shootingAngle);
+        shootingArrow.setPosition(walkingAnimation.getPosition().x+walkingAnimation.getHitbox().width+10,walkingAnimation.getPosition().y-walkingAnimation.getHitbox().height);
     }
 
     return lostItems;
@@ -186,6 +189,13 @@ int Character::update(std::list<FallingItem>& fallingItems)
 
 void Character::setHitSprite(sf::Sprite hitSprite){
     this->hitSprite = hitSprite;
+}
+
+void Character::setShootingArrowTexture(sf::Texture& texture)
+{
+    this->shootingArrow.setTexture(texture);
+    shootingArrow.scale(2,2);
+    shootingArrow.setOrigin(0.f,shootingArrow.getTextureRect().height/2);
 }
 
 void Character::setSoundBuffers(sf::SoundBuffer& damageSoundBuffer, sf::SoundBuffer& collectSoundBuffer, sf::SoundBuffer& shootSoundBuffer)
@@ -232,12 +242,7 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
 
     // Draw the shooting angle
     if(shooting){
-        sf::RectangleShape line(sf::Vector2f(60.f, 4.f));
-        if(name == WIZARD_NAME) line.setFillColor(sf::Color::Yellow);
-        line.setOrigin(0.f,2.f);
-        line.rotate(-shootingAngle);
-        line.setPosition(animation.getPosition().x+animation.getHitbox().width+10,animation.getPosition().y-animation.getHitbox().height);
-        r.draw(line,s);
+        r.draw(shootingArrow,s);
     }
 }
 

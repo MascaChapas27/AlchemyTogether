@@ -30,6 +30,9 @@ class Character : public sf::Drawable {
         // Indicates the shooting angle
         int shootingAngle;
 
+        // Sprite for the arrow that indicates the shooting angle
+        sf::Sprite shootingArrow;
+
         // Indicates if the shooting angle is moving up or down
         bool shootingAngleGoingDown;
 
@@ -82,6 +85,7 @@ class Character : public sf::Drawable {
         void setHitSprite(sf::Sprite hitSprite);
         void setSpeed(double speed);
         void setKeys(sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey, sf::Keyboard::Key shootingKey);
+        void setShootingArrowTexture(sf::Texture& texture);
         void setCurrentItems(int currentItems);
         void setMaxItems(int maxItems);
         void setSoundBuffers(sf::SoundBuffer& damageSoundBuffer, sf::SoundBuffer& collectSoundBuffer, sf::SoundBuffer& shootSoundBuffer);

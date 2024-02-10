@@ -39,8 +39,7 @@ void Boss::setActivated(bool activated){
         initialY = BOSS_INITIAL_Y;
         finalY = BOSS_FINAL_Y;
         goingDown = true;
-        //attack = static_cast<AttackType>(rand()%NUM_BOSS_ATTACKS);
-        attack = AttackType::RAIN_WITH_HOLES;
+        attack = static_cast<AttackType>(rand()%NUM_BOSS_ATTACKS);
 
     } else {
         disappearingSound.play();
@@ -116,6 +115,12 @@ void Boss::update(std::list<FallingItem>& fallingItems){
         case AttackType::RAIN_WITH_HOLES:
             attackRainWithHoles(fallingItems);
             break;
+        case AttackType::RANDOM_RAIN:
+            attackRandomRain(fallingItems);
+            break;
+        case AttackType::UNIFORM_RAIN:
+            attackUniformRain(fallingItems);
+            break;
         }
     }
 }
@@ -132,7 +137,7 @@ void Boss::attackCircles(std::list<FallingItem>& fallingItems)
             FallingItem::fallingFire.setRotationSpeed((-10+rand()%21)/10.0);
             fallingItems.insert(fallingItems.begin(),FallingItem::fallingFire);
         }
-        attackAux = MAX_FPS;
+        attackAux = MAX_FPS*2;
     } else
         attackAux--;
 }
@@ -142,7 +147,7 @@ void Boss::attackRainLeftToRight(std::list<FallingItem>& fallingItems)
     if(attackAux < MAX_FPS*2){
         if(attackAux%RAIN_LEFT_TO_RIGHT_LATENCY == 0){
             double positionX = MAIN_WINDOW_WIDTH*((double)attackAux/(MAX_FPS*2));
-            FallingItem::fallingFire.setPosition(sf::Vector2f(positionX,0));
+            FallingItem::fallingFire.setPosition(sf::Vector2f(positionX,-30));
             FallingItem::fallingFire.setCurrentSpeed(sf::Vector2f((-2+rand()%4)/10.0,0));
             FallingItem::fallingFire.setRotationSpeed((-10+rand()%21)/10.0);
             fallingItems.insert(fallingItems.begin(),FallingItem::fallingFire);
@@ -164,7 +169,7 @@ void Boss::attackRainWithHoles(std::list<FallingItem>& fallingItems)
         for(int i=0;i<NUM_FIRE_RAIN_WITH_HOLES;i++){
             if(i == hole1 || i == hole2) continue;
             double positionX = MAIN_WINDOW_WIDTH*((double)i/NUM_FIRE_RAIN_WITH_HOLES);
-            FallingItem::fallingFire.setPosition(sf::Vector2f(positionX,0));
+            FallingItem::fallingFire.setPosition(sf::Vector2f(positionX,-30));
             FallingItem::fallingFire.setCurrentSpeed(sf::Vector2f(0,0));
             FallingItem::fallingFire.setRotationSpeed((-10+rand()%21)/10.0);
             fallingItems.insert(fallingItems.begin(),FallingItem::fallingFire);
@@ -174,6 +179,40 @@ void Boss::attackRainWithHoles(std::list<FallingItem>& fallingItems)
         attackAux--;
     }
 }
+
+void Boss::attackRandomRain(std::list<FallingItem>& fallingItems)
+{
+    if(attackAux == 0){
+        shootSound.play();
+        double positionX = MAIN_WINDOW_WIDTH*(rand()%100/100.0);
+        FallingItem::fallingFire.setPosition(sf::Vector2f(positionX,-30));
+        FallingItem::fallingFire.setCurrentSpeed(sf::Vector2f(0,0));
+        FallingItem::fallingFire.setRotationSpeed((-10+rand()%21)/10.0);
+        fallingItems.insert(fallingItems.begin(),FallingItem::fallingFire);
+        attackAux = MAX_FPS/RANDOM_RAIN_FIRE_PER_SECOND;
+    } else {
+        attackAux--;
+    }
+}
+
+void Boss::attackUniformRain(std::list<FallingItem>& fallingItems)
+{
+    if(attackAux == 0){
+        shootSound.play();
+
+        for(int i=0;i<NUM_FIRE_UNIFORM_RAIN;i++){
+            double positionX = MAIN_WINDOW_WIDTH*((double)i/NUM_FIRE_UNIFORM_RAIN);
+            FallingItem::fallingFire.setPosition(sf::Vector2f(positionX,-30));
+            FallingItem::fallingFire.setCurrentSpeed(sf::Vector2f((-2+rand()%4)/10.0,0));
+            FallingItem::fallingFire.setRotationSpeed((-10+rand()%21)/10.0);
+            fallingItems.insert(fallingItems.begin(),FallingItem::fallingFire);
+        }
+        attackAux = MAX_FPS;
+    } else {
+        attackAux--;
+    }
+}
+
 
 void Boss::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     if(invincibilityCounter == -1) r.draw(animation,s);

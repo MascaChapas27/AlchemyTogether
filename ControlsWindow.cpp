@@ -5,8 +5,6 @@
 
 void ControlsWindow::run(){
 
-    MusicPlayer::getInstance()->play(MusicID::battle_music);
-
     // Ok first we have to get the background
     sf::Sprite background;
     sf::Texture backgroundTexture;

@@ -34,6 +34,21 @@ void TitleScreen::run(){
     titleSprite.scale(2,2);
     titleSprite.setPosition(TITLE_POSITION);
 
+    // Sprite for the "press enter to start" message
+    sf::Sprite pressEnterSprite;
+    pressEnterSprite.setTexture(TextureHolder::getTextureInstance()->get(TextureID::press_enter));
+    pressEnterSprite.scale(2,2);
+    pressEnterSprite.setPosition(MAIN_WINDOW_WIDTH/2-pressEnterSprite.getTextureRect().width,MAIN_WINDOW_HEIGHT-pressEnterSprite.getTextureRect().height*2-20);
+
+    // Sprite for the "press escape to skip" message
+    sf::Sprite pressEscapeSprite;
+    pressEscapeSprite.setTexture(TextureHolder::getTextureInstance()->get(TextureID::press_escape));
+    pressEscapeSprite.scale(2,2);
+    pressEscapeSprite.setPosition(MAIN_WINDOW_WIDTH/2-pressEscapeSprite.getTextureRect().width,pressEscapeSprite.getTextureRect().height);
+    sf::Color newColor = pressEscapeSprite.getColor();
+    newColor.a = 0;
+    pressEscapeSprite.setColor(newColor);
+
     // Rectangle that covers everything
     sf::RectangleShape rectangleCover(sf::Vector2f(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT));
     rectangleCover.setFillColor(sf::Color::Black);
@@ -83,7 +98,7 @@ void TitleScreen::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed){
-                if(event.key.code == sf::Keyboard::Escape) return;
+                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
                 else nextCutscene = true;
             }
         }
@@ -99,6 +114,7 @@ void TitleScreen::run(){
         mainWindow.draw(cutscene0_wizard);
         mainWindow.draw(cutscene0_alchemist);
         mainWindow.draw(titleSprite);
+        mainWindow.draw(pressEnterSprite);
 
         mainWindow.display();
     }
@@ -109,6 +125,7 @@ void TitleScreen::run(){
     while(!nextCutscene){
 
         titleSprite.move(0,-5);
+        pressEnterSprite.move(0,5);
 
         int correctRectangles = 0;
 
@@ -141,7 +158,7 @@ void TitleScreen::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed){
-                if(event.key.code == sf::Keyboard::Escape) return;
+                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
             }
         }
 
@@ -160,6 +177,7 @@ void TitleScreen::run(){
         mainWindow.draw(rectangleRight);
         mainWindow.draw(rectangleUp);
         mainWindow.draw(titleSprite);
+        mainWindow.draw(pressEnterSprite);
 
         mainWindow.display();
 
@@ -181,6 +199,12 @@ void TitleScreen::run(){
 
     while(!nextCutscene){
 
+        if(pressEscapeSprite.getColor().a != 255){
+            sf::Color newColor = pressEscapeSprite.getColor();
+            newColor.a+=5;
+            pressEscapeSprite.setColor(newColor);
+        }
+
         if(currentLetter<finalText.size()){
             if(wait > 0) wait--;
             else {
@@ -196,7 +220,7 @@ void TitleScreen::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) return;
+                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
                 advanceConversationSound.play();
                 switch(currentText){
                 case 0:
@@ -272,6 +296,7 @@ void TitleScreen::run(){
         mainWindow.draw(rectangleRight);
         mainWindow.draw(rectangleUp);
         mainWindow.draw(talkingText);
+        mainWindow.draw(pressEscapeSprite);
 
         mainWindow.display();
     }
@@ -283,11 +308,17 @@ void TitleScreen::run(){
 
     while(!nextCutscene){
 
+        if(pressEscapeSprite.getColor().a != 255){
+            sf::Color newColor = pressEscapeSprite.getColor();
+            newColor.a+=5;
+            pressEscapeSprite.setColor(newColor);
+        }
+
         sf::Event event;
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) return;
+                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
                 sf::Color currentColor = rectangleCover.getFillColor();
                 currentColor.a=255;
                 rectangleCover.setFillColor(currentColor);
@@ -317,6 +348,7 @@ void TitleScreen::run(){
         mainWindow.draw(rectangleUp);
         mainWindow.draw(talkingText);
         mainWindow.draw(rectangleCover);
+        mainWindow.draw(pressEscapeSprite);
 
         mainWindow.display();
     }
@@ -343,11 +375,17 @@ void TitleScreen::run(){
 
     while(!nextCutscene){
 
+        if(pressEscapeSprite.getColor().a != 255){
+            sf::Color newColor = pressEscapeSprite.getColor();
+            newColor.a+=5;
+            pressEscapeSprite.setColor(newColor);
+        }
+
         sf::Event event;
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) return;
+                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
                 sf::Color currentColor = rectangleCover.getFillColor();
                 currentColor.a=0;
                 rectangleCover.setFillColor(currentColor);
@@ -375,6 +413,7 @@ void TitleScreen::run(){
         mainWindow.draw(rectangleUp);
         mainWindow.draw(talkingText);
         mainWindow.draw(rectangleCover);
+        mainWindow.draw(pressEscapeSprite);
 
         mainWindow.display();
     }
@@ -394,6 +433,12 @@ void TitleScreen::run(){
 
     while(!nextCutscene){
 
+        if(pressEscapeSprite.getColor().a != 255){
+            sf::Color newColor = pressEscapeSprite.getColor();
+            newColor.a+=5;
+            pressEscapeSprite.setColor(newColor);
+        }
+
         if(currentLetter<finalText.size()){
             talkingText.setString(talkingText.getString()+finalText[currentLetter]);
             currentLetter++;
@@ -405,7 +450,7 @@ void TitleScreen::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) return;
+                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
                 advanceConversationSound.play();
                 switch(currentText){
                 case 0:
@@ -450,6 +495,7 @@ void TitleScreen::run(){
         mainWindow.draw(rectangleRight);
         mainWindow.draw(rectangleUp);
         mainWindow.draw(talkingText);
+        mainWindow.draw(pressEscapeSprite);
 
         mainWindow.display();
     }
@@ -490,11 +536,17 @@ void TitleScreen::run(){
 
     while(!nextCutscene){
 
+        if(pressEscapeSprite.getColor().a != 255){
+            sf::Color newColor = pressEscapeSprite.getColor();
+            newColor.a+=5;
+            pressEscapeSprite.setColor(newColor);
+        }
+
         sf::Event event;
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) return;
+                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
                 nextCutscene = true;
             }
         }
@@ -529,11 +581,11 @@ void TitleScreen::run(){
         mainWindow.draw(rectangleRight);
         mainWindow.draw(rectangleUp);
         mainWindow.draw(talkingText);
+        mainWindow.draw(pressEscapeSprite);
         mainWindow.draw(rectangleCover);
 
         mainWindow.display();
     }
-
 
     MusicPlayer::getInstance()->stop();
 }

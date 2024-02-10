@@ -94,6 +94,11 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::wizard_side,"sprites/wizard-side.png");
     load(TextureID::wizard_hold,"sprites/wizard-hold.png");
     load(TextureID::wizard_walk,"sprites/wizard-walk.png");
+    load(TextureID::press_enter,"sprites/press-enter.png");
+    load(TextureID::press_escape,"sprites/press-escape.png");
+    load(TextureID::time_frame,"sprites/time-frame.png");
+    load(TextureID::alchemist_arrow,"sprites/alchemist-arrow.png");
+    load(TextureID::wizard_arrow,"sprites/wizard-arrow.png");
 }
 
 template <class Resource, class Identifier>
@@ -111,6 +116,8 @@ void ResourceHolder<Resource,Identifier>::loadAllSounds()
     load(SoundID::wizard_shoot,"sounds/wizard-shoot.wav");
     load(SoundID::boss_damage,"sounds/boss-damage.wav");
     load(SoundID::boss_shoot,"sounds/boss-shoot.wav");
+    load(SoundID::boss_disappear,"sounds/boss-disappear.wav");
+    load(SoundID::boss_appear,"sounds/boss-appear.wav");
 }
 
 template <class Resource, class Identifier>
