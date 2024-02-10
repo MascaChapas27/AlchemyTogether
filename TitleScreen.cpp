@@ -82,7 +82,10 @@ void TitleScreen::run(){
         sf::Event event;
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
-            else if (event.type == sf::Event::KeyPressed) nextCutscene = true;
+            else if (event.type == sf::Event::KeyPressed){
+                if(event.key.code == sf::Keyboard::Escape) return;
+                else nextCutscene = true;
+            }
         }
 
         cutscene0_wizard.update();
@@ -137,6 +140,9 @@ void TitleScreen::run(){
         sf::Event event;
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
+            else if (event.type == sf::Event::KeyPressed){
+                if(event.key.code == sf::Keyboard::Escape) return;
+            }
         }
 
         cutscene0_wizard.update();
@@ -190,6 +196,7 @@ void TitleScreen::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
+                if(event.key.code == sf::Keyboard::Escape) return;
                 advanceConversationSound.play();
                 switch(currentText){
                 case 0:
@@ -280,6 +287,7 @@ void TitleScreen::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
+                if(event.key.code == sf::Keyboard::Escape) return;
                 sf::Color currentColor = rectangleCover.getFillColor();
                 currentColor.a=255;
                 rectangleCover.setFillColor(currentColor);
@@ -339,6 +347,7 @@ void TitleScreen::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
+                if(event.key.code == sf::Keyboard::Escape) return;
                 sf::Color currentColor = rectangleCover.getFillColor();
                 currentColor.a=0;
                 rectangleCover.setFillColor(currentColor);
@@ -396,6 +405,7 @@ void TitleScreen::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
+                if(event.key.code == sf::Keyboard::Escape) return;
                 advanceConversationSound.play();
                 switch(currentText){
                 case 0:
@@ -484,6 +494,7 @@ void TitleScreen::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
+                if(event.key.code == sf::Keyboard::Escape) return;
                 nextCutscene = true;
             }
         }

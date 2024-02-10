@@ -103,6 +103,7 @@ int Character::update(std::list<FallingItem>& fallingItems)
                (iter->getType() == MAGIC_TYPE && name == ALCHEMIST_NAME) ||
                (iter->getType() == FIRE_TYPE)) &&
                 invincibilityCounter == -1){
+                damageSound.play();
                 if(currentItems == 0){
                     Animation deadCharacter;
                     deadCharacter.setDelay(1);
@@ -128,6 +129,7 @@ int Character::update(std::list<FallingItem>& fallingItems)
                 }
             } else if((iter->getType() == BOOK_TYPE && name == ALCHEMIST_NAME) ||
                (iter->getType() == MAGIC_TYPE && name == WIZARD_NAME)) {
+                collectSound.play();
                 iter=fallingItems.erase(iter);
                 currentItems = currentItems == maxItems ? maxItems : currentItems+1;
             } else {
@@ -162,6 +164,7 @@ int Character::update(std::list<FallingItem>& fallingItems)
     // Five, shoot
     if(shooting){
         if(shootingCooldown == 0 && currentItems > 0 && sf::Keyboard::isKeyPressed(shootingKey)){
+            shootSound.play();
             if(name == ALCHEMIST_NAME){
                 FallingItem::fallingBook.setPosition(walkingAnimation.getPosition().x+walkingAnimation.getHitbox().width+10,walkingAnimation.getPosition().y-walkingAnimation.getHitbox().height);
                 FallingItem::fallingBook.setCurrentSpeed(sf::Vector2f(cos(shootingAngle*PI/180)*ALCHEMIST_STRENGTH,-sin(shootingAngle*PI/180)*ALCHEMIST_STRENGTH));
@@ -185,7 +188,7 @@ void Character::setHitSprite(sf::Sprite hitSprite){
     this->hitSprite = hitSprite;
 }
 
-void Character::setSoundBuffers(sf::SoundBuffer damageSoundBuffer, sf::SoundBuffer collectSoundBuffer, sf::SoundBuffer shootSoundBuffer)
+void Character::setSoundBuffers(sf::SoundBuffer& damageSoundBuffer, sf::SoundBuffer& collectSoundBuffer, sf::SoundBuffer& shootSoundBuffer)
 {
     damageSound.setBuffer(damageSoundBuffer);
     collectSound.setBuffer(collectSoundBuffer);

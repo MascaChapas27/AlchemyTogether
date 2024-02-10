@@ -5,6 +5,8 @@
 #include "Animation.hpp"
 #include <list>
 #include "FallingItem.hpp"
+#include <SFML/Audio.hpp>
+#include "Utilities.hpp"
 
 class Boss : public sf::Drawable {
     private:
@@ -36,6 +38,28 @@ class Boss : public sf::Drawable {
         // Health for the boss
         int health;
 
+        // Indicates if the boss should shoot
+        bool activated;
+
+        // Sounds
+        sf::Sound appearingSound;
+        sf::Sound disappearingSound;
+        sf::Sound damageSound;
+        sf::Sound shootSound;
+
+        // Type of attack currently happening
+        AttackType attack;
+
+        // Helper variable to know where to shoot depending on the attack
+        int attackAux;
+
+    private:
+        void attackCircles(std::list<FallingItem>& fallingItems);
+        void attackUniformRain(std::list<FallingItem>& fallingItems);
+        void attackRainWithHoles(std::list<FallingItem>& fallingItems);
+        void attackRainLeftToRight(std::list<FallingItem>& fallingItems);
+        void attackRandomRain(std::list<FallingItem>& fallingItems);
+
     public:
         Boss();
         void setAnimation(Animation animation);
@@ -43,6 +67,8 @@ class Boss : public sf::Drawable {
         int getCurrentHealth();
         sf::Vector2f getPosition();
         void setActivated(bool activated);
+        void setSoundBuffers(sf::SoundBuffer& appearing, sf::SoundBuffer& disappearing,
+                             sf::SoundBuffer& damage, sf::SoundBuffer& shoot);
         void update(std::list<FallingItem>& fallingItems);
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;
 };

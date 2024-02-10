@@ -29,6 +29,14 @@ enum class MusicID {
     intro_music, battle_music
 };
 
+enum class AttackType {
+    UNIFORM_RAIN, RAIN_WITH_HOLES, CIRCLES, RAIN_LEFT_TO_RIGHT, RANDOM_RAIN
+};
+const int NUM_BOSS_ATTACKS = 5;
+const int NUM_FIRE_CIRCLES = 10;
+const int RAIN_LEFT_TO_RIGHT_LATENCY = 20;
+const int NUM_FIRE_RAIN_WITH_HOLES = 15;
+
 extern sf::RenderWindow mainWindow;
 extern sf::RenderWindow auxWindow;
 

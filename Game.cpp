@@ -6,6 +6,7 @@
 void Game::run(){
 
     TextureHolder * textureHolder = TextureHolder::getTextureInstance();
+    SoundHolder * soundHolder = SoundHolder::getSoundInstance();
 
     // Prepare the wizard
     Animation walkingWizard;
@@ -37,6 +38,7 @@ void Game::run(){
     wizard.setKeys(sf::Keyboard::J, sf::Keyboard::L, sf::Keyboard::I);
     wizard.setSpeed(3);
     wizard.setName(WIZARD_NAME);
+    wizard.setSoundBuffers(soundHolder->get(SoundID::wizard_damage),soundHolder->get(SoundID::wizard_collect),soundHolder->get(SoundID::wizard_shoot));
 
     // Prepare the alchemist
     Animation walkingAlchemist;
@@ -68,6 +70,7 @@ void Game::run(){
     alchemist.setKeys(sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W);
     alchemist.setSpeed(3);
     alchemist.setName(ALCHEMIST_NAME);
+    alchemist.setSoundBuffers(soundHolder->get(SoundID::alchemist_damage),soundHolder->get(SoundID::alchemist_collect),soundHolder->get(SoundID::alchemist_shoot));
 
     // Prepare the boss
     Animation flyingBoss;
@@ -192,11 +195,6 @@ void Game::run(){
                     FallingItem::fallingMagic.setRotationSpeed((-10+rand()%21)/10.0);
                     fallingItems.insert(fallingItems.begin(),FallingItem::fallingMagic);
                 }
-            } else {
-                FallingItem::fallingFire.setPosition(boss.getPosition());
-                FallingItem::fallingFire.setCurrentSpeed(sf::Vector2f((-40+rand()%45)/10.0,(-40+rand()%20)/10.0));
-                FallingItem::fallingFire.setRotationSpeed((-10+rand()%21)/10.0);
-                fallingItems.insert(fallingItems.begin(),FallingItem::fallingFire);
             }
         }
 

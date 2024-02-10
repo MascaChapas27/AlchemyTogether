@@ -84,7 +84,7 @@ class Character : public sf::Drawable {
         void setKeys(sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey, sf::Keyboard::Key shootingKey);
         void setCurrentItems(int currentItems);
         void setMaxItems(int maxItems);
-        void setSoundBuffers(sf::SoundBuffer damageSoundBuffer, sf::SoundBuffer collectSoundBuffer, sf::SoundBuffer shootSoundBuffer);
+        void setSoundBuffers(sf::SoundBuffer& damageSoundBuffer, sf::SoundBuffer& collectSoundBuffer, sf::SoundBuffer& shootSoundBuffer);
         int getCurrentItems();
         int getMaxItems();
         void setShooting(bool shooting);
