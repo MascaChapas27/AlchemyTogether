@@ -99,6 +99,8 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::time_frame,"sprites/time-frame.png");
     load(TextureID::alchemist_arrow,"sprites/alchemist-arrow.png");
     load(TextureID::wizard_arrow,"sprites/wizard-arrow.png");
+    load(TextureID::alchemist_corpse,"sprites/alchemist-corpse.png");
+    load(TextureID::wizard_corpse,"sprites/wizard-corpse.png");
 }
 
 template <class Resource, class Identifier>

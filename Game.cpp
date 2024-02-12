@@ -151,8 +151,8 @@ void Game::run(){
     clockText.setFont(clockFont);
     clockText.setFillColor(sf::Color::Blue);
     clockText.setCharacterSize(22);
-    clockText.setPosition(40,34);
-    clockText.setString("Time left: ");
+    clockText.setPosition(60,40);
+    clockText.setString("Tiempo: ");
 
     int difficulty = 20;
 
@@ -241,7 +241,7 @@ void Game::run(){
 
         // Update the texts
         char clockString[20];
-        sprintf(clockString,"Time left: 00:%02d",(bossHere ? BOSS_TIME : GATHER_TIME) - (int)clock.getElapsedTime().asSeconds());
+        sprintf(clockString,"Tiempo: 00:%02d",(bossHere ? BOSS_TIME : GATHER_TIME) - (int)clock.getElapsedTime().asSeconds());
         clockText.setString(clockString);
 
         auto iter = fallingItems.begin();

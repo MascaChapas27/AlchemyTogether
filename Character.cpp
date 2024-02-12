@@ -117,6 +117,8 @@ int Character::update(std::list<FallingItem>& fallingItems)
                     fallingCorpse.setCurrentSpeed(sf::Vector2f((-10+rand()%30)/10.0,(-80+rand()%30)/10.0));
                     fallingCorpse.setGravity(GRAVITY*2);
                     fallingCorpse.setRotationSpeed((-10+rand()%21)/10.0);
+                    fallingCorpse.setType(CORPSE_TYPE);
+                    fallingCorpse.setLyingItemTexture(TextureHolder::getTextureInstance()->get(name == ALCHEMIST_NAME ? TextureID::alchemist_corpse : TextureID::wizard_corpse));
 
                     fallingItems.insert(iter,fallingCorpse);
                     dead = true;
@@ -129,9 +131,10 @@ int Character::update(std::list<FallingItem>& fallingItems)
                 }
             } else if((iter->getType() == BOOK_TYPE && name == ALCHEMIST_NAME) ||
                (iter->getType() == MAGIC_TYPE && name == WIZARD_NAME)) {
-                collectSound.play();
                 iter=fallingItems.erase(iter);
                 currentItems = currentItems == maxItems ? maxItems : currentItems+1;
+                collectSound.setPitch(1+currentItems/10.0);
+                collectSound.play();
             } else {
                 iter++;
             }
@@ -280,6 +283,7 @@ void Character::setShooting(bool shooting){
     if(shooting) {
         holdingAnimation.setPosition(walkingAnimation.getPosition());
         sideAnimation.setPosition(walkingAnimation.getPosition());
+        shootingArrow.setPosition(walkingAnimation.getPosition().x+walkingAnimation.getHitbox().width+10,walkingAnimation.getPosition().y-walkingAnimation.getHitbox().height);
     }
     else walkingAnimation.setPosition(sideAnimation.getPosition());
 }

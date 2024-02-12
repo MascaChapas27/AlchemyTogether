@@ -17,6 +17,7 @@ void Boss::setAnimation(Animation animation){
     this->animation = animation;
     initialY = -animation.getHitbox().height*3;
     finalY = -animation.getHitbox().height*3;
+    animation.setColor(sf::Color::Transparent);
 }
 
 void Boss::setHitSprite(sf::Sprite hitSprite){
@@ -50,6 +51,17 @@ void Boss::setActivated(bool activated){
 }
 
 void Boss::update(std::list<FallingItem>& fallingItems){
+
+    // Zero, make the boss transparent if it's deactivated and the opposite
+    if(activated){
+        sf::Color newColor = animation.getColor();
+        if(newColor.a < 255) newColor.a+=1;
+        animation.setColor(newColor);
+    } else {
+        sf::Color newColor = animation.getColor();
+        if(newColor.a > 0) newColor.a-=1;
+        animation.setColor(newColor);
+    }
 
     // First, move the boss
     sf::Vector2f newPosition = animation.getPosition();

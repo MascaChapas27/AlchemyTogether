@@ -88,6 +88,16 @@ void Animation::setDelay(int delay){
     this->delay = delay;
 }
 
+sf::Color Animation::getColor()
+{
+    return sprite.getColor();
+}
+
+void Animation::setColor(sf::Color color)
+{
+    sprite.setColor(color);
+}
+
 sf::Vector2f Animation::getPosition() const{
     return sprite.getPosition();
 }

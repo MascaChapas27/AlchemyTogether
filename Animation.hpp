@@ -44,6 +44,8 @@ class Animation : public sf::Drawable{
         sf::IntRect getHitbox() const;
         void resetToStart();
         void addTransparency();
+        sf::Color getColor();
+        void setColor(sf::Color color);
         void addRotation(double rotation);
         double getWidth();
         void update();
