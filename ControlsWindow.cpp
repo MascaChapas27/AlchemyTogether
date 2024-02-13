@@ -40,7 +40,7 @@ void ControlsWindow::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == event.Closed){
                 exit(EXIT_SUCCESS);
-            } else if (event.type == event.KeyPressed){
+            } else if (event.type == event.KeyPressed && event.key.code == sf::Keyboard::Return){
                 return;
             }
         }

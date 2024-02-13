@@ -116,7 +116,7 @@ int Character::update(std::list<FallingItem>& fallingItems)
                     fallingCorpse.setPosition(getPosition());
                     fallingCorpse.setCurrentSpeed(sf::Vector2f((-10+rand()%30)/10.0,(-80+rand()%30)/10.0));
                     fallingCorpse.setGravity(GRAVITY*2);
-                    fallingCorpse.setRotationSpeed((-10+rand()%21)/10.0);
+                    fallingCorpse.setRotationSpeed(name == ALCHEMIST_NAME ? 0.4 : -0.4);
                     fallingCorpse.setType(CORPSE_TYPE);
                     fallingCorpse.setLyingItemTexture(TextureHolder::getTextureInstance()->get(name == ALCHEMIST_NAME ? TextureID::alchemist_corpse : TextureID::wizard_corpse));
 
@@ -194,6 +194,10 @@ void Character::setHitSprite(sf::Sprite hitSprite){
     this->hitSprite = hitSprite;
 }
 
+bool Character::isDead(){
+    return this->dead;
+}
+
 void Character::setShootingArrowTexture(sf::Texture& texture)
 {
     this->shootingArrow.setTexture(texture);
@@ -251,7 +255,7 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
 
 sf::Vector2f Character::getPosition()
 {
-    return (shooting ? shootingAnimation : walkingAnimation).getPosition();
+    return this->position;
 }
 
 void Character::setCurrentItems(int currentItems)

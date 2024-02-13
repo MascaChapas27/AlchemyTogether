@@ -101,6 +101,9 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::wizard_arrow,"sprites/wizard-arrow.png");
     load(TextureID::alchemist_corpse,"sprites/alchemist-corpse.png");
     load(TextureID::wizard_corpse,"sprites/wizard-corpse.png");
+
+    load(TextureID::death0,"sprites/death0.png");
+    load(TextureID::death1,"sprites/death1.png");
 }
 
 template <class Resource, class Identifier>

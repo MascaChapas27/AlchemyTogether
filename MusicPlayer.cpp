@@ -43,4 +43,5 @@ void MusicPlayer::loadAllMusic()
 {
     load(MusicID::intro_music,"music/intro.wav");
     load(MusicID::battle_music,"music/battle.wav");
+    load(MusicID::death_music,"music/death.wav");
 }

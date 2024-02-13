@@ -90,6 +90,7 @@ class Character : public sf::Drawable {
         void setMaxItems(int maxItems);
         void setSoundBuffers(sf::SoundBuffer& damageSoundBuffer, sf::SoundBuffer& collectSoundBuffer, sf::SoundBuffer& shootSoundBuffer);
         int getCurrentItems();
+        bool isDead();
         int getMaxItems();
         void setShooting(bool shooting);
         sf::Vector2f getPosition();

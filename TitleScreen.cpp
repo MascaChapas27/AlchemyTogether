@@ -99,7 +99,7 @@ void TitleScreen::run(){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed){
                 if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
-                else nextCutscene = true;
+                else if(event.key.code == sf::Keyboard::Return) nextCutscene = true;
             }
         }
 
@@ -221,62 +221,64 @@ void TitleScreen::run(){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
                 if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
-                advanceConversationSound.play();
-                switch(currentText){
-                case 0:
-                    talkingText.setString("");
-                    finalText = "Me dedico a vagar por el UNIVERSO";
-                    currentLetter = 0;
-                    currentText++;
-                    break;
-                case 1:
-                    talkingText.setString("");
-                    finalText = "Buscando planetas que DESTRUIR";
-                    currentLetter = 0;
-                    currentText++;
-                    break;
-                case 2:
-                    talkingText.setString("");
-                    finalText = "Y el vuestro... parece bastante DESTRUIBLE";
-                    currentLetter = 0;
-                    currentText++;
-                    break;
-                case 3:
-                    talkingText.setString("");
-                    finalText = "(en mi humilde opinión)";
-                    currentLetter = 0;
-                    currentText++;
-                    break;
-                case 4:
-                    talkingText.setString("");
-                    finalText = "¡¡Es por eso que DESTRUIRÉ este PLANETA!!";
-                    currentLetter = 0;
-                    currentText++;
-                    break;
-                case 5:
-                    talkingText.setString("");
-                    finalText = "A no ser que me lancéis LIBROS y MAGIA";
-                    currentLetter = 0;
-                    currentText++;
-                    break;
-                case 6:
-                    talkingText.setString("");
-                    finalText = "(son mi DEBILIDAD)";
-                    currentLetter = 0;
-                    currentText++;
-                    break;
-                case 7:
-                    talkingText.setString("");
-                    finalText = "¡¡Pero confío en que eso NO PASARÁ!!";
-                    currentLetter = 0;
-                    currentText++;
-                    break;
-                default:
-                    nextCutscene = true;
-                    talkingText.setString("");
-                    finalText = "";
-                    currentLetter = 0;
-                    break;
+                else if(event.key.code == sf::Keyboard::Return){
+                    advanceConversationSound.play();
+                    switch(currentText){
+                    case 0:
+                        talkingText.setString("");
+                        finalText = "Me dedico a vagar por el UNIVERSO";
+                        currentLetter = 0;
+                        currentText++;
+                        break;
+                    case 1:
+                        talkingText.setString("");
+                        finalText = "Buscando planetas que DESTRUIR";
+                        currentLetter = 0;
+                        currentText++;
+                        break;
+                    case 2:
+                        talkingText.setString("");
+                        finalText = "Y el vuestro... parece bastante DESTRUIBLE";
+                        currentLetter = 0;
+                        currentText++;
+                        break;
+                    case 3:
+                        talkingText.setString("");
+                        finalText = "(en mi humilde opinión)";
+                        currentLetter = 0;
+                        currentText++;
+                        break;
+                    case 4:
+                        talkingText.setString("");
+                        finalText = "¡¡Es por eso que DESTRUIRÉ este PLANETA!!";
+                        currentLetter = 0;
+                        currentText++;
+                        break;
+                    case 5:
+                        talkingText.setString("");
+                        finalText = "A no ser que me lancéis LIBROS y MAGIA";
+                        currentLetter = 0;
+                        currentText++;
+                        break;
+                    case 6:
+                        talkingText.setString("");
+                        finalText = "(son mi DEBILIDAD)";
+                        currentLetter = 0;
+                        currentText++;
+                        break;
+                    case 7:
+                        talkingText.setString("");
+                        finalText = "¡¡Pero confío en que eso NO PASARÁ!!";
+                        currentLetter = 0;
+                        currentText++;
+                        break;
+                    default:
+                        nextCutscene = true;
+                        talkingText.setString("");
+                        finalText = "";
+                        currentLetter = 0;
+                        break;
+                    }
                 }
             }
         }
@@ -319,9 +321,11 @@ void TitleScreen::run(){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
                 if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
-                sf::Color currentColor = rectangleCover.getFillColor();
-                currentColor.a=255;
-                rectangleCover.setFillColor(currentColor);
+                else if(event.key.code == sf::Keyboard::Return){
+                    sf::Color currentColor = rectangleCover.getFillColor();
+                    currentColor.a=255;
+                    rectangleCover.setFillColor(currentColor);
+                }
             }
         }
 
@@ -386,9 +390,11 @@ void TitleScreen::run(){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
                 if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
-                sf::Color currentColor = rectangleCover.getFillColor();
-                currentColor.a=0;
-                rectangleCover.setFillColor(currentColor);
+                else if(event.key.code == sf::Keyboard::Return){
+                    sf::Color currentColor = rectangleCover.getFillColor();
+                    currentColor.a=0;
+                    rectangleCover.setFillColor(currentColor);
+                }
             }
         }
 
@@ -451,33 +457,36 @@ void TitleScreen::run(){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
                 if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
-                advanceConversationSound.play();
-                switch(currentText){
-                case 0:
-                    talkingText.setString("");
-                    talkingSound.setBuffer(SoundHolder::getSoundInstance()->get(SoundID::alchemist_voice));
-                    talkingText.setFont(FontHolder::getFontInstance()->get(FontID::AlchemistFont));
-                    talkingText.setFillColor(sf::Color::White);
-                    talkingText.setCharacterSize(30);
-                    talkingText.move(0,-8);
-                    finalText = "y como se supone que vamos a encontrar de eso";
-                    currentLetter = 0;
-                    currentText++;
-                    break;
-                case 1:
-                    talkingText.setString("");
-                    finalText = "estamos en mitad de ningun sitio";
-                    currentLetter = 0;
-                    currentText++;
-                    break;
-                case 2:
-                    talkingText.setString("");
-                    finalText = "ni que los libros y la magia cayeran del cielo";
-                    currentLetter = 0;
-                    currentText++;
-                    break;
-                default:
-                    nextCutscene = true;
+                else if(event.key.code == sf::Keyboard::Return){
+
+                    advanceConversationSound.play();
+                    switch(currentText){
+                    case 0:
+                        talkingText.setString("");
+                        talkingSound.setBuffer(SoundHolder::getSoundInstance()->get(SoundID::alchemist_voice));
+                        talkingText.setFont(FontHolder::getFontInstance()->get(FontID::AlchemistFont));
+                        talkingText.setFillColor(sf::Color::White);
+                        talkingText.setCharacterSize(30);
+                        talkingText.move(0,-8);
+                        finalText = "y como se supone que vamos a encontrar de eso";
+                        currentLetter = 0;
+                        currentText++;
+                        break;
+                    case 1:
+                        talkingText.setString("");
+                        finalText = "estamos en mitad de ningun sitio";
+                        currentLetter = 0;
+                        currentText++;
+                        break;
+                    case 2:
+                        talkingText.setString("");
+                        finalText = "ni que los libros y la magia cayeran del cielo";
+                        currentLetter = 0;
+                        currentText++;
+                        break;
+                    default:
+                        nextCutscene = true;
+                    }
                 }
             }
         }
@@ -547,7 +556,7 @@ void TitleScreen::run(){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
                 if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
-                nextCutscene = true;
+                else if(event.key.code == sf::Keyboard::Return) nextCutscene = true;
             }
         }
 

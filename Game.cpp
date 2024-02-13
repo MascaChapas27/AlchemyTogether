@@ -160,7 +160,7 @@ void Game::run(){
 
     bool bossHere = false;
 
-    while(boss.getCurrentHealth()>0){
+    while(!(wizard.isDead() && alchemist.isDead()) && boss.getCurrentHealth()>0){
 
         sf::Event event;
         while(mainWindow.pollEvent(event)){
@@ -170,13 +170,13 @@ void Game::run(){
             }
         }
 
-        // Spawn books or magic or the boss
+        // Spawn books or magic
         if(rand()%difficulty==0){
             if(!bossHere){
                 if(rand()%2){
                     sf::Vector2f position;
                     position.y = -FallingItem::fallingBook.getHitbox().height;
-                    position.x = rand()%(MAIN_WINDOW_HEIGHT-FallingItem::fallingBook.getHitbox().width);
+                    position.x = FallingItem::fallingBook.getHitbox().width + rand()%(MAIN_WINDOW_WIDTH-FallingItem::fallingBook.getHitbox().width);
                     FallingItem::fallingBook.setPosition(position);
                     FallingItem::fallingBook.setCurrentSpeed(sf::Vector2f(0,0));
                     FallingItem::fallingBook.setRotationSpeed((-10+rand()%21)/10.0);
@@ -184,7 +184,7 @@ void Game::run(){
                 } else {
                     sf::Vector2f position;
                     position.y = -FallingItem::fallingMagic.getHitbox().height;
-                    position.x = rand()%(MAIN_WINDOW_HEIGHT-FallingItem::fallingMagic.getHitbox().width);
+                    position.x = rand()%(MAIN_WINDOW_WIDTH-FallingItem::fallingMagic.getHitbox().width);
                     FallingItem::fallingMagic.setPosition(position);
                     FallingItem::fallingMagic.setCurrentSpeed(sf::Vector2f(0,0));
                     FallingItem::fallingMagic.setRotationSpeed((-10+rand()%21)/10.0);
@@ -268,5 +268,73 @@ void Game::run(){
         mainWindow.draw(clockText);
 
         mainWindow.display();
+    }
+
+    MusicPlayer::getInstance()->stop();
+
+    sf::Clock endClock;
+    endClock.restart();
+
+    auto iter = fallingItems.begin();
+    while(iter != fallingItems.end()){
+        if(iter->getType() != CORPSE_TYPE) iter=fallingItems.erase(iter);
+        else {
+            iter++;
+        }
+    }
+
+    if(wizard.isDead() && alchemist.isDead()){
+
+        bool gameOver = false;
+
+        MusicPlayer::getInstance()->play(MusicID::death_music);
+
+        while(true){
+            sf::Event event;
+            while(mainWindow.pollEvent(event)){
+                if(event.type == sf::Event::Closed){
+                    mainWindow.close();
+                    exit(0);
+                }
+            }
+
+            if(!gameOver && endClock.getElapsedTime().asSeconds() > 3){
+                gameOver = true;
+
+
+            }
+
+            for(FallingItem& fallingItem : fallingItems){
+                fallingItem.update();
+            }
+
+            mainWindow.clear();
+            for(FallingItem& fallingItem : fallingItems){
+                mainWindow.draw(fallingItem);
+            }
+            mainWindow.display();
+        }
+    } else {
+        while(true){
+            sf::Event event;
+            while(mainWindow.pollEvent(event)){
+                if(event.type == sf::Event::Closed){
+                    mainWindow.close();
+                    exit(0);
+                }
+            }
+
+            for(FallingItem& fallingItem : fallingItems){
+                fallingItem.update();
+            }
+
+            mainWindow.clear();
+            for(FallingItem& fallingItem : fallingItems){
+                mainWindow.draw(fallingItem);
+            }
+            mainWindow.draw(wizard);
+            mainWindow.draw(alchemist);
+            mainWindow.display();
+        }
     }
 }

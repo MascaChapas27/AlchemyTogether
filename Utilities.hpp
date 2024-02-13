@@ -12,7 +12,8 @@ enum class TextureID{
     cutscene1_background,cutscene1_alchemist,cutscene1_wizard,
     cutscene2_alchemist,cutscene2_wizard,cutscene2_background,
     wizard_dance,wizard_hit,wizard_shoot,wizard_side,wizard_hold,wizard_walk,
-    time_frame,alchemist_arrow,wizard_arrow,alchemist_corpse,wizard_corpse
+    time_frame,alchemist_arrow,wizard_arrow,alchemist_corpse,wizard_corpse,
+    death0,death1
 };
 
 enum class SoundID {
@@ -27,7 +28,7 @@ enum class FontID {
 };
 
 enum class MusicID {
-    intro_music, battle_music
+    intro_music, battle_music, death_music
 };
 
 enum class AttackType {
@@ -37,8 +38,8 @@ const int NUM_BOSS_ATTACKS = 5;
 const int NUM_FIRE_CIRCLES = 6;
 const int RAIN_LEFT_TO_RIGHT_LATENCY = 20;
 const int NUM_FIRE_RAIN_WITH_HOLES = 15;
-const int RANDOM_RAIN_FIRE_PER_SECOND = 15;
-const int NUM_FIRE_UNIFORM_RAIN = 8;
+const int RANDOM_RAIN_FIRE_PER_SECOND = 13;
+const int NUM_FIRE_UNIFORM_RAIN = 7;
 
 extern sf::RenderWindow mainWindow;
 
