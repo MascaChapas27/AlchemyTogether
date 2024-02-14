@@ -1,6 +1,7 @@
 #include "Boss.hpp"
 #include "Utilities.hpp"
 #include <iostream>
+#include "ResourceHolder.hpp"
 
 Boss::Boss(){
     invincibilityCounter = -1;
@@ -100,6 +101,22 @@ void Boss::update(std::list<FallingItem>& fallingItems){
                     health--;
                     iter=fallingItems.erase(iter);
                     invincibilityCounter=0;
+
+                    Animation minus1Animation;
+                    minus1Animation.setDelay(1);
+                    minus1Animation.setPosition(getPosition());
+                    minus1Animation.setTexture(TextureHolder::getTextureInstance()->get(TextureID::boss_minus1),1);
+
+                    FallingItem fallingMinus1;
+                    fallingMinus1.setAnimation(minus1Animation);
+                    fallingMinus1.setPosition(getPosition());
+                    fallingMinus1.setCurrentSpeed(sf::Vector2f((-20+rand()%40)/10.0,(-60+rand()%10)/10.0));
+                    fallingMinus1.setGravity(GRAVITY*3);
+                    fallingMinus1.setRotationSpeed((-5+rand()%10)/10.0);
+                    fallingMinus1.setType(MINUS1_TYPE);
+
+                    fallingItems.insert(iter,fallingMinus1);
+
                 } else {
                     iter++;
                 }
@@ -177,10 +194,11 @@ void Boss::attackRainWithHoles(std::list<FallingItem>& fallingItems)
         shootSound.play();
 
         int hole1 = rand()%NUM_FIRE_RAIN_WITH_HOLES;
-        int hole2 = (hole1 + NUM_FIRE_RAIN_WITH_HOLES/2) %NUM_FIRE_RAIN_WITH_HOLES;
+        int hole2 = (hole1 + NUM_FIRE_RAIN_WITH_HOLES/3) %NUM_FIRE_RAIN_WITH_HOLES;
+        int hole3 = (hole2 + NUM_FIRE_RAIN_WITH_HOLES/3) %NUM_FIRE_RAIN_WITH_HOLES;
 
         for(int i=0;i<NUM_FIRE_RAIN_WITH_HOLES;i++){
-            if(i == hole1 || i == hole2) continue;
+            if(i == hole1 || i == hole2 || i == hole3) continue;
             double positionX = MAIN_WINDOW_WIDTH*((double)i/NUM_FIRE_RAIN_WITH_HOLES);
             FallingItem::fallingFire.setPosition(sf::Vector2f(positionX,-30));
             FallingItem::fallingFire.setCurrentSpeed(sf::Vector2f(0,0));

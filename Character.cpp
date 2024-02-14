@@ -135,6 +135,23 @@ int Character::update(std::list<FallingItem>& fallingItems)
                 currentItems = currentItems == maxItems ? maxItems : currentItems+1;
                 collectSound.setPitch(1+currentItems/10.0);
                 collectSound.play();
+
+                Animation plus1Animation;
+                plus1Animation.setDelay(1);
+                plus1Animation.setPosition(getPosition());
+                plus1Animation.setTexture(name == WIZARD_NAME ? TextureHolder::getTextureInstance()->get(TextureID::wizard_plus1) :
+                                         TextureHolder::getTextureInstance()->get(TextureID::alchemist_plus1),1);
+
+                FallingItem fallingPlus1;
+                fallingPlus1.setAnimation(plus1Animation);
+                fallingPlus1.setPosition(getPosition());
+                fallingPlus1.setCurrentSpeed(sf::Vector2f((-20+rand()%40)/10.0,(-60+rand()%10)/10.0));
+                fallingPlus1.setGravity(GRAVITY*3);
+                fallingPlus1.setRotationSpeed((-5+rand()%10)/10.0);
+                fallingPlus1.setType(PLUS1_TYPE);
+
+                fallingItems.insert(iter,fallingPlus1);
+
             } else {
                 iter++;
             }

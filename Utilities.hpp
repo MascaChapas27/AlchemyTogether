@@ -13,7 +13,7 @@ enum class TextureID{
     cutscene2_alchemist,cutscene2_wizard,cutscene2_background,
     wizard_dance,wizard_hit,wizard_shoot,wizard_side,wizard_hold,wizard_walk,
     time_frame,alchemist_arrow,wizard_arrow,alchemist_corpse,wizard_corpse,
-    death0,death1,gameOver
+    death0,death1,gameOver,wizard_plus1,alchemist_plus1,boss_minus1
 };
 
 enum class SoundID {
@@ -106,6 +106,8 @@ const std::string BOOK_TYPE = "Book";
 const std::string MAGIC_TYPE = "Magic";
 const std::string FIRE_TYPE = "Fire";
 const std::string CORPSE_TYPE = "Corpse";
+const std::string PLUS1_TYPE = "Plus1";
+const std::string MINUS1_TYPE = "Minus1";
 
 const int INITIAL_SHOOTING_ANGLE = 0;
 const int FINAL_SHOOTING_ANGLE = 90;
