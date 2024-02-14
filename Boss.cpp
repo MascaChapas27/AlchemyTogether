@@ -158,6 +158,7 @@ void Boss::attackRainLeftToRight(std::list<FallingItem>& fallingItems)
 {
     if(attackAux < MAX_FPS*2){
         if(attackAux%RAIN_LEFT_TO_RIGHT_LATENCY == 0){
+            shootSound.play();
             double positionX = MAIN_WINDOW_WIDTH*((double)attackAux/(MAX_FPS*2));
             FallingItem::fallingFire.setPosition(sf::Vector2f(positionX,-30));
             FallingItem::fallingFire.setCurrentSpeed(sf::Vector2f((-2+rand()%4)/10.0,0));

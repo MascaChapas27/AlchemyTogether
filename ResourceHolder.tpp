@@ -104,6 +104,8 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
 
     load(TextureID::death0,"sprites/death0.png");
     load(TextureID::death1,"sprites/death1.png");
+
+    load(TextureID::gameOver,"sprites/gameOver.png");
 }
 
 template <class Resource, class Identifier>
@@ -130,5 +132,4 @@ void ResourceHolder<Resource,Identifier>::loadAllFonts()
 {
     load(FontID::AlchemistFont,"fonts/gabriela.ttf");
     load(FontID::WizardFont,"fonts/daniela.ttf");
-    load(FontID::BossFont,"fonts/father.ttf");
 }

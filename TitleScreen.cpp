@@ -187,8 +187,9 @@ void TitleScreen::run(){
     nextCutscene = false;
 
     talkingSound.setBuffer(SoundHolder::getSoundInstance()->get(SoundID::boss_voice));
-    talkingText.setFont(FontHolder::getFontInstance()->get(FontID::BossFont));
+    talkingText.setFont(FontHolder::getFontInstance()->get(FontID::WizardFont));
     talkingText.setFillColor(sf::Color::Blue);
+    talkingText.setCharacterSize(20);
     advanceConversationSound.play();
     finalText = "¡¡SALUDOS insignificantes terrícolas!!";
     currentLetter = 0;

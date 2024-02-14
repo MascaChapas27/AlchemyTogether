@@ -13,7 +13,7 @@ enum class TextureID{
     cutscene2_alchemist,cutscene2_wizard,cutscene2_background,
     wizard_dance,wizard_hit,wizard_shoot,wizard_side,wizard_hold,wizard_walk,
     time_frame,alchemist_arrow,wizard_arrow,alchemist_corpse,wizard_corpse,
-    death0,death1
+    death0,death1,gameOver
 };
 
 enum class SoundID {
@@ -24,7 +24,7 @@ enum class SoundID {
 };
 
 enum class FontID {
-    AlchemistFont, WizardFont, BossFont
+    AlchemistFont, WizardFont
 };
 
 enum class MusicID {

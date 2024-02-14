@@ -82,11 +82,7 @@ void Game::run(){
     // Prepare the boss
     Animation flyingBoss;
     flyingBoss.setDelay(15);
-
-    sf::Texture flyingBossTexture;
-    flyingBossTexture.loadFromFile("sprites/boss.png");
-
-    flyingBoss.setTexture(flyingBossTexture,3);
+    flyingBoss.setTexture(textureHolder->get(TextureID::boss),3);
     flyingBoss.setPosition(BOSS_X,-flyingBoss.getHitbox().height*2);
 
     boss.setAnimation(flyingBoss);
@@ -96,17 +92,13 @@ void Game::run(){
                          soundHolder->get(SoundID::boss_shoot));
 
     sf::Sprite hitBoss;
-    sf::Texture hitBossTexture;
-    hitBossTexture.loadFromFile("sprites/boss-hit.png");
-    hitBoss.setTexture(hitBossTexture);
+    hitBoss.setTexture(textureHolder->get(TextureID::boss_hit));
     hitBoss.scale(2.f,2.f);
 
     boss.setHitSprite(hitBoss);
 
     // Prepare the backgrounds
-    sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile("sprites/background.png");
-    background.setTexture(backgroundTexture);
+    background.setTexture(textureHolder->get(TextureID::background));
     background.scale(2.f,2.f);
 
     sf::Sprite timeFrameSprite;
@@ -125,9 +117,7 @@ void Game::run(){
     FallingItem::fallingBook.setType(BOOK_TYPE);
 
     Animation fallingMagicAnimation;
-    sf::Texture fallingMagicTexture;
-    fallingMagicTexture.loadFromFile("sprites/magic.png");
-    fallingMagicAnimation.setTexture(fallingMagicTexture,2);
+    fallingMagicAnimation.setTexture(textureHolder->get(TextureID::magic),2);
     fallingMagicAnimation.setDelay(10);
 
     FallingItem::fallingMagic.setAnimation(fallingMagicAnimation);
@@ -135,9 +125,7 @@ void Game::run(){
     FallingItem::fallingMagic.setType(MAGIC_TYPE);
 
     Animation fallingFireAnimation;
-    sf::Texture fallingFireTexture;
-    fallingFireTexture.loadFromFile("sprites/fire.png");
-    fallingFireAnimation.setTexture(fallingFireTexture,2);
+    fallingFireAnimation.setTexture(textureHolder->get(TextureID::fire),2);
     fallingFireAnimation.setDelay(10);
 
     FallingItem::fallingFire.setAnimation(fallingFireAnimation);
@@ -145,14 +133,11 @@ void Game::run(){
     FallingItem::fallingFire.setType(FIRE_TYPE);
 
     // Prepare the font to write the time
-    sf::Font clockFont;
-    clockFont.loadFromFile("fonts/father.ttf");
     sf::Text clockText;
-    clockText.setFont(clockFont);
+    clockText.setFont(FontHolder::getFontInstance()->get(FontID::WizardFont));
+    clockText.setCharacterSize(20);
     clockText.setFillColor(sf::Color::Blue);
-    clockText.setCharacterSize(22);
-    clockText.setPosition(60,40);
-    clockText.setString("Tiempo: ");
+    clockText.setPosition(50,44);
 
     int difficulty = 20;
 
@@ -287,6 +272,11 @@ void Game::run(){
 
         bool gameOver = false;
 
+        sf::Sprite gameOverSprite;
+        gameOverSprite.setTexture(TextureHolder::getTextureInstance()->get(TextureID::gameOver));
+        gameOverSprite.scale(2,2);
+        gameOverSprite.setColor(sf::Color(255,255,255,0));
+
         MusicPlayer::getInstance()->play(MusicID::death_music);
 
         while(true){
@@ -300,8 +290,12 @@ void Game::run(){
 
             if(!gameOver && endClock.getElapsedTime().asSeconds() > 3){
                 gameOver = true;
+            }
 
-
+            if(gameOver){
+                sf::Color newColor = gameOverSprite.getColor();
+                if(newColor.a < 255) newColor.a++;
+                gameOverSprite.setColor(newColor);
             }
 
             for(FallingItem& fallingItem : fallingItems){
@@ -309,6 +303,7 @@ void Game::run(){
             }
 
             mainWindow.clear();
+            mainWindow.draw(gameOverSprite);
             for(FallingItem& fallingItem : fallingItems){
                 mainWindow.draw(fallingItem);
             }
