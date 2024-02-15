@@ -2,45 +2,89 @@
 #include "Animation.hpp"
 #include "Utilities.hpp"
 #include "MusicPlayer.hpp"
+#include "ResourceHolder.hpp"
 
-void ControlsWindow::run(){
+std::pair<int,int> ControlsWindow::run(){
+
+    TextureHolder * textureHolder = TextureHolder::getTextureInstance();
 
     // Ok first we have to get the background
     sf::Sprite background;
-    sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile("sprites/controls-background.png");
-    background.setTexture(backgroundTexture);
+    background.setTexture(textureHolder->get(TextureID::controls_background_keyboard_keyboard));
     background.scale(2.f,2.f);
 
     // Now the animations for both characters
     Animation wizardAnimation;
     wizardAnimation.setDelay(25);
     wizardAnimation.setPingPong(false);
-
-    sf::Texture wizardTexture;
-    wizardTexture.loadFromFile("sprites/wizard-dance.png");
-    wizardAnimation.setTexture(wizardTexture,4);
+    wizardAnimation.setTexture(textureHolder->get(TextureID::wizard_dance),4);
     wizardAnimation.setPosition(WIZARD_INITIAL_X,WIZARD_INITIAL_Y);
 
     Animation alchemistAnimation;
     alchemistAnimation.setDelay(15);
     alchemistAnimation.setPingPong(true);
     alchemistAnimation.setPosition(ALCHEMIST_INITIAL_X,ALCHEMIST_INITIAL_Y);
-
-    sf::Texture alchemistTexture;
-    alchemistTexture.loadFromFile("sprites/alchemist-dance.png");
-    alchemistAnimation.setTexture(alchemistTexture,6);
+    alchemistAnimation.setTexture(textureHolder->get(TextureID::alchemist_dance),6);
 
     // Now let's make it work
+
+    int wizardJoystick = -1;
+    int alchemistJoystick = -1;
 
     while(true){
 
         sf::Event event;
         while(mainWindow.pollEvent(event)){
-            if(event.type == event.Closed){
+            if(event.type == sf::Event::Closed){
                 exit(EXIT_SUCCESS);
-            } else if (event.type == event.KeyPressed && event.key.code == sf::Keyboard::Return){
-                return;
+            } else if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Return) || (event.type == sf::Event::JoystickButtonPressed && ((int)event.joystickButton.joystickId == alchemistJoystick || (int)event.joystickButton.joystickId == wizardJoystick))){
+                return std::pair<int,int>(alchemistJoystick,wizardJoystick);
+            } else if (event.type == sf::Event::JoystickButtonPressed){
+                int pressedJoystick = event.joystickButton.joystickId;
+                if(alchemistJoystick==-1 && wizardJoystick==-1){
+                    bool moved = false;
+                    bool alchemistSelected = true;
+                    sf::Sprite chooseControllerBackground;
+                    chooseControllerBackground.setTexture(TextureHolder::getTextureInstance()->get(TextureID::joystick_choose_alchemist));
+                    chooseControllerBackground.scale(2,2);
+
+                    while(alchemistJoystick==-1 && wizardJoystick==-1){
+                        while(mainWindow.pollEvent(event)){
+                            if(!moved && event.type == sf::Event::JoystickMoved && event.joystickMove.axis == sf::Joystick::Axis::X && std::abs(event.joystickMove.position) > JOYSTICK_THRESHOLD){
+                                if(alchemistSelected){
+                                    chooseControllerBackground.setTexture(TextureHolder::getTextureInstance()->get(TextureID::joystick_choose_wizard));
+                                    alchemistSelected = false;
+                                } else {
+                                    chooseControllerBackground.setTexture(TextureHolder::getTextureInstance()->get(TextureID::joystick_choose_alchemist));
+                                    alchemistSelected = true;
+                                }
+                                moved = true;
+                            } else if (event.type == sf::Event::JoystickButtonPressed){
+                                if(alchemistSelected)
+                                    alchemistJoystick = pressedJoystick;
+                                else
+                                    wizardJoystick = pressedJoystick;
+                            } else if (std::abs(sf::Joystick::getAxisPosition(pressedJoystick,sf::Joystick::Axis::X)) < JOYSTICK_THRESHOLD){
+                                moved = false;
+                            }
+                        }
+
+                        mainWindow.clear();
+                        mainWindow.draw(chooseControllerBackground);
+                        mainWindow.display();
+                    }
+                } else if (alchemistJoystick != -1){
+                    wizardJoystick = pressedJoystick;
+                } else {
+                    alchemistJoystick = pressedJoystick;
+                }
+
+                if(wizardJoystick != -1 && alchemistJoystick != -1)
+                    background.setTexture(textureHolder->get(TextureID::controls_background_joystick_joystick));
+                else if(wizardJoystick != -1)
+                    background.setTexture(textureHolder->get(TextureID::controls_background_keyboard_joystick));
+                else
+                    background.setTexture(textureHolder->get(TextureID::controls_background_joystick_keyboard));
             }
         }
 

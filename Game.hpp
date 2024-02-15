@@ -23,7 +23,7 @@ class Game {
         sf::Sprite background;
 
     public:
-        void run();
+        void run(int alchemistController, int wizardController);
 
 };
 

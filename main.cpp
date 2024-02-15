@@ -30,11 +30,11 @@ int main(){
 
     // Show initial window with controls and stuff
     ControlsWindow controlsWindow;
-    controlsWindow.run();
+    std::pair<int,int> controllers = controlsWindow.run();
 
     // Game
     Game game;
-    game.run();
+    game.run(controllers.first, controllers.second);
 
     // The end
     return EXIT_SUCCESS;

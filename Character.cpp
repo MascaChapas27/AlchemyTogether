@@ -12,6 +12,7 @@ Character::Character(){
     shootingAngleGoingDown = false;
     shootingCooldown = 0;
     dead = false;
+    controller = -1;
 }
 
 void Character::setWalkingAnimation(Animation walkingAnimation)
@@ -47,18 +48,39 @@ void Character::setKeys(sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey, s
     this->shootingKey = shootingKey;
 }
 
+int Character::getController()
+{
+    return controller;
+}
+
+void Character::setController(int controllerID)
+{
+    this->controller = controllerID;
+}
+
 int Character::update(std::list<FallingItem>& fallingItems)
 {
     if(dead) return 0;
 
     bool moved = false;
-    if(sf::Keyboard::isKeyPressed(leftKey)){
-        moved = true;
-        position.x -= speed;
-    } else if(sf::Keyboard::isKeyPressed(rightKey)){
-        moved = true;
-        position.x += speed;
+    if(controller == -1){
+        if(sf::Keyboard::isKeyPressed(leftKey)){
+            moved = true;
+            position.x -= speed;
+        } else if(sf::Keyboard::isKeyPressed(rightKey)){
+            moved = true;
+            position.x += speed;
+        }
+    } else {
+        if(sf::Joystick::getAxisPosition(controller,sf::Joystick::Axis::X) < -JOYSTICK_THRESHOLD){
+            moved = true;
+            position.x -= speed;
+        } else if(sf::Joystick::getAxisPosition(controller,sf::Joystick::Axis::X) > JOYSTICK_THRESHOLD){
+            moved = true;
+            position.x += speed;
+        }
     }
+
 
     if(position.x + walkingAnimation.getWidth() > MAIN_WINDOW_WIDTH){
         position.x = MAIN_WINDOW_WIDTH - walkingAnimation.getWidth();
@@ -183,7 +205,7 @@ int Character::update(std::list<FallingItem>& fallingItems)
 
     // Five, shoot
     if(shooting){
-        if(shootingCooldown == 0 && currentItems > 0 && sf::Keyboard::isKeyPressed(shootingKey)){
+        if(shootingCooldown == 0 && currentItems > 0 && (controller == -1 ? sf::Keyboard::isKeyPressed(shootingKey) : is_any_button_pressed(controller))){
             shootSound.play();
             if(name == ALCHEMIST_NAME){
                 FallingItem::fallingBook.setPosition(walkingAnimation.getPosition().x+walkingAnimation.getHitbox().width+10,walkingAnimation.getPosition().y-walkingAnimation.getHitbox().height);

@@ -58,6 +58,7 @@
 		<Unit filename="ResourceHolder.tpp" />
 		<Unit filename="TitleScreen.cpp" />
 		<Unit filename="TitleScreen.hpp" />
+		<Unit filename="Utilities.cpp" />
 		<Unit filename="Utilities.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>

@@ -77,7 +77,6 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::fire,"sprites/fire.png");
     load(TextureID::boss,"sprites/boss.png");
     load(TextureID::boss_hit,"sprites/boss-hit.png");
-    load(TextureID::controls_background,"sprites/controls-background.png");
     load(TextureID::cutscene0_background,"sprites/cutscene0-background.png");
     load(TextureID::cutscene0_boss,"sprites/cutscene0-boss.png");
     load(TextureID::cutscene0_wizard,"sprites/cutscene0-wizard.png");
@@ -102,14 +101,16 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::alchemist_corpse,"sprites/alchemist-corpse.png");
     load(TextureID::wizard_corpse,"sprites/wizard-corpse.png");
 
-    load(TextureID::death0,"sprites/death0.png");
-    load(TextureID::death1,"sprites/death1.png");
-
-    load(TextureID::gameOver,"sprites/gameOver.png");
     load(TextureID::alchemist_plus1,"sprites/alchemist-plus1.png");
     load(TextureID::wizard_plus1,"sprites/wizard-plus1.png");
     load(TextureID::boss_minus1,"sprites/boss-minus1.png");
     load(TextureID::boss_corpse,"sprites/boss-corpse.png");
+    load(TextureID::joystick_choose_alchemist,"sprites/joystick-choose-alchemist.png");
+    load(TextureID::joystick_choose_wizard,"sprites/joystick-choose-wizard.png");
+    load(TextureID::controls_background_keyboard_keyboard,"sprites/controls-background-keyboard-keyboard.png");
+    load(TextureID::controls_background_keyboard_joystick,"sprites/controls-background-keyboard-joystick.png");
+    load(TextureID::controls_background_joystick_keyboard,"sprites/controls-background-joystick-keyboard.png");
+    load(TextureID::controls_background_joystick_joystick,"sprites/controls-background-joystick-joystick.png");
 }
 
 template <class Resource, class Identifier>

@@ -6,14 +6,20 @@
 #include <memory>
 
 enum class TextureID{
-    alchemist_dance,alchemist_hit,alchemist_shoot,alchemist_walk,alchemist_hold,alchemist_side,
-    background,book,magic,fire,boss,boss_hit,controls_background,
-    title,press_enter,press_escape,cutscene0_boss,cutscene0_wizard,cutscene0_alchemist,cutscene0_background,
+
+    title,press_enter,press_escape,
+    cutscene0_boss,cutscene0_wizard,cutscene0_alchemist,cutscene0_background,
     cutscene1_background,cutscene1_alchemist,cutscene1_wizard,
     cutscene2_alchemist,cutscene2_wizard,cutscene2_background,
-    wizard_dance,wizard_hit,wizard_shoot,wizard_side,wizard_hold,wizard_walk,
+
+    alchemist_dance,wizard_dance,joystick_choose_alchemist,joystick_choose_wizard,
+    controls_background_keyboard_keyboard, controls_background_keyboard_joystick, controls_background_joystick_keyboard, controls_background_joystick_joystick,
+
+    alchemist_hit,alchemist_shoot,alchemist_walk,alchemist_hold,alchemist_side,
+    wizard_hit,wizard_shoot,wizard_side,wizard_hold,wizard_walk,
+    background,book,magic,fire,boss,boss_hit,
     time_frame,alchemist_arrow,wizard_arrow,alchemist_corpse,wizard_corpse,
-    death0,death1,gameOver,wizard_plus1,alchemist_plus1,boss_minus1,boss_corpse
+    wizard_plus1,alchemist_plus1,boss_minus1,boss_corpse,
 };
 
 enum class SoundID {
@@ -42,6 +48,8 @@ const int RANDOM_RAIN_FIRE_PER_SECOND = 13;
 const int NUM_FIRE_UNIFORM_RAIN = 7;
 
 extern sf::RenderWindow mainWindow;
+
+const float JOYSTICK_THRESHOLD = 0.3;
 
 const bool DEBUG = false;
 
@@ -127,5 +135,7 @@ const int FALLING_TRAIL_MAX_LENGTH = 2;
 const int FALLING_TRAIL_MAX_COUNTER = 5;
 
 const double GRAVITY = 0.05;
+
+bool is_any_button_pressed(int joystick);
 
 #endif // __UTILITIES_HPP__

@@ -4,7 +4,7 @@
 #include "ResourceHolder.hpp"
 #include "MusicPlayer.hpp"
 
-void Game::run(){
+void Game::run(int alchemistController, int wizardController){
 
     TextureHolder * textureHolder = TextureHolder::getTextureInstance();
     SoundHolder * soundHolder = SoundHolder::getSoundInstance();
@@ -44,6 +44,7 @@ void Game::run(){
     wizard.setSpeed(3);
     wizard.setName(WIZARD_NAME);
     wizard.setSoundBuffers(soundHolder->get(SoundID::wizard_damage),soundHolder->get(SoundID::wizard_collect),soundHolder->get(SoundID::wizard_shoot));
+    wizard.setController(wizardController);
 
     // Prepare the alchemist
     Animation walkingAlchemist;
@@ -78,6 +79,7 @@ void Game::run(){
     alchemist.setSpeed(3);
     alchemist.setName(ALCHEMIST_NAME);
     alchemist.setSoundBuffers(soundHolder->get(SoundID::alchemist_damage),soundHolder->get(SoundID::alchemist_collect),soundHolder->get(SoundID::alchemist_shoot));
+    alchemist.setController(alchemistController);
 
     // Prepare the boss
     Animation flyingBoss;
@@ -270,16 +272,14 @@ void Game::run(){
 
     if(wizard.isDead() && alchemist.isDead()){
 
-        bool gameOver = false;
+        bool fadeBlack = false;
 
-        sf::Sprite gameOverSprite;
-        gameOverSprite.setTexture(TextureHolder::getTextureInstance()->get(TextureID::gameOver));
-        gameOverSprite.scale(2,2);
-        gameOverSprite.setColor(sf::Color(255,255,255,0));
+        sf::RectangleShape foregroundRectangle(sf::Vector2f(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT));
+        foregroundRectangle.setFillColor(sf::Color(0,0,0,0));
 
         MusicPlayer::getInstance()->play(MusicID::death_music);
 
-        while(true){
+        while(foregroundRectangle.getFillColor().a < 255){
             sf::Event event;
             while(mainWindow.pollEvent(event)){
                 if(event.type == sf::Event::Closed){
@@ -288,14 +288,14 @@ void Game::run(){
                 }
             }
 
-            if(!gameOver && endClock.getElapsedTime().asSeconds() > 3){
-                gameOver = true;
+            if(!fadeBlack && endClock.getElapsedTime().asSeconds() > 3){
+                fadeBlack = true;
             }
 
-            if(gameOver){
-                sf::Color newColor = gameOverSprite.getColor();
+            if(fadeBlack){
+                sf::Color newColor = foregroundRectangle.getFillColor();
                 if(newColor.a < 255) newColor.a++;
-                gameOverSprite.setColor(newColor);
+                foregroundRectangle.setFillColor(newColor);
             }
 
             for(FallingItem& fallingItem : fallingItems){
@@ -303,27 +303,33 @@ void Game::run(){
             }
 
             mainWindow.clear();
-            mainWindow.draw(gameOverSprite);
             for(FallingItem& fallingItem : fallingItems){
                 mainWindow.draw(fallingItem);
             }
+            mainWindow.draw(foregroundRectangle);
             mainWindow.display();
         }
+
+        // GoodEndingCutscene::getInstance()->begin();
+
     } else {
 
         bool dancing = false;
+        bool fadeBlack = false;
         Animation wizardAnimation;
         wizardAnimation.setDelay(25);
         wizardAnimation.setPingPong(false);
         wizardAnimation.setTexture(textureHolder->get(TextureID::wizard_dance),4);
-
 
         Animation alchemistAnimation;
         alchemistAnimation.setPingPong(true);
         alchemistAnimation.setDelay(15);
         alchemistAnimation.setTexture(textureHolder->get(TextureID::alchemist_dance),6);
 
-        while(true){
+        sf::RectangleShape foregroundRectangle(sf::Vector2f(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT));
+        foregroundRectangle.setFillColor(sf::Color(0,0,0,0));
+
+        while(foregroundRectangle.getFillColor().a < 255){
             sf::Event event;
             while(mainWindow.pollEvent(event)){
                 if(event.type == sf::Event::Closed){
@@ -336,6 +342,16 @@ void Game::run(){
                 dancing = true;
                 wizardAnimation.setPosition(wizard.isDead() ? -300 : wizard.getPosition().x,wizard.isDead() ? -300 : wizard.getPosition().y);
                 alchemistAnimation.setPosition(alchemist.isDead() ? -300 : alchemist.getPosition().x,alchemist.isDead() ? -300 : alchemist.getPosition().y);
+            }
+
+            if(!fadeBlack && endClock.getElapsedTime().asSeconds() > 5){
+                fadeBlack = true;
+            }
+
+            if(fadeBlack){
+                sf::Color newColor = foregroundRectangle.getFillColor();
+                newColor.a++;
+                foregroundRectangle.setFillColor(newColor);
             }
 
             for(FallingItem& fallingItem : fallingItems){
@@ -361,7 +377,10 @@ void Game::run(){
                 mainWindow.draw(wizard);
                 mainWindow.draw(alchemist);
             }
+            mainWindow.draw(foregroundRectangle);
             mainWindow.display();
         }
+
+        // GoodEndingCutscene::getInstance()->begin();
     }
 }

@@ -74,6 +74,9 @@ class Character : public sf::Drawable {
         // Current position for the character
         sf::Vector2f position;
 
+        // Controller the character will use (-1 means none)
+        int controller;
+
 
     public:
         Character();
@@ -92,6 +95,8 @@ class Character : public sf::Drawable {
         int getCurrentItems();
         bool isDead();
         int getMaxItems();
+        int getController();
+        void setController(int controllerID);
         void setShooting(bool shooting);
         sf::Vector2f getPosition();
         int update(std::list<FallingItem>& fallingItems);
