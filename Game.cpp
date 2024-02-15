@@ -310,6 +310,19 @@ void Game::run(){
             mainWindow.display();
         }
     } else {
+
+        bool dancing = false;
+        Animation wizardAnimation;
+        wizardAnimation.setDelay(25);
+        wizardAnimation.setPingPong(false);
+        wizardAnimation.setTexture(textureHolder->get(TextureID::wizard_dance),4);
+
+
+        Animation alchemistAnimation;
+        alchemistAnimation.setPingPong(true);
+        alchemistAnimation.setDelay(15);
+        alchemistAnimation.setTexture(textureHolder->get(TextureID::alchemist_dance),6);
+
         while(true){
             sf::Event event;
             while(mainWindow.pollEvent(event)){
@@ -319,16 +332,35 @@ void Game::run(){
                 }
             }
 
+            if(!dancing && endClock.getElapsedTime().asSeconds() > 3){
+                dancing = true;
+                wizardAnimation.setPosition(wizard.isDead() ? -300 : wizard.getPosition().x,wizard.isDead() ? -300 : wizard.getPosition().y);
+                alchemistAnimation.setPosition(alchemist.isDead() ? -300 : alchemist.getPosition().x,alchemist.isDead() ? -300 : alchemist.getPosition().y);
+            }
+
             for(FallingItem& fallingItem : fallingItems){
                 fallingItem.update();
+            }
+
+            if(dancing){
+                alchemistAnimation.update();
+                wizardAnimation.update();
+            } else {
+                wizard.update(fallingItems);
+                alchemist.update(fallingItems);
             }
 
             mainWindow.clear();
             for(FallingItem& fallingItem : fallingItems){
                 mainWindow.draw(fallingItem);
             }
-            mainWindow.draw(wizard);
-            mainWindow.draw(alchemist);
+            if(dancing){
+                mainWindow.draw(wizardAnimation);
+                mainWindow.draw(alchemistAnimation);
+            } else {
+                mainWindow.draw(wizard);
+                mainWindow.draw(alchemist);
+            }
             mainWindow.display();
         }
     }

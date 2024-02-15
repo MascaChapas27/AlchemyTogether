@@ -13,7 +13,7 @@ enum class TextureID{
     cutscene2_alchemist,cutscene2_wizard,cutscene2_background,
     wizard_dance,wizard_hit,wizard_shoot,wizard_side,wizard_hold,wizard_walk,
     time_frame,alchemist_arrow,wizard_arrow,alchemist_corpse,wizard_corpse,
-    death0,death1,gameOver,wizard_plus1,alchemist_plus1,boss_minus1
+    death0,death1,gameOver,wizard_plus1,alchemist_plus1,boss_minus1,boss_corpse
 };
 
 enum class SoundID {
@@ -83,6 +83,8 @@ const std::string AUX_WINDOW_NAME = "Help";
 const int INVINCIBILITY_FRAMES = 200;
 const int INVINCINILITY_FLICKER = 2;
 const int BOSS_INVINCIBILITY_FRAMES = 30;
+
+const int ATTACK = 1;
 
 const int WIZARD_INITIAL_X = 590;
 const int WIZARD_INITIAL_Y = 548;

@@ -23,7 +23,6 @@ void ControlsWindow::run(){
     wizardAnimation.setPosition(WIZARD_INITIAL_X,WIZARD_INITIAL_Y);
 
     Animation alchemistAnimation;
-    alchemistAnimation.setPingPong(true);
     alchemistAnimation.setDelay(15);
     alchemistAnimation.setPingPong(true);
     alchemistAnimation.setPosition(ALCHEMIST_INITIAL_X,ALCHEMIST_INITIAL_Y);

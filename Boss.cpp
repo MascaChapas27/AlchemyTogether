@@ -98,7 +98,7 @@ void Boss::update(std::list<FallingItem>& fallingItems){
 
                 if(iter->getType() == BOOK_TYPE || iter->getType() == MAGIC_TYPE){
                     damageSound.play();
-                    health--;
+                    health-=ATTACK;
                     iter=fallingItems.erase(iter);
                     invincibilityCounter=0;
 
@@ -116,6 +116,24 @@ void Boss::update(std::list<FallingItem>& fallingItems){
                     fallingMinus1.setType(MINUS1_TYPE);
 
                     fallingItems.insert(iter,fallingMinus1);
+
+                    if(health<=0){
+                        Animation deadBoss;
+                        deadBoss.setDelay(1);
+                        deadBoss.setPosition(getPosition());
+                        deadBoss.setTexture(TextureHolder::getTextureInstance()->get(TextureID::boss_hit),1);
+
+                        FallingItem fallingCorpse;
+                        fallingCorpse.setAnimation(deadBoss);
+                        fallingCorpse.setPosition(getPosition());
+                        fallingCorpse.setCurrentSpeed(sf::Vector2f((-10+rand()%30)/10.0,(-80+rand()%30)/10.0));
+                        fallingCorpse.setGravity(GRAVITY*2);
+                        fallingCorpse.setRotationSpeed(-0.4);
+                        fallingCorpse.setType(CORPSE_TYPE);
+                        fallingCorpse.setLyingItemTexture(TextureHolder::getTextureInstance()->get(TextureID::boss_corpse));
+
+                        fallingItems.insert(iter,fallingCorpse);
+                    }
 
                 } else {
                     iter++;
@@ -257,7 +275,7 @@ void Boss::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     backgroundRectangle.setPosition(animation.getPosition().x-animation.getHitbox().width,animation.getPosition().y-animation.getHitbox().height-10);
     r.draw(backgroundRectangle,s);
 
-    sf::RectangleShape rectangle(sf::Vector2f(((double)health/BOSS_INITIAL_HEALTH)*animation.getHitbox().width*2,10));
+    sf::RectangleShape rectangle(sf::Vector2f(((double)(health>=0 ? health : 0)/BOSS_INITIAL_HEALTH)*animation.getHitbox().width*2,10));
     rectangle.setFillColor(sf::Color::Blue);
     rectangle.setPosition(animation.getPosition().x-animation.getHitbox().width,animation.getPosition().y-animation.getHitbox().height-10);
     r.draw(rectangle,s);
