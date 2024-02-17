@@ -151,8 +151,8 @@ int Character::update(std::list<FallingItem>& fallingItems)
                     invincibilityCounter = 0;
                     iter++;
                 }
-            } else if((iter->getType() == BOOK_TYPE && name == ALCHEMIST_NAME) ||
-               (iter->getType() == MAGIC_TYPE && name == WIZARD_NAME)) {
+            } else if(currentItems < maxItems && ((iter->getType() == BOOK_TYPE && name == ALCHEMIST_NAME) ||
+               (iter->getType() == MAGIC_TYPE && name == WIZARD_NAME))) {
                 iter=fallingItems.erase(iter);
                 currentItems = currentItems == maxItems ? maxItems : currentItems+1;
                 collectSound.setPitch(1+currentItems/10.0);

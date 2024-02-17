@@ -3,7 +3,8 @@
 
 class TitleScreen {
     public:
-        void run();
+        // Returns true if a joystick button was pressed, false if not
+        int run();
 };
 
 #endif // __TITLE_SCREEN_HPP__

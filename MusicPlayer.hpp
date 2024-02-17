@@ -21,7 +21,7 @@ class MusicPlayer
 
     public:
         void load(MusicID identifier, const std::string path);
-        void play(MusicID theme);
+        void play(MusicID theme, bool looped = true);
         void stop();
         float getVolume();
         void alterVolume(float change);

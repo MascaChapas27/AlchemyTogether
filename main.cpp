@@ -25,12 +25,12 @@ int main(){
 
     // Show title screen and initial cutscene
     TitleScreen titleScreen;
-    titleScreen.run();
+    int joystickID = titleScreen.run();
     mainWindow.setFramerateLimit(MAX_FPS);
 
     // Show initial window with controls and stuff
     ControlsWindow controlsWindow;
-    std::pair<int,int> controllers = controlsWindow.run();
+    std::pair<int,int> controllers = controlsWindow.run(joystickID);
 
     // Game
     Game game;

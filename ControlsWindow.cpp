@@ -4,7 +4,7 @@
 #include "MusicPlayer.hpp"
 #include "ResourceHolder.hpp"
 
-std::pair<int,int> ControlsWindow::run(){
+std::pair<int,int> ControlsWindow::run(int joystickID){
 
     TextureHolder * textureHolder = TextureHolder::getTextureInstance();
 
@@ -34,13 +34,14 @@ std::pair<int,int> ControlsWindow::run(){
     while(true){
 
         sf::Event event;
-        while(mainWindow.pollEvent(event)){
+        while(mainWindow.pollEvent(event) || joystickID != -1){
             if(event.type == sf::Event::Closed){
                 exit(EXIT_SUCCESS);
             } else if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Return) || (event.type == sf::Event::JoystickButtonPressed && ((int)event.joystickButton.joystickId == alchemistJoystick || (int)event.joystickButton.joystickId == wizardJoystick))){
                 return std::pair<int,int>(alchemistJoystick,wizardJoystick);
-            } else if (event.type == sf::Event::JoystickButtonPressed){
-                int pressedJoystick = event.joystickButton.joystickId;
+            } else if (event.type == sf::Event::JoystickButtonPressed || joystickID != -1){
+                int pressedJoystick = joystickID == -1 ? event.joystickButton.joystickId : joystickID;
+                joystickID = -1;
                 if(alchemistJoystick==-1 && wizardJoystick==-1){
                     bool moved = false;
                     bool alchemistSelected = true;
@@ -50,6 +51,10 @@ std::pair<int,int> ControlsWindow::run(){
 
                     while(alchemistJoystick==-1 && wizardJoystick==-1){
                         while(mainWindow.pollEvent(event)){
+                            if(event.type == sf::Event::Closed){
+                                mainWindow.close();
+                                exit(EXIT_SUCCESS);
+                            }
                             if(!moved && event.type == sf::Event::JoystickMoved && event.joystickMove.axis == sf::Joystick::Axis::X && std::abs(event.joystickMove.position) > JOYSTICK_THRESHOLD){
                                 if(alchemistSelected){
                                     chooseControllerBackground.setTexture(TextureHolder::getTextureInstance()->get(TextureID::joystick_choose_wizard));

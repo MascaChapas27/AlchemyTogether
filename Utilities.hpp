@@ -20,13 +20,17 @@ enum class TextureID{
     background,book,magic,fire,boss,boss_hit,
     time_frame,alchemist_arrow,wizard_arrow,alchemist_corpse,wizard_corpse,
     wizard_plus1,alchemist_plus1,boss_minus1,boss_corpse,
+
+    dead_heroes, breaking_earth
 };
 
 enum class SoundID {
     boss_voice, alchemist_voice, wizard_voice, advance_conversation,
     alchemist_damage,alchemist_collect,alchemist_shoot,
     wizard_damage,wizard_collect,wizard_shoot,
-    boss_damage,boss_shoot,boss_appear,boss_disappear
+    boss_damage,boss_shoot,boss_appear,boss_disappear,
+
+    breaking_earth
 };
 
 enum class FontID {
@@ -34,7 +38,7 @@ enum class FontID {
 };
 
 enum class MusicID {
-    intro_music, battle_music, death_music
+    intro_music, battle_music, death_music, good_ending_music
 };
 
 enum class AttackType {

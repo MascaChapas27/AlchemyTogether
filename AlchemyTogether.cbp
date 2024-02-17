@@ -42,6 +42,8 @@
 		</Linker>
 		<Unit filename="Animation.cpp" />
 		<Unit filename="Animation.hpp" />
+		<Unit filename="BadEndingCutscene.cpp" />
+		<Unit filename="BadEndingCutscene.hpp" />
 		<Unit filename="Boss.cpp" />
 		<Unit filename="Boss.hpp" />
 		<Unit filename="Character.cpp" />

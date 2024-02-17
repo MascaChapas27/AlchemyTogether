@@ -14,13 +14,13 @@ void MusicPlayer::load(MusicID identifier, const std::string path)
     filenames[identifier] = path;
 }
 
-void MusicPlayer::play(MusicID theme)
+void MusicPlayer::play(MusicID theme, bool looped)
 {
     std::string filename = filenames[theme];
 
     currentMusic.openFromFile(filename);
 
-    currentMusic.setLoop(true);
+    currentMusic.setLoop(looped);
     currentMusic.play();
 }
 
@@ -44,4 +44,5 @@ void MusicPlayer::loadAllMusic()
     load(MusicID::intro_music,"music/intro.wav");
     load(MusicID::battle_music,"music/battle.wav");
     load(MusicID::death_music,"music/death.wav");
+    load(MusicID::good_ending_music,"music/happy.wav");
 }

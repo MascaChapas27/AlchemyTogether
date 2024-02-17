@@ -111,6 +111,9 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::controls_background_keyboard_joystick,"sprites/controls-background-keyboard-joystick.png");
     load(TextureID::controls_background_joystick_keyboard,"sprites/controls-background-joystick-keyboard.png");
     load(TextureID::controls_background_joystick_joystick,"sprites/controls-background-joystick-joystick.png");
+
+    load(TextureID::dead_heroes,"sprites/dead-heroes.png");
+    load(TextureID::breaking_earth,"sprites/breaking-earth.png");
 }
 
 template <class Resource, class Identifier>
@@ -130,6 +133,7 @@ void ResourceHolder<Resource,Identifier>::loadAllSounds()
     load(SoundID::boss_shoot,"sounds/boss-shoot.wav");
     load(SoundID::boss_disappear,"sounds/boss-disappear.wav");
     load(SoundID::boss_appear,"sounds/boss-appear.wav");
+    load(SoundID::breaking_earth,"sounds/breaking-earth.wav");
 }
 
 template <class Resource, class Identifier>

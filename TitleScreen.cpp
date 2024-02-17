@@ -2,8 +2,9 @@
 #include "Animation.hpp"
 #include "ResourceHolder.hpp"
 #include "MusicPlayer.hpp"
+#include <iostream>
 
-void TitleScreen::run(){
+int TitleScreen::run(){
 
     MusicPlayer::getInstance()->play(MusicID::intro_music);
 
@@ -98,8 +99,11 @@ void TitleScreen::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed){
-                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
+                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
                 else if(event.key.code == sf::Keyboard::Return) nextCutscene = true;
+            } else if (event.type == sf::Event::JoystickButtonPressed){
+                MusicPlayer::getInstance()->stop();
+                return event.joystickButton.joystickId;
             }
         }
 
@@ -158,8 +162,8 @@ void TitleScreen::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed){
-                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
-            }
+                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
+            } else if (event.type == sf::Event::JoystickButtonPressed) {MusicPlayer::getInstance()->stop(); return event.joystickButton.joystickId;}
         }
 
         cutscene0_wizard.update();
@@ -220,8 +224,9 @@ void TitleScreen::run(){
         sf::Event event;
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
+            else if (event.type == sf::Event::JoystickButtonPressed) {MusicPlayer::getInstance()->stop(); return event.joystickButton.joystickId;}
             else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
+                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
                 else if(event.key.code == sf::Keyboard::Return){
                     advanceConversationSound.play();
                     switch(currentText){
@@ -320,8 +325,9 @@ void TitleScreen::run(){
         sf::Event event;
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
+            else if (event.type == sf::Event::JoystickButtonPressed) {MusicPlayer::getInstance()->stop(); return event.joystickButton.joystickId;}
             else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
+                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
                 else if(event.key.code == sf::Keyboard::Return){
                     sf::Color currentColor = rectangleCover.getFillColor();
                     currentColor.a=255;
@@ -390,7 +396,8 @@ void TitleScreen::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
+                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
+                else if (event.type == sf::Event::JoystickButtonPressed) {MusicPlayer::getInstance()->stop(); return event.joystickButton.joystickId;}
                 else if(event.key.code == sf::Keyboard::Return){
                     sf::Color currentColor = rectangleCover.getFillColor();
                     currentColor.a=0;
@@ -456,8 +463,9 @@ void TitleScreen::run(){
         sf::Event event;
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
+            else if (event.type == sf::Event::JoystickButtonPressed) {MusicPlayer::getInstance()->stop(); return event.joystickButton.joystickId;}
             else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
+                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
                 else if(event.key.code == sf::Keyboard::Return){
 
                     advanceConversationSound.play();
@@ -556,7 +564,8 @@ void TitleScreen::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return;}
+                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
+                else if (event.type == sf::Event::JoystickButtonPressed) {MusicPlayer::getInstance()->stop(); return event.joystickButton.joystickId;}
                 else if(event.key.code == sf::Keyboard::Return) nextCutscene = true;
             }
         }
@@ -598,4 +607,5 @@ void TitleScreen::run(){
     }
 
     MusicPlayer::getInstance()->stop();
+    return -1;
 }

@@ -3,6 +3,7 @@
 #include <iostream>
 #include "ResourceHolder.hpp"
 #include "MusicPlayer.hpp"
+#include "BadEndingCutscene.hpp"
 
 void Game::run(int alchemistController, int wizardController){
 
@@ -310,7 +311,8 @@ void Game::run(int alchemistController, int wizardController){
             mainWindow.display();
         }
 
-        // GoodEndingCutscene::getInstance()->begin();
+        BadEndingCutscene badEndingCutscene;
+        badEndingCutscene.play();
 
     } else {
 
@@ -342,6 +344,7 @@ void Game::run(int alchemistController, int wizardController){
                 dancing = true;
                 wizardAnimation.setPosition(wizard.isDead() ? -300 : wizard.getPosition().x,wizard.isDead() ? -300 : wizard.getPosition().y);
                 alchemistAnimation.setPosition(alchemist.isDead() ? -300 : alchemist.getPosition().x,alchemist.isDead() ? -300 : alchemist.getPosition().y);
+                MusicPlayer::getInstance()->play(MusicID::good_ending_music);
             }
 
             if(!fadeBlack && endClock.getElapsedTime().asSeconds() > 5){
@@ -367,15 +370,15 @@ void Game::run(int alchemistController, int wizardController){
             }
 
             mainWindow.clear();
-            for(FallingItem& fallingItem : fallingItems){
-                mainWindow.draw(fallingItem);
-            }
             if(dancing){
                 mainWindow.draw(wizardAnimation);
                 mainWindow.draw(alchemistAnimation);
             } else {
                 mainWindow.draw(wizard);
                 mainWindow.draw(alchemist);
+            }
+            for(FallingItem& fallingItem : fallingItems){
+                mainWindow.draw(fallingItem);
             }
             mainWindow.draw(foregroundRectangle);
             mainWindow.display();
