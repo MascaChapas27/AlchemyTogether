@@ -33,8 +33,9 @@ void FallingItem::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     }
 
     if(DEBUG){
-        sf::RectangleShape rectangle = sf::RectangleShape(sf::Vector2f(animation.getHitbox().width,animation.getHitbox().height));
-        rectangle.setPosition(animation.getHitbox().left,animation.getHitbox().top);
+        sf::RectangleShape rectangle = sf::RectangleShape(sf::Vector2f(getHitbox().width,getHitbox().height));
+        rectangle.setOrigin(rectangle.getSize().x/2,rectangle.getSize().y/2);
+        rectangle.setPosition(getPosition());
         rectangle.setOutlineColor(sf::Color::Red);
         rectangle.setOutlineThickness(1);
         rectangle.setFillColor(sf::Color::Transparent);
@@ -42,8 +43,16 @@ void FallingItem::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     }
 }
 
-sf::IntRect FallingItem::getHitbox(){
-    return animation.getHitbox();
+sf::IntRect FallingItem::getHitbox() const{
+
+    if(currentlyLying){
+        sf::IntRect rectangle = lyingItem.getTextureRect();
+        rectangle.width*=2;
+        rectangle.height*=2;
+        rectangle.left = lyingItem.getPosition().x-rectangle.width/2;
+        rectangle.top = lyingItem.getPosition().y-rectangle.height/2;
+        return rectangle;
+    } else return animation.getHitbox();
 }
 
 void FallingItem::update(){
@@ -83,9 +92,9 @@ void FallingItem::update(){
     animation.update();
 }
 
-sf::Vector2f FallingItem::getPosition()
+sf::Vector2f FallingItem::getPosition() const
 {
-    return animation.getPosition();
+    return currentlyLying ? lyingItem.getPosition() : animation.getPosition();
 }
 
 void FallingItem::setPosition(sf::Vector2f position)
@@ -96,9 +105,17 @@ void FallingItem::setPosition(sf::Vector2f position)
 void FallingItem::setLyingItemTexture(sf::Texture& texture)
 {
     lyingItem.setTexture(texture);
-    lyingItem.scale(2,2);
+    lyingItem.setScale(2,2);
     lyingItem.setOrigin(lyingItem.getTextureRect().width/2,lyingItem.getTextureRect().height/2);
     lying = true;
+}
+
+void FallingItem::reset()
+{
+    currentSpeed = sf::Vector2f(0,0);
+    trailCounter = 0;
+    currentlyLying = false;
+    trail.clear();
 }
 
 void FallingItem::setPosition(double x, double y){
@@ -107,6 +124,11 @@ void FallingItem::setPosition(double x, double y){
 
 bool FallingItem::isOut(){
     return animation.getPosition().y > MAIN_WINDOW_HEIGHT+animation.getHitbox().height;
+}
+
+bool FallingItem::isCurrentlyLying() const
+{
+    return currentlyLying;
 }
 
 void FallingItem::setType(std::string type){

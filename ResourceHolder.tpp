@@ -134,6 +134,8 @@ void ResourceHolder<Resource,Identifier>::loadAllSounds()
     load(SoundID::boss_disappear,"sounds/boss-disappear.wav");
     load(SoundID::boss_appear,"sounds/boss-appear.wav");
     load(SoundID::breaking_earth,"sounds/breaking-earth.wav");
+    load(SoundID::alchemist_revive,"sounds/alchemist-revive.wav");
+    load(SoundID::wizard_revive,"sounds/wizard-revive.wav");
 }
 
 template <class Resource, class Identifier>

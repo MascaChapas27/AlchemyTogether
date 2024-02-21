@@ -45,7 +45,7 @@ void Game::run(int alchemistController, int wizardController){
     wizard.setKeys(sf::Keyboard::J, sf::Keyboard::L, sf::Keyboard::I);
     wizard.setSpeed(3);
     wizard.setName(WIZARD_NAME);
-    wizard.setSoundBuffers(soundHolder->get(SoundID::wizard_damage),soundHolder->get(SoundID::wizard_collect),soundHolder->get(SoundID::wizard_shoot));
+    wizard.setSoundBuffers(soundHolder->get(SoundID::wizard_damage),soundHolder->get(SoundID::wizard_collect),soundHolder->get(SoundID::wizard_shoot),soundHolder->get(SoundID::wizard_revive));
     wizard.setController(wizardController);
 
     // Prepare the alchemist
@@ -80,7 +80,7 @@ void Game::run(int alchemistController, int wizardController){
     alchemist.setKeys(sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::W);
     alchemist.setSpeed(3);
     alchemist.setName(ALCHEMIST_NAME);
-    alchemist.setSoundBuffers(soundHolder->get(SoundID::alchemist_damage),soundHolder->get(SoundID::alchemist_collect),soundHolder->get(SoundID::alchemist_shoot));
+    alchemist.setSoundBuffers(soundHolder->get(SoundID::alchemist_damage),soundHolder->get(SoundID::alchemist_collect),soundHolder->get(SoundID::alchemist_shoot),soundHolder->get(SoundID::alchemist_revive));
     alchemist.setController(alchemistController);
 
     // Prepare the boss
@@ -183,7 +183,7 @@ void Game::run(int alchemistController, int wizardController){
         }
 
         // Check if wizard got hit and lost magic
-        int wizardLostItems = wizard.update(fallingItems);
+        int wizardLostItems = wizard.update(fallingItems,alchemist);
 
         if(wizardLostItems > 0){
             for(int i=0;i<wizardLostItems;i++){
@@ -195,7 +195,7 @@ void Game::run(int alchemistController, int wizardController){
         }
 
         // Check if alchemist got hit and lost books
-        int alchemistLostItems = alchemist.update(fallingItems);
+        int alchemistLostItems = alchemist.update(fallingItems, wizard);
 
         if(alchemistLostItems > 0){
             for(int i=0;i<alchemistLostItems;i++){
@@ -298,8 +298,8 @@ void Game::run(int alchemistController, int wizardController){
                 foregroundRectangle.setFillColor(newColor);
             }
 
-            wizard.update(fallingItems);
-            alchemist.update(fallingItems);
+            wizard.update(fallingItems,alchemist);
+            alchemist.update(fallingItems,wizard);
 
             mainWindow.clear();
             mainWindow.draw(wizard);
@@ -362,8 +362,8 @@ void Game::run(int alchemistController, int wizardController){
                 alchemistAnimation.update();
                 wizardAnimation.update();
             } else {
-                wizard.update(fallingItems);
-                alchemist.update(fallingItems);
+                wizard.update(fallingItems,alchemist);
+                alchemist.update(fallingItems,wizard);
             }
 
             mainWindow.clear();

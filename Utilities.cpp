@@ -1,7 +1,7 @@
 #include "Utilities.hpp"
 #include <iostream>
 
-bool is_any_button_pressed(int joystick){
+bool joystick_pressing_any_button(int joystick){
     int numButtons = sf::Joystick::getButtonCount(joystick);
 
     for(int i=0;i<numButtons;i++){
@@ -42,4 +42,11 @@ void buttons_debug(int joystick){
 
         sf::sleep(sf::seconds(0.5));
     }
+}
+
+bool rectangles_collide(sf::IntRect rect1, sf::IntRect rect2){
+    return ((rect1.left < (rect2.left+rect2.width)) &&
+            ((rect1.left+rect1.width) > rect2.left) &&
+            (rect1.top < (rect2.top+rect2.height) &&
+            ((rect1.top+rect1.height) > rect2.top)));
 }

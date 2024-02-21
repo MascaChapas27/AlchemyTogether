@@ -30,6 +30,8 @@ enum class SoundID {
     wizard_damage,wizard_collect,wizard_shoot,
     boss_damage,boss_shoot,boss_appear,boss_disappear,
 
+    alchemist_revive,wizard_revive,
+
     breaking_earth
 };
 
@@ -95,7 +97,7 @@ const int INVINCIBILITY_FRAMES = 200;
 const int INVINCINILITY_FLICKER = 2;
 const int BOSS_INVINCIBILITY_FRAMES = 30;
 
-const int ATTACK = 100;
+const int ATTACK = 1;
 
 const int WIZARD_INITIAL_X = 590;
 const int WIZARD_INITIAL_Y = 548;
@@ -129,6 +131,9 @@ const int MAX_SHOOTING_COOLDOWN = 30;
 const int GATHER_TIME = 10;
 const int BOSS_TIME = 15;
 
+const int POINTS_TO_REVIVE = MAX_FPS * 10;
+const int HIT_SPRITE_DURATION = 30;
+
 const double PI = 3.14159265;
 
 const int ALCHEMIST_STRENGTH = 7;
@@ -139,11 +144,13 @@ const int FALLING_TRAIL_MAX_COUNTER = 5;
 
 const double GRAVITY = 0.05;
 
-bool is_any_button_pressed(int joystick);
+bool joystick_pressing_any_button(int joystick);
 
 void buttons_debug(int joystick);
 
 bool joystick_moving_left(int joystick);
 bool joystick_moving_right(int joystick);
+
+bool rectangles_collide(sf::IntRect rect1, sf::IntRect rect2);
 
 #endif // __UTILITIES_HPP__

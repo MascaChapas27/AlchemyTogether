@@ -62,6 +62,9 @@ class Character : public sf::Drawable {
         // Indicates if the character is dead
         bool dead;
 
+        // Helper counter to revive after your buddy presses the revive button near you for a while
+        int reviveCounter;
+
         // Sound that plays when you get hit
         sf::Sound damageSound;
 
@@ -70,6 +73,9 @@ class Character : public sf::Drawable {
 
         // Sound that plays when you shoot
         sf::Sound shootSound;
+
+        // Sound that plays when you are revived
+        sf::Sound reviveSound;
 
         // Current position for the character
         sf::Vector2f position;
@@ -94,15 +100,17 @@ class Character : public sf::Drawable {
         void setShootingArrowTexture(sf::Texture& texture);
         void setCurrentItems(int currentItems);
         void setMaxItems(int maxItems);
-        void setSoundBuffers(sf::SoundBuffer& damageSoundBuffer, sf::SoundBuffer& collectSoundBuffer, sf::SoundBuffer& shootSoundBuffer);
+        void setSoundBuffers(sf::SoundBuffer& damageSoundBuffer, sf::SoundBuffer& collectSoundBuffer, sf::SoundBuffer& shootSoundBuffer, sf::SoundBuffer& reviveSoundBuffer);
         int getCurrentItems();
         bool isDead();
         int getMaxItems();
         int getController();
         void setController(int controllerID);
         void setShooting(bool shooting);
+        void tryToRevive();
         sf::Vector2f getPosition();
-        int update(std::list<FallingItem>& fallingItems);
+        sf::IntRect getHitbox();
+        int update(std::list<FallingItem>& fallingItems, Character& buddy);
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;
 };
 

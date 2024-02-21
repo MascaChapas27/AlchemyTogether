@@ -49,14 +49,16 @@ class FallingItem : public sf::Drawable {
         void setType(std::string type);
         void setAnimation(Animation animation);
         void setGravity(double gravity);
-        sf::IntRect getHitbox();
-        sf::Vector2f getPosition();
+        sf::IntRect getHitbox() const;
+        sf::Vector2f getPosition() const;
         void setPosition(sf::Vector2f position);
         void setPosition(double x, double y);
         void update();
         void setLyingItemTexture(sf::Texture& texture);
         void setCurrentSpeed(sf::Vector2f currentSpeed);
         bool isOut();
+        bool isCurrentlyLying() const;
+        void reset();
         void setRotationSpeed(double rotationSpeed);
         std::string getType();
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;

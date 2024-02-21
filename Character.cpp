@@ -13,6 +13,7 @@ Character::Character(){
     shootingCooldown = 0;
     dead = false;
     controller = -1;
+    reviveCounter = 0;
 }
 
 void Character::setWalkingAnimation(Animation walkingAnimation)
@@ -58,7 +59,7 @@ void Character::setController(int controllerID)
     this->controller = controllerID;
 }
 
-int Character::update(std::list<FallingItem>& fallingItems)
+int Character::update(std::list<FallingItem>& fallingItems, Character& buddy)
 {
     if(dead){
         fallingCorpse.update();
@@ -205,7 +206,7 @@ int Character::update(std::list<FallingItem>& fallingItems)
 
     // Five, shoot
     if(shooting){
-        if(shootingCooldown == 0 && currentItems > 0 && (controller == -1 ? sf::Keyboard::isKeyPressed(shootingKey) : is_any_button_pressed(controller))){
+        if(shootingCooldown == 0 && currentItems > 0 && (controller == -1 ? sf::Keyboard::isKeyPressed(shootingKey) : joystick_pressing_any_button(controller))){
             shootSound.play();
             if(name == ALCHEMIST_NAME){
                 FallingItem::fallingBook.setPosition(walkingAnimation.getPosition().x+walkingAnimation.getHitbox().width+10,walkingAnimation.getPosition().y-walkingAnimation.getHitbox().height);
@@ -226,7 +227,47 @@ int Character::update(std::list<FallingItem>& fallingItems)
         shootingArrow.setPosition(walkingAnimation.getPosition().x+walkingAnimation.getHitbox().width+10,walkingAnimation.getPosition().y-walkingAnimation.getHitbox().height);
     }
 
+    // Six, revive your buddy
+    sf::IntRect rect1 = walkingAnimation.getHitbox();
+    sf::IntRect rect2 = buddy.getHitbox();
+
+    if(buddy.isDead() && rectangles_collide(rect1,rect2)){
+
+        buddy.tryToRevive();
+    }
+
     return lostItems;
+}
+
+void Character::tryToRevive()
+{
+    if(!dead) return;
+
+    reviveCounter++;
+
+    if(reviveCounter >= POINTS_TO_REVIVE){
+
+        position = sf::Vector2f(fallingCorpse.getPosition().x,name == WIZARD_NAME ? WIZARD_INITIAL_Y : ALCHEMIST_INITIAL_Y);
+
+        walkingAnimation.setPosition(position);
+        sideAnimation.setPosition(position);
+        shootingAnimation.setPosition(position);
+        holdingAnimation.setPosition(position);
+
+        reviveCounter = 0;
+        invincibilityCounter = HIT_SPRITE_DURATION;
+
+        fallingCorpse.reset();
+
+        dead=false;
+
+        reviveSound.play();
+    }
+}
+
+sf::IntRect Character::getHitbox(){
+    if(dead) return fallingCorpse.getHitbox();
+    else return walkingAnimation.getHitbox();
 }
 
 void Character::setHitSprite(sf::Sprite hitSprite){
@@ -244,17 +285,31 @@ void Character::setShootingArrowTexture(sf::Texture& texture)
     shootingArrow.setOrigin(0.f,shootingArrow.getTextureRect().height/2);
 }
 
-void Character::setSoundBuffers(sf::SoundBuffer& damageSoundBuffer, sf::SoundBuffer& collectSoundBuffer, sf::SoundBuffer& shootSoundBuffer)
+void Character::setSoundBuffers(sf::SoundBuffer& damageSoundBuffer, sf::SoundBuffer& collectSoundBuffer, sf::SoundBuffer& shootSoundBuffer, sf::SoundBuffer& reviveSoundBuffer)
 {
     damageSound.setBuffer(damageSoundBuffer);
     collectSound.setBuffer(collectSoundBuffer);
     shootSound.setBuffer(shootSoundBuffer);
+    reviveSound.setBuffer(reviveSoundBuffer);
 }
 
 void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
 
     if(dead){
         r.draw(fallingCorpse,s);
+
+        // Draw the revive points
+        if(fallingCorpse.isCurrentlyLying()){
+            sf::RectangleShape backgroundRectangle(sf::Vector2f(fallingCorpse.getHitbox().width,10));
+            backgroundRectangle.setFillColor(name == WIZARD_NAME ? sf::Color(100,100,000) : sf::Color(100,100,100));
+            backgroundRectangle.setPosition(fallingCorpse.getPosition().x-fallingCorpse.getHitbox().width/2,fallingCorpse.getPosition().y-fallingCorpse.getHitbox().height-10);
+            r.draw(backgroundRectangle,s);
+
+            sf::RectangleShape rectangle(sf::Vector2f(((double)reviveCounter/POINTS_TO_REVIVE)*fallingCorpse.getHitbox().width,10));
+            rectangle.setFillColor(name == WIZARD_NAME ? sf::Color::Yellow : sf::Color::White);
+            rectangle.setPosition(fallingCorpse.getPosition().x-fallingCorpse.getHitbox().width/2,fallingCorpse.getPosition().y-fallingCorpse.getHitbox().height-10);
+            r.draw(rectangle,s);
+        }
         return;
     }
 
@@ -274,7 +329,7 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
 
     if(invincibilityCounter == -1) r.draw(animation,s);
     else if (invincibilityCounter%2==0){
-        if(invincibilityCounter < 30) r.draw(hitSprite,s);
+        if(invincibilityCounter < HIT_SPRITE_DURATION) r.draw(hitSprite,s);
         else r.draw(animation,s);
     }
 

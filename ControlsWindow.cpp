@@ -45,6 +45,7 @@ std::pair<int,int> ControlsWindow::run(int joystickID){
                 if(alchemistJoystick==-1 && wizardJoystick==-1){
                     bool moved = false;
                     bool alchemistSelected = true;
+                    bool pressed = true;
                     sf::Sprite chooseControllerBackground;
                     chooseControllerBackground.setTexture(TextureHolder::getTextureInstance()->get(TextureID::joystick_choose_alchemist));
                     chooseControllerBackground.scale(2,2);
@@ -55,24 +56,27 @@ std::pair<int,int> ControlsWindow::run(int joystickID){
                                 mainWindow.close();
                                 exit(EXIT_SUCCESS);
                             }
-                            if(!moved && event.type == sf::Event::JoystickMoved && (joystick_moving_left(joystickID) || joystick_moving_right(joystickID))){
-                                if(alchemistSelected){
-                                    chooseControllerBackground.setTexture(TextureHolder::getTextureInstance()->get(TextureID::joystick_choose_wizard));
-                                    alchemistSelected = false;
-                                } else {
-                                    chooseControllerBackground.setTexture(TextureHolder::getTextureInstance()->get(TextureID::joystick_choose_alchemist));
-                                    alchemistSelected = true;
-                                }
-                                moved = true;
-                            } else if (event.type == sf::Event::JoystickButtonPressed && is_any_button_pressed(joystickID)){
-                                if(alchemistSelected)
-                                    alchemistJoystick = pressedJoystick;
-                                else
-                                    wizardJoystick = pressedJoystick;
-                            } else if (!(joystick_moving_left(joystickID) || joystick_moving_right(joystickID))){
-                                moved = false;
-                            }
                         }
+
+                        if(!moved && (joystick_moving_left(pressedJoystick) || joystick_moving_right(pressedJoystick))){
+                            if(alchemistSelected){
+                                chooseControllerBackground.setTexture(TextureHolder::getTextureInstance()->get(TextureID::joystick_choose_wizard));
+                                alchemistSelected = false;
+                            } else {
+                                chooseControllerBackground.setTexture(TextureHolder::getTextureInstance()->get(TextureID::joystick_choose_alchemist));
+                                alchemistSelected = true;
+                            }
+                            moved = true;
+                        } else if (moved && !(joystick_moving_left(pressedJoystick) || joystick_moving_right(pressedJoystick)))
+                            moved = false;
+
+                        if (!pressed && joystick_pressing_any_button(pressedJoystick)){
+                            if(alchemistSelected)
+                                alchemistJoystick = pressedJoystick;
+                            else
+                                wizardJoystick = pressedJoystick;
+                        } else if(pressed && !joystick_pressing_any_button(pressedJoystick))
+                            pressed = false;
 
                         mainWindow.clear();
                         mainWindow.draw(chooseControllerBackground);
