@@ -60,7 +60,10 @@ void Character::setController(int controllerID)
 
 int Character::update(std::list<FallingItem>& fallingItems)
 {
-    if(dead) return 0;
+    if(dead){
+        fallingCorpse.update();
+        return 0;
+    }
 
     bool moved = false;
     if(controller == -1){
@@ -72,10 +75,10 @@ int Character::update(std::list<FallingItem>& fallingItems)
             position.x += speed;
         }
     } else {
-        if(sf::Joystick::getAxisPosition(controller,sf::Joystick::Axis::X) < -JOYSTICK_THRESHOLD){
+        if(joystick_moving_left(controller)){
             moved = true;
             position.x -= speed;
-        } else if(sf::Joystick::getAxisPosition(controller,sf::Joystick::Axis::X) > JOYSTICK_THRESHOLD){
+        } else if(joystick_moving_right(controller)){
             moved = true;
             position.x += speed;
         }
@@ -133,7 +136,6 @@ int Character::update(std::list<FallingItem>& fallingItems)
                     deadCharacter.setTexture(name == WIZARD_NAME ? TextureHolder::getTextureInstance()->get(TextureID::wizard_hit) :
                                              TextureHolder::getTextureInstance()->get(TextureID::alchemist_hit),1);
 
-                    FallingItem fallingCorpse;
                     fallingCorpse.setAnimation(deadCharacter);
                     fallingCorpse.setPosition(getPosition());
                     fallingCorpse.setCurrentSpeed(sf::Vector2f((-10+rand()%30)/10.0,(-80+rand()%30)/10.0));
@@ -141,8 +143,6 @@ int Character::update(std::list<FallingItem>& fallingItems)
                     fallingCorpse.setRotationSpeed(name == ALCHEMIST_NAME ? 0.4 : -0.4);
                     fallingCorpse.setType(CORPSE_TYPE);
                     fallingCorpse.setLyingItemTexture(TextureHolder::getTextureInstance()->get(name == ALCHEMIST_NAME ? TextureID::alchemist_corpse : TextureID::wizard_corpse));
-
-                    fallingItems.insert(iter,fallingCorpse);
                     dead = true;
                     return 0;
                 } else {
@@ -253,7 +253,10 @@ void Character::setSoundBuffers(sf::SoundBuffer& damageSoundBuffer, sf::SoundBuf
 
 void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
 
-    if(dead) return;
+    if(dead){
+        r.draw(fallingCorpse,s);
+        return;
+    }
 
     Animation animation;
 
@@ -289,6 +292,15 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     // Draw the shooting angle
     if(shooting){
         r.draw(shootingArrow,s);
+    }
+
+    if(DEBUG){
+        sf::RectangleShape rectangle = sf::RectangleShape(sf::Vector2f(animation.getHitbox().width,animation.getHitbox().height));
+        rectangle.setPosition(animation.getHitbox().left,animation.getHitbox().top);
+        rectangle.setOutlineColor(sf::Color::Red);
+        rectangle.setOutlineThickness(1);
+        rectangle.setFillColor(sf::Color::Transparent);
+        r.draw(rectangle,s);
     }
 }
 

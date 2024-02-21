@@ -113,7 +113,7 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::controls_background_joystick_joystick,"sprites/controls-background-joystick-joystick.png");
 
     load(TextureID::dead_heroes,"sprites/dead-heroes.png");
-    load(TextureID::breaking_earth,"sprites/breaking-earth.png");
+    load(TextureID::defeated_boss,"sprites/defeated-boss.png");
 }
 
 template <class Resource, class Identifier>

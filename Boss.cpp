@@ -89,7 +89,10 @@ void Boss::update(std::list<FallingItem>& fallingItems){
         while(iter != fallingItems.end() && (invincibilityCounter>=10 || invincibilityCounter==-1)){
             sf::IntRect rect1 = iter->getHitbox();
             sf::IntRect rect2 = animation.getHitbox();
-            rect2.left-=rect2.width/2;
+            rect2.left-=rect2.width/4;
+            rect2.top-=rect2.height/4;
+            rect2.height = rect2.height*3/2;
+            rect2.width/=2;
 
             if((rect1.left < (rect2.left+rect2.width)) &&
                ((rect1.left+rect1.width) > rect2.left) &&
@@ -279,6 +282,15 @@ void Boss::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     rectangle.setFillColor(sf::Color::Blue);
     rectangle.setPosition(animation.getPosition().x-animation.getHitbox().width,animation.getPosition().y-animation.getHitbox().height-10);
     r.draw(rectangle,s);
+
+    if(DEBUG){
+        sf::RectangleShape rectangle = sf::RectangleShape(sf::Vector2f(animation.getHitbox().width/2,animation.getHitbox().height*3/2));
+        rectangle.setPosition(animation.getHitbox().left-animation.getHitbox().width/4,animation.getHitbox().top-animation.getHitbox().height/4);
+        rectangle.setOutlineColor(sf::Color::Red);
+        rectangle.setOutlineThickness(1);
+        rectangle.setFillColor(sf::Color::Transparent);
+        r.draw(rectangle,s);
+    }
 }
 
 void Boss::setSoundBuffers(sf::SoundBuffer& appearing, sf::SoundBuffer& disappearing, sf::SoundBuffer& damage, sf::SoundBuffer& shoot)

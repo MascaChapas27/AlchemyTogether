@@ -67,15 +67,6 @@ void Animation::update(){
 
 void Animation::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     r.draw(this->sprite,s);
-
-    if(DEBUG){
-        sf::RectangleShape rectangle = sf::RectangleShape(sf::Vector2f(getHitbox().width,getHitbox().height));
-        rectangle.setPosition(getHitbox().left,getHitbox().top);
-        rectangle.setOutlineColor(sf::Color::Red);
-        rectangle.setOutlineThickness(1);
-        rectangle.setFillColor(sf::Color::Transparent);
-        r.draw(rectangle,s);
-    }
 }
 
 void Animation::resetToStart(){

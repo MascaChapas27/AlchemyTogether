@@ -21,7 +21,7 @@ enum class TextureID{
     time_frame,alchemist_arrow,wizard_arrow,alchemist_corpse,wizard_corpse,
     wizard_plus1,alchemist_plus1,boss_minus1,boss_corpse,
 
-    dead_heroes, breaking_earth
+    dead_heroes, defeated_boss
 };
 
 enum class SoundID {
@@ -53,7 +53,7 @@ const int NUM_FIRE_UNIFORM_RAIN = 7;
 
 extern sf::RenderWindow mainWindow;
 
-const float JOYSTICK_THRESHOLD = 0.3;
+const float JOYSTICK_THRESHOLD = 20;
 
 const bool DEBUG = false;
 
@@ -90,13 +90,12 @@ const int ALCHEMIST_DANCE_WIDTH = 32;
 const int CUTSCENE_FPS = 30;
 const int MAX_FPS = 100;
 const std::string MAIN_WINDOW_NAME = "Alchemy Together";
-const std::string AUX_WINDOW_NAME = "Help";
 
 const int INVINCIBILITY_FRAMES = 200;
 const int INVINCINILITY_FLICKER = 2;
 const int BOSS_INVINCIBILITY_FRAMES = 30;
 
-const int ATTACK = 1;
+const int ATTACK = 100;
 
 const int WIZARD_INITIAL_X = 590;
 const int WIZARD_INITIAL_Y = 548;
@@ -141,5 +140,10 @@ const int FALLING_TRAIL_MAX_COUNTER = 5;
 const double GRAVITY = 0.05;
 
 bool is_any_button_pressed(int joystick);
+
+void buttons_debug(int joystick);
+
+bool joystick_moving_left(int joystick);
+bool joystick_moving_right(int joystick);
 
 #endif // __UTILITIES_HPP__

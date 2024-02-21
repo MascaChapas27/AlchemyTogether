@@ -55,7 +55,7 @@ std::pair<int,int> ControlsWindow::run(int joystickID){
                                 mainWindow.close();
                                 exit(EXIT_SUCCESS);
                             }
-                            if(!moved && event.type == sf::Event::JoystickMoved && event.joystickMove.axis == sf::Joystick::Axis::X && std::abs(event.joystickMove.position) > JOYSTICK_THRESHOLD){
+                            if(!moved && event.type == sf::Event::JoystickMoved && (joystick_moving_left(joystickID) || joystick_moving_right(joystickID))){
                                 if(alchemistSelected){
                                     chooseControllerBackground.setTexture(TextureHolder::getTextureInstance()->get(TextureID::joystick_choose_wizard));
                                     alchemistSelected = false;
@@ -64,12 +64,12 @@ std::pair<int,int> ControlsWindow::run(int joystickID){
                                     alchemistSelected = true;
                                 }
                                 moved = true;
-                            } else if (event.type == sf::Event::JoystickButtonPressed){
+                            } else if (event.type == sf::Event::JoystickButtonPressed && is_any_button_pressed(joystickID)){
                                 if(alchemistSelected)
                                     alchemistJoystick = pressedJoystick;
                                 else
                                     wizardJoystick = pressedJoystick;
-                            } else if (std::abs(sf::Joystick::getAxisPosition(pressedJoystick,sf::Joystick::Axis::X)) < JOYSTICK_THRESHOLD){
+                            } else if (!(joystick_moving_left(joystickID) || joystick_moving_right(joystickID))){
                                 moved = false;
                             }
                         }

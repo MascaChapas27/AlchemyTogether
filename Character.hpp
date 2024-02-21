@@ -77,6 +77,9 @@ class Character : public sf::Drawable {
         // Controller the character will use (-1 means none)
         int controller;
 
+        // Falling item for the dead character
+        FallingItem fallingCorpse;
+
 
     public:
         Character();

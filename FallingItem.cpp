@@ -31,6 +31,15 @@ void FallingItem::draw(sf::RenderTarget& r, sf::RenderStates s) const{
         }
         r.draw(this->animation,s);
     }
+
+    if(DEBUG){
+        sf::RectangleShape rectangle = sf::RectangleShape(sf::Vector2f(animation.getHitbox().width,animation.getHitbox().height));
+        rectangle.setPosition(animation.getHitbox().left,animation.getHitbox().top);
+        rectangle.setOutlineColor(sf::Color::Red);
+        rectangle.setOutlineThickness(1);
+        rectangle.setFillColor(sf::Color::Transparent);
+        r.draw(rectangle,s);
+    }
 }
 
 sf::IntRect FallingItem::getHitbox(){

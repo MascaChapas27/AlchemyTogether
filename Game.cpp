@@ -4,6 +4,7 @@
 #include "ResourceHolder.hpp"
 #include "MusicPlayer.hpp"
 #include "BadEndingCutscene.hpp"
+#include "GoodEndingCutscene.hpp"
 
 void Game::run(int alchemistController, int wizardController){
 
@@ -51,7 +52,7 @@ void Game::run(int alchemistController, int wizardController){
     Animation walkingAlchemist;
     walkingAlchemist.setDelay(15);
     walkingAlchemist.setTexture(textureHolder->get(TextureID::alchemist_walk),2);
-    walkingAlchemist.setPosition(ALCHEMIST_INITIAL_X-1,MAIN_WINDOW_HEIGHT-walkingAlchemist.getHitbox().height);
+    walkingAlchemist.setPosition(ALCHEMIST_INITIAL_X-2,MAIN_WINDOW_HEIGHT-walkingAlchemist.getHitbox().height);
     alchemist.setWalkingAnimation(walkingAlchemist);
 
     Animation shootingAlchemist;
@@ -266,9 +267,7 @@ void Game::run(int alchemistController, int wizardController){
     auto iter = fallingItems.begin();
     while(iter != fallingItems.end()){
         if(iter->getType() != CORPSE_TYPE) iter=fallingItems.erase(iter);
-        else {
-            iter++;
-        }
+        else iter++;
     }
 
     if(wizard.isDead() && alchemist.isDead()){
@@ -299,14 +298,12 @@ void Game::run(int alchemistController, int wizardController){
                 foregroundRectangle.setFillColor(newColor);
             }
 
-            for(FallingItem& fallingItem : fallingItems){
-                fallingItem.update();
-            }
+            wizard.update(fallingItems);
+            alchemist.update(fallingItems);
 
             mainWindow.clear();
-            for(FallingItem& fallingItem : fallingItems){
-                mainWindow.draw(fallingItem);
-            }
+            mainWindow.draw(wizard);
+            mainWindow.draw(alchemist);
             mainWindow.draw(foregroundRectangle);
             mainWindow.display();
         }
@@ -371,19 +368,27 @@ void Game::run(int alchemistController, int wizardController){
 
             mainWindow.clear();
             if(dancing){
-                mainWindow.draw(wizardAnimation);
-                mainWindow.draw(alchemistAnimation);
+
+                if(wizard.isDead()) mainWindow.draw(wizard);
+                else mainWindow.draw(wizardAnimation);
+
+                if(alchemist.isDead()) mainWindow.draw(alchemist);
+                else mainWindow.draw(alchemistAnimation);
+
             } else {
                 mainWindow.draw(wizard);
                 mainWindow.draw(alchemist);
             }
+
             for(FallingItem& fallingItem : fallingItems){
                 mainWindow.draw(fallingItem);
             }
+
             mainWindow.draw(foregroundRectangle);
             mainWindow.display();
         }
 
-        // GoodEndingCutscene::getInstance()->begin();
+        GoodEndingCutscene goodEndingCutscene;
+        goodEndingCutscene.play();
     }
 }

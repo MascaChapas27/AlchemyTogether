@@ -5,6 +5,7 @@
 #include "TitleScreen.hpp"
 #include "ResourceHolder.hpp"
 #include "MusicPlayer.hpp"
+#include <iostream>
 
 // Global variables in Utilities.hpp
 sf::RenderWindow mainWindow;
@@ -12,6 +13,10 @@ sf::Texture hitWizardTexture;
 sf::Texture hitAlchemistTexture;
 
 int main(){
+
+    // This thing makes error messages disappear because they keep appearing oh god
+    // they are everywhere go straight to hell and dont come back
+    sf::err().rdbuf(NULL);
 
     // Load resources
     TextureHolder::getTextureInstance()->loadAllTextures();

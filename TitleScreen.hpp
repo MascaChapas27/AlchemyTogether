@@ -3,7 +3,7 @@
 
 class TitleScreen {
     public:
-        // Returns true if a joystick button was pressed, false if not
+        // Returns a joystick code if a joystick button was pressed, -1 if not
         int run();
 };
 
