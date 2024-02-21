@@ -63,6 +63,7 @@ int Character::update(std::list<FallingItem>& fallingItems, Character& buddy)
 {
     if(dead){
         fallingCorpse.update();
+        reviveSprite.setPosition((int)fallingCorpse.getPosition().x,(int)fallingCorpse.getPosition().y-fallingCorpse.getHitbox().height-reviveSprite.getTextureRect().height-6);
         return 0;
     }
 
@@ -110,6 +111,9 @@ int Character::update(std::list<FallingItem>& fallingItems, Character& buddy)
         holdingAnimation.resetToStart();
         sideAnimation.resetToStart();
     }
+
+    // Also update the position of the inventory thing
+    inventorySprite.setPosition(position.x,position.y-walkingAnimation.getHitbox().height-inventorySprite.getTextureRect().height-6);
 
     // Second, check for collisions
 
@@ -293,6 +297,20 @@ void Character::setSoundBuffers(sf::SoundBuffer& damageSoundBuffer, sf::SoundBuf
     reviveSound.setBuffer(reviveSoundBuffer);
 }
 
+void Character::setInventoryTexture(sf::Texture& inventoryTexture)
+{
+    inventorySprite.setTexture(inventoryTexture);
+    inventorySprite.setScale(2,2);
+    inventorySprite.setOrigin(inventorySprite.getTextureRect().width/2,inventorySprite.getTextureRect().height/2);
+}
+
+void Character::setReviveTexture(sf::Texture& reviveTexture)
+{
+    reviveSprite.setTexture(reviveTexture);
+    reviveSprite.setScale(2,2);
+    reviveSprite.setOrigin(reviveSprite.getTextureRect().width/2,reviveSprite.getTextureRect().height/2);
+}
+
 void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
 
     if(dead){
@@ -300,14 +318,11 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
 
         // Draw the revive points
         if(fallingCorpse.isCurrentlyLying()){
-            sf::RectangleShape backgroundRectangle(sf::Vector2f(fallingCorpse.getHitbox().width,10));
-            backgroundRectangle.setFillColor(name == WIZARD_NAME ? sf::Color(100,100,000) : sf::Color(100,100,100));
-            backgroundRectangle.setPosition(fallingCorpse.getPosition().x-fallingCorpse.getHitbox().width/2,fallingCorpse.getPosition().y-fallingCorpse.getHitbox().height-10);
-            r.draw(backgroundRectangle,s);
+            r.draw(reviveSprite,s);
 
             sf::RectangleShape rectangle(sf::Vector2f(((double)reviveCounter/POINTS_TO_REVIVE)*fallingCorpse.getHitbox().width,10));
             rectangle.setFillColor(name == WIZARD_NAME ? sf::Color::Yellow : sf::Color::White);
-            rectangle.setPosition(fallingCorpse.getPosition().x-fallingCorpse.getHitbox().width/2,fallingCorpse.getPosition().y-fallingCorpse.getHitbox().height-10);
+            rectangle.setPosition(fallingCorpse.getPosition().x-fallingCorpse.getHitbox().width/2,fallingCorpse.getPosition().y-fallingCorpse.getHitbox().height-19);
             r.draw(rectangle,s);
         }
         return;
@@ -334,14 +349,11 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     }
 
     // Draw the amount of items left
-    sf::RectangleShape backgroundRectangle(sf::Vector2f(animation.getHitbox().width*2,10));
-    backgroundRectangle.setFillColor(name == WIZARD_NAME ? sf::Color(100,100,000) : sf::Color(100,100,100));
-    backgroundRectangle.setPosition(animation.getPosition().x-animation.getHitbox().width,animation.getPosition().y-animation.getHitbox().height-10);
-    r.draw(backgroundRectangle,s);
+    r.draw(inventorySprite,s);
 
     sf::RectangleShape rectangle(sf::Vector2f(((double)currentItems/maxItems)*animation.getHitbox().width*2,10));
     rectangle.setFillColor(name == WIZARD_NAME ? sf::Color::Yellow : sf::Color::White);
-    rectangle.setPosition(animation.getPosition().x-animation.getHitbox().width,animation.getPosition().y-animation.getHitbox().height-10);
+    rectangle.setPosition(animation.getPosition().x-animation.getHitbox().width + (name == ALCHEMIST_NAME),animation.getPosition().y-animation.getHitbox().height-19- (name==ALCHEMIST_NAME));
     r.draw(rectangle,s);
 
     // Draw the shooting angle

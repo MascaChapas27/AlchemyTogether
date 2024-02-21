@@ -86,6 +86,12 @@ class Character : public sf::Drawable {
         // Falling item for the dead character
         FallingItem fallingCorpse;
 
+        // Sprite that shows how many items the character has
+        sf::Sprite inventorySprite;
+
+        // Sprite that shows how much is left for the character to revive
+        sf::Sprite reviveSprite;
+
 
     public:
         Character();
@@ -95,6 +101,8 @@ class Character : public sf::Drawable {
         void setHoldingAnimation(Animation animation);
         void setSideAnimation(Animation animation);
         void setHitSprite(sf::Sprite hitSprite);
+        void setInventoryTexture(sf::Texture& inventoryTexture);
+        void setReviveTexture(sf::Texture& reviveTexture);
         void setSpeed(double speed);
         void setKeys(sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey, sf::Keyboard::Key shootingKey);
         void setShootingArrowTexture(sf::Texture& texture);

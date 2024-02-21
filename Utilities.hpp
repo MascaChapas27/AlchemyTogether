@@ -21,6 +21,8 @@ enum class TextureID{
     time_frame,alchemist_arrow,wizard_arrow,alchemist_corpse,wizard_corpse,
     wizard_plus1,alchemist_plus1,boss_minus1,boss_corpse,
 
+    alchemist_inventory, wizard_inventory, alchemist_revive, wizard_revive,
+
     dead_heroes, defeated_boss
 };
 

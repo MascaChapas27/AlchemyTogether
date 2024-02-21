@@ -47,6 +47,8 @@ void Game::run(int alchemistController, int wizardController){
     wizard.setName(WIZARD_NAME);
     wizard.setSoundBuffers(soundHolder->get(SoundID::wizard_damage),soundHolder->get(SoundID::wizard_collect),soundHolder->get(SoundID::wizard_shoot),soundHolder->get(SoundID::wizard_revive));
     wizard.setController(wizardController);
+    wizard.setInventoryTexture(textureHolder->get(TextureID::wizard_inventory));
+    wizard.setReviveTexture(textureHolder->get(TextureID::wizard_revive));
 
     // Prepare the alchemist
     Animation walkingAlchemist;
@@ -82,6 +84,8 @@ void Game::run(int alchemistController, int wizardController){
     alchemist.setName(ALCHEMIST_NAME);
     alchemist.setSoundBuffers(soundHolder->get(SoundID::alchemist_damage),soundHolder->get(SoundID::alchemist_collect),soundHolder->get(SoundID::alchemist_shoot),soundHolder->get(SoundID::alchemist_revive));
     alchemist.setController(alchemistController);
+    alchemist.setInventoryTexture(textureHolder->get(TextureID::alchemist_inventory));
+    alchemist.setReviveTexture(textureHolder->get(TextureID::alchemist_revive));
 
     // Prepare the boss
     Animation flyingBoss;
