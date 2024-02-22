@@ -21,7 +21,7 @@ enum class TextureID{
     time_frame,alchemist_arrow,wizard_arrow,alchemist_corpse,wizard_corpse,
     wizard_plus1,alchemist_plus1,boss_minus1,boss_corpse,
 
-    alchemist_inventory, wizard_inventory, alchemist_revive, wizard_revive,
+    alchemist_inventory, wizard_inventory, alchemist_revive, wizard_revive, boss_health,
 
     dead_heroes, defeated_boss
 };
@@ -99,7 +99,7 @@ const int INVINCIBILITY_FRAMES = 200;
 const int INVINCINILITY_FLICKER = 2;
 const int BOSS_INVINCIBILITY_FRAMES = 30;
 
-const int ATTACK = 1;
+const int ATTACK = 100;
 
 const int WIZARD_INITIAL_X = 590;
 const int WIZARD_INITIAL_Y = 548;

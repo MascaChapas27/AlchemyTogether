@@ -53,6 +53,9 @@ class Boss : public sf::Drawable {
         // Helper variable to know where to shoot depending on the attack
         int attackAux;
 
+        // Sprite for the sign that contains the health bar
+        sf::Sprite healthSprite;
+
     private:
         void attackCircles(std::list<FallingItem>& fallingItems);
         void attackUniformRain(std::list<FallingItem>& fallingItems);
@@ -67,6 +70,7 @@ class Boss : public sf::Drawable {
         int getCurrentHealth();
         sf::Vector2f getPosition();
         void setActivated(bool activated);
+        void setHealthTexture(sf::Texture& healthTexture);
         void setSoundBuffers(sf::SoundBuffer& appearing, sf::SoundBuffer& disappearing,
                              sf::SoundBuffer& damage, sf::SoundBuffer& shoot);
         void update(std::list<FallingItem>& fallingItems);

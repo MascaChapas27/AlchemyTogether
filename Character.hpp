@@ -92,6 +92,8 @@ class Character : public sf::Drawable {
         // Sprite that shows how much is left for the character to revive
         sf::Sprite reviveSprite;
 
+        // True if the game is running but false if it's joever
+        bool showSigns;
 
     public:
         Character();
@@ -108,6 +110,7 @@ class Character : public sf::Drawable {
         void setShootingArrowTexture(sf::Texture& texture);
         void setCurrentItems(int currentItems);
         void setMaxItems(int maxItems);
+        void setShowSigns(bool showSigns);
         void setSoundBuffers(sf::SoundBuffer& damageSoundBuffer, sf::SoundBuffer& collectSoundBuffer, sf::SoundBuffer& shootSoundBuffer, sf::SoundBuffer& reviveSoundBuffer);
         int getCurrentItems();
         bool isDead();

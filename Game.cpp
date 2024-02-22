@@ -104,6 +104,7 @@ void Game::run(int alchemistController, int wizardController){
     hitBoss.scale(2.f,2.f);
 
     boss.setHitSprite(hitBoss);
+    boss.setHealthTexture(textureHolder->get(TextureID::boss_health));
 
     // Prepare the backgrounds
     background.setTexture(textureHolder->get(TextureID::background));
@@ -263,6 +264,9 @@ void Game::run(int alchemistController, int wizardController){
         mainWindow.display();
     }
 
+    wizard.setShowSigns(false);
+    alchemist.setShowSigns(false);
+
     MusicPlayer::getInstance()->stop();
 
     sf::Clock endClock;
@@ -365,10 +369,9 @@ void Game::run(int alchemistController, int wizardController){
             if(dancing){
                 alchemistAnimation.update();
                 wizardAnimation.update();
-            } else {
-                wizard.update(fallingItems,alchemist);
-                alchemist.update(fallingItems,wizard);
             }
+            wizard.update(fallingItems,alchemist);
+            alchemist.update(fallingItems,wizard);
 
             mainWindow.clear();
             if(dancing){

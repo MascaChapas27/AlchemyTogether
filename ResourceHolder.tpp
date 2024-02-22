@@ -105,6 +105,7 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::wizard_inventory,"sprites/wizard-inventory.png");
     load(TextureID::alchemist_revive,"sprites/alchemist-revive.png");
     load(TextureID::wizard_revive,"sprites/wizard-revive.png");
+    load(TextureID::boss_health,"sprites/boss-health.png");
 
     load(TextureID::alchemist_plus1,"sprites/alchemist-plus1.png");
     load(TextureID::wizard_plus1,"sprites/wizard-plus1.png");

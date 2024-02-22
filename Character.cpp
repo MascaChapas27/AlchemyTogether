@@ -14,6 +14,7 @@ Character::Character(){
     dead = false;
     controller = -1;
     reviveCounter = 0;
+    showSigns = true;
 }
 
 void Character::setWalkingAnimation(Animation walkingAnimation)
@@ -235,8 +236,7 @@ int Character::update(std::list<FallingItem>& fallingItems, Character& buddy)
     sf::IntRect rect1 = walkingAnimation.getHitbox();
     sf::IntRect rect2 = buddy.getHitbox();
 
-    if(buddy.isDead() && rectangles_collide(rect1,rect2)){
-
+    if(showSigns && buddy.isDead() && rectangles_collide(rect1,rect2)){
         buddy.tryToRevive();
     }
 
@@ -317,7 +317,7 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
         r.draw(fallingCorpse,s);
 
         // Draw the revive points
-        if(fallingCorpse.isCurrentlyLying()){
+        if(showSigns && fallingCorpse.isCurrentlyLying()){
             r.draw(reviveSprite,s);
 
             sf::RectangleShape rectangle(sf::Vector2f(((double)reviveCounter/POINTS_TO_REVIVE)*fallingCorpse.getHitbox().width,10));
@@ -349,12 +349,14 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     }
 
     // Draw the amount of items left
-    r.draw(inventorySprite,s);
+    if(showSigns){
+        r.draw(inventorySprite,s);
 
-    sf::RectangleShape rectangle(sf::Vector2f(((double)currentItems/maxItems)*animation.getHitbox().width*2,10));
-    rectangle.setFillColor(name == WIZARD_NAME ? sf::Color::Yellow : sf::Color::White);
-    rectangle.setPosition(animation.getPosition().x-animation.getHitbox().width + (name == ALCHEMIST_NAME),animation.getPosition().y-animation.getHitbox().height-19- (name==ALCHEMIST_NAME));
-    r.draw(rectangle,s);
+        sf::RectangleShape rectangle(sf::Vector2f(((double)currentItems/maxItems)*animation.getHitbox().width*2,10));
+        rectangle.setFillColor(name == WIZARD_NAME ? sf::Color::Yellow : sf::Color::White);
+        rectangle.setPosition(animation.getPosition().x-animation.getHitbox().width + (name == ALCHEMIST_NAME),animation.getPosition().y-animation.getHitbox().height-19- (name==ALCHEMIST_NAME));
+        r.draw(rectangle,s);
+    }
 
     // Draw the shooting angle
     if(shooting){
@@ -369,6 +371,11 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
         rectangle.setFillColor(sf::Color::Transparent);
         r.draw(rectangle,s);
     }
+}
+
+void Character::setShowSigns(bool showSigns)
+{
+    this->showSigns = showSigns;
 }
 
 sf::Vector2f Character::getPosition()

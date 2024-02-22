@@ -73,6 +73,9 @@ void Boss::update(std::list<FallingItem>& fallingItems){
 
     animation.setPosition(newPosition.x,newPosition.y);
 
+    // Also update the position of the health bar thing
+    healthSprite.setPosition(newPosition.x,newPosition.y-animation.getHitbox().height-healthSprite.getTextureRect().height-6);
+
     animation.update();
 
     // Second, change direction
@@ -273,14 +276,12 @@ void Boss::draw(sf::RenderTarget& r, sf::RenderStates s) const{
         else r.draw(animation,s);
     }
 
-    sf::RectangleShape backgroundRectangle(sf::Vector2f(animation.getHitbox().width*2,10));
-    backgroundRectangle.setFillColor(sf::Color(0,0,100));
-    backgroundRectangle.setPosition(animation.getPosition().x-animation.getHitbox().width,animation.getPosition().y-animation.getHitbox().height-10);
-    r.draw(backgroundRectangle,s);
+    // Draw the health bar
+    r.draw(healthSprite,s);
 
     sf::RectangleShape rectangle(sf::Vector2f(((double)(health>=0 ? health : 0)/BOSS_INITIAL_HEALTH)*animation.getHitbox().width*2,10));
     rectangle.setFillColor(sf::Color::Blue);
-    rectangle.setPosition(animation.getPosition().x-animation.getHitbox().width,animation.getPosition().y-animation.getHitbox().height-10);
+    rectangle.setPosition(animation.getPosition().x-animation.getHitbox().width+1,animation.getPosition().y-animation.getHitbox().height-19);
     r.draw(rectangle,s);
 
     if(DEBUG){
@@ -291,6 +292,13 @@ void Boss::draw(sf::RenderTarget& r, sf::RenderStates s) const{
         rectangle.setFillColor(sf::Color::Transparent);
         r.draw(rectangle,s);
     }
+}
+
+void Boss::setHealthTexture(sf::Texture& healthTexture)
+{
+    healthSprite.setTexture(healthTexture);
+    healthSprite.setScale(2,2);
+    healthSprite.setOrigin(healthSprite.getTextureRect().width/2,healthSprite.getTextureRect().height/2);
 }
 
 void Boss::setSoundBuffers(sf::SoundBuffer& appearing, sf::SoundBuffer& disappearing, sf::SoundBuffer& damage, sf::SoundBuffer& shoot)
