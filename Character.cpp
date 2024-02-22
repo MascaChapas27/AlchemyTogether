@@ -69,29 +69,30 @@ int Character::update(std::list<FallingItem>& fallingItems, Character& buddy)
     }
 
     bool moved = false;
-    if(controller == -1){
-        if(sf::Keyboard::isKeyPressed(leftKey)){
-            moved = true;
-            position.x -= speed;
-        } else if(sf::Keyboard::isKeyPressed(rightKey)){
-            moved = true;
-            position.x += speed;
+    if(showSigns){
+        if(controller == -1){
+            if(sf::Keyboard::isKeyPressed(leftKey)){
+                moved = true;
+                position.x -= speed;
+            } else if(sf::Keyboard::isKeyPressed(rightKey)){
+                moved = true;
+                position.x += speed;
+            }
+        } else {
+            if(joystick_moving_left(controller)){
+                moved = true;
+                position.x -= speed;
+            } else if(joystick_moving_right(controller)){
+                moved = true;
+                position.x += speed;
+            }
         }
-    } else {
-        if(joystick_moving_left(controller)){
-            moved = true;
-            position.x -= speed;
-        } else if(joystick_moving_right(controller)){
-            moved = true;
-            position.x += speed;
+
+        if(position.x + walkingAnimation.getWidth() > MAIN_WINDOW_WIDTH){
+            position.x = MAIN_WINDOW_WIDTH - walkingAnimation.getWidth();
+        } else if (position.x-walkingAnimation.getWidth() < 0){
+            position.x = walkingAnimation.getWidth();
         }
-    }
-
-
-    if(position.x + walkingAnimation.getWidth() > MAIN_WINDOW_WIDTH){
-        position.x = MAIN_WINDOW_WIDTH - walkingAnimation.getWidth();
-    } else if (position.x-walkingAnimation.getWidth() < 0){
-        position.x = walkingAnimation.getWidth();
     }
 
     // First, update all animations just in case
@@ -210,7 +211,7 @@ int Character::update(std::list<FallingItem>& fallingItems, Character& buddy)
     }
 
     // Five, shoot
-    if(shooting){
+    if(shooting && showSigns){
         if(shootingCooldown == 0 && currentItems > 0 && (controller == -1 ? sf::Keyboard::isKeyPressed(shootingKey) : joystick_pressing_any_button(controller))){
             shootSound.play();
             if(name == ALCHEMIST_NAME){
@@ -359,7 +360,7 @@ void Character::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     }
 
     // Draw the shooting angle
-    if(shooting){
+    if(shooting && showSigns){
         r.draw(shootingArrow,s);
     }
 

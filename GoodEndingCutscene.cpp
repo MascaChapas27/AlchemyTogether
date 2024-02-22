@@ -115,6 +115,7 @@ void GoodEndingCutscene::play(){
             sf::Color newColor = rectangleCover.getFillColor();
             newColor.a+=5;
             rectangleCover.setFillColor(newColor);
+            MusicPlayer::getInstance()->alterVolume(-1);
         }
 
         mainWindow.clear();
