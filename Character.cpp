@@ -150,8 +150,9 @@ int Character::update(std::list<FallingItem>& fallingItems, Character& buddy)
                     fallingCorpse.setRotationSpeed(name == ALCHEMIST_NAME ? 0.4 : -0.4);
                     fallingCorpse.setType(CORPSE_TYPE);
                     fallingCorpse.setLyingItemTexture(TextureHolder::getTextureInstance()->get(name == ALCHEMIST_NAME ? TextureID::alchemist_corpse : TextureID::wizard_corpse));
+                    fallingCorpse.setLyingBuffer(SoundHolder::getSoundInstance()->get(name == ALCHEMIST_NAME ? SoundID::alchemist_fall : SoundID::wizard_fall));
                     dead = true;
-                    return 0;
+                    return -1;
                 } else {
                     lostItems = currentItems;
                     currentItems = 0;
@@ -252,12 +253,15 @@ void Character::tryToRevive()
 
     if(reviveCounter >= POINTS_TO_REVIVE){
 
-        position = sf::Vector2f(fallingCorpse.getPosition().x,name == WIZARD_NAME ? WIZARD_INITIAL_Y : ALCHEMIST_INITIAL_Y);
+        position = sf::Vector2f((int)fallingCorpse.getPosition().x,name == WIZARD_NAME ? WIZARD_INITIAL_Y : ALCHEMIST_INITIAL_Y);
 
         walkingAnimation.setPosition(position);
         sideAnimation.setPosition(position);
         shootingAnimation.setPosition(position);
         holdingAnimation.setPosition(position);
+
+        inventorySprite.setPosition(position.x,position.y-walkingAnimation.getHitbox().height-inventorySprite.getTextureRect().height-6);
+        shootingArrow.setPosition(walkingAnimation.getPosition().x+walkingAnimation.getHitbox().width+10,walkingAnimation.getPosition().y-walkingAnimation.getHitbox().height);
 
         reviveCounter = 0;
         invincibilityCounter = HIT_SPRITE_DURATION;

@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Animation.hpp"
 #include <list>
+#include <SFML/Audio.hpp>
 
 class FallingItem : public sf::Drawable {
     private:
@@ -39,6 +40,9 @@ class FallingItem : public sf::Drawable {
         // Counter to avoid trail effects from being too close
         int trailCounter;
 
+        // Sound that plays when the item falls and lies on the floor
+        sf::Sound lyingSound;
+
     public:
         FallingItem();
 
@@ -56,6 +60,7 @@ class FallingItem : public sf::Drawable {
         void update();
         void setLyingItemTexture(sf::Texture& texture);
         void setCurrentSpeed(sf::Vector2f currentSpeed);
+        void setLyingBuffer(sf::SoundBuffer& lyingBuffer);
         bool isOut();
         bool isCurrentlyLying() const;
         void reset();

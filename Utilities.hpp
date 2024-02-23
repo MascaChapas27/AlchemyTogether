@@ -32,7 +32,7 @@ enum class SoundID {
     wizard_damage,wizard_collect,wizard_shoot,
     boss_damage,boss_shoot,boss_appear,boss_disappear,
 
-    alchemist_revive,wizard_revive,
+    alchemist_revive,wizard_revive, alchemist_fall, wizard_fall, boss_fall,
 
     breaking_earth
 };
@@ -80,6 +80,7 @@ const sf::Vector2f CUTSCENE2_ALCHEMIST_POSITION(140,222);
 const int CUTSCENE2_WAIT = 50;
 
 const int WINDOW_SHAKE_FREQUENCY = 1;
+const int WINDOW_SHAKE_HIT = 20;
 
 const int TEXT_WAIT = 20;
 
@@ -99,7 +100,7 @@ const int INVINCIBILITY_FRAMES = 200;
 const int INVINCINILITY_FLICKER = 2;
 const int BOSS_INVINCIBILITY_FRAMES = 30;
 
-const int ATTACK = 100;
+const int ATTACK = 1;
 
 const int WIZARD_INITIAL_X = 590;
 const int WIZARD_INITIAL_Y = 548;

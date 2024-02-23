@@ -76,6 +76,7 @@ void FallingItem::update(){
        (animation.getPosition().x+currentSpeed.x > MAIN_WINDOW_WIDTH-animation.getHitbox().width && currentSpeed.x > 0)) currentSpeed.x*=-1;
 
     if(!currentlyLying && lying && animation.getPosition().y > MAIN_WINDOW_HEIGHT){
+        lyingSound.play();
         lyingItem.setPosition(sf::Vector2f(animation.getPosition().x,MAIN_WINDOW_HEIGHT-lyingItem.getTextureRect().height));
         currentlyLying = true;
         gravity = 0;
@@ -108,6 +109,11 @@ void FallingItem::setLyingItemTexture(sf::Texture& texture)
     lyingItem.setScale(2,2);
     lyingItem.setOrigin(lyingItem.getTextureRect().width/2,lyingItem.getTextureRect().height/2);
     lying = true;
+}
+
+void FallingItem::setLyingBuffer(sf::SoundBuffer& lyingBuffer)
+{
+    this->lyingSound.setBuffer(lyingBuffer);
 }
 
 void FallingItem::reset()

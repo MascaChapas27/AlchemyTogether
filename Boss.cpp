@@ -137,6 +137,7 @@ void Boss::update(std::list<FallingItem>& fallingItems){
                         fallingCorpse.setRotationSpeed(-0.4);
                         fallingCorpse.setType(CORPSE_TYPE);
                         fallingCorpse.setLyingItemTexture(TextureHolder::getTextureInstance()->get(TextureID::boss_corpse));
+                        fallingCorpse.setLyingBuffer(SoundHolder::getSoundInstance()->get(SoundID::boss_fall));
 
                         fallingItems.insert(iter,fallingCorpse);
                     }

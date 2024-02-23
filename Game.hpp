@@ -22,7 +22,13 @@ class Game {
         // Background
         sf::Sprite background;
 
+        // Super cool movement for the window i could have done in a different class
+        // but fuck it i dont want to dedicate a lot of time to this silly thingy
+        int windowMovement;
+        bool windowGoingDown;
+
     public:
+        Game();
         void run(int alchemistController, int wizardController);
 
 };

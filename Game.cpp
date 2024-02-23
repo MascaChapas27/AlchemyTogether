@@ -6,6 +6,11 @@
 #include "BadEndingCutscene.hpp"
 #include "GoodEndingCutscene.hpp"
 
+Game::Game(){
+    this->windowGoingDown = false;
+    this->windowMovement = 0;
+}
+
 void Game::run(int alchemistController, int wizardController){
 
     TextureHolder * textureHolder = TextureHolder::getTextureInstance();
@@ -164,6 +169,16 @@ void Game::run(int alchemistController, int wizardController){
             }
         }
 
+        if(windowMovement > 0){
+            if(windowGoingDown){
+                mainWindow.setPosition(sf::Vector2i(mainWindow.getPosition().x,mainWindow.getPosition().y+windowMovement));
+            } else {
+                mainWindow.setPosition(sf::Vector2i(mainWindow.getPosition().x,mainWindow.getPosition().y-windowMovement));
+                windowMovement--;
+            }
+            windowGoingDown = !windowGoingDown;
+        }
+
         // Spawn books or magic
         if(rand()%difficulty==0){
             if(!bossHere){
@@ -190,7 +205,8 @@ void Game::run(int alchemistController, int wizardController){
         // Check if wizard got hit and lost magic
         int wizardLostItems = wizard.update(fallingItems,alchemist);
 
-        if(wizardLostItems > 0){
+        if(wizardLostItems != 0){
+            windowMovement=WINDOW_SHAKE_HIT;
             for(int i=0;i<wizardLostItems;i++){
                 FallingItem::fallingMagic.setPosition(wizard.getPosition());
                 FallingItem::fallingMagic.setCurrentSpeed(sf::Vector2f((-10+rand()%30)/10.0,(-80+rand()%30)/10.0));
@@ -202,7 +218,8 @@ void Game::run(int alchemistController, int wizardController){
         // Check if alchemist got hit and lost books
         int alchemistLostItems = alchemist.update(fallingItems, wizard);
 
-        if(alchemistLostItems > 0){
+        if(alchemistLostItems != 0){
+            windowMovement=WINDOW_SHAKE_HIT;
             for(int i=0;i<alchemistLostItems;i++){
                 FallingItem::fallingBook.setPosition(alchemist.getPosition());
                 FallingItem::fallingBook.setCurrentSpeed(sf::Vector2f((-10+rand()%30)/10.0,(-80+rand()%30)/10.0));
@@ -294,6 +311,16 @@ void Game::run(int alchemistController, int wizardController){
                     mainWindow.close();
                     exit(0);
                 }
+            }
+
+            if(windowMovement > 0){
+                if(windowGoingDown){
+                    mainWindow.setPosition(sf::Vector2i(mainWindow.getPosition().x,mainWindow.getPosition().y+windowMovement));
+                } else {
+                    mainWindow.setPosition(sf::Vector2i(mainWindow.getPosition().x,mainWindow.getPosition().y-windowMovement));
+                    windowMovement--;
+                }
+                windowGoingDown = !windowGoingDown;
             }
 
             if(!fadeBlack && endClock.getElapsedTime().asSeconds() > 3){
