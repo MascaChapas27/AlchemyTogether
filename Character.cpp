@@ -8,10 +8,11 @@ Character::Character(){
     maxItems = 10;
     currentItems = 0;
     shooting = false;
-    shootingAngle = INITIAL_SHOOTING_ANGLE + rand()%(FINAL_SHOOTING_ANGLE-INITIAL_SHOOTING_ANGLE+1);
+    shootingAngle = 0;
     shootingAngleGoingDown = false;
     shootingCooldown = 0;
     dead = false;
+    currentSpeed = 0;
     controller = -1;
     reviveCounter = 0;
     showSigns = true;
@@ -73,20 +74,35 @@ int Character::update(std::list<FallingItem>& fallingItems, Character& buddy)
         if(controller == -1){
             if(sf::Keyboard::isKeyPressed(leftKey)){
                 moved = true;
-                position.x -= speed;
+                currentSpeed-=SPEED_STEP;
             } else if(sf::Keyboard::isKeyPressed(rightKey)){
                 moved = true;
-                position.x += speed;
+                currentSpeed+=SPEED_STEP;
             }
         } else {
             if(joystick_moving_left(controller)){
                 moved = true;
-                position.x -= speed;
+                currentSpeed-=SPEED_STEP;
             } else if(joystick_moving_right(controller)){
                 moved = true;
-                position.x += speed;
+                currentSpeed+=SPEED_STEP;
             }
         }
+
+        if(currentSpeed > speed) currentSpeed = speed;
+        if(currentSpeed < -speed) currentSpeed = -speed;
+
+        if(!moved){
+            if(currentSpeed > 0){
+                currentSpeed-=SPEED_STEP;
+                if(currentSpeed < 0) currentSpeed = 0;
+            } else if(currentSpeed < 0){
+                currentSpeed+=SPEED_STEP;
+                if(currentSpeed > 0) currentSpeed = 0;
+            }
+        }
+
+        position.x+=currentSpeed;
 
         if(position.x + walkingAnimation.getWidth() > MAIN_WINDOW_WIDTH){
             position.x = MAIN_WINDOW_WIDTH - walkingAnimation.getWidth();

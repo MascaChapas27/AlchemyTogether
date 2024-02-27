@@ -134,6 +134,8 @@ const int MAX_SHOOTING_COOLDOWN = 30;
 const int GATHER_TIME = 10;
 const int BOSS_TIME = 15;
 
+const double SPEED_STEP = 0.4;
+
 const int POINTS_TO_REVIVE = MAX_FPS * 10;
 const int HIT_SPRITE_DURATION = 30;
 

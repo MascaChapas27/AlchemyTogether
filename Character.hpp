@@ -48,6 +48,9 @@ class Character : public sf::Drawable {
         // Speed for the character
         double speed;
 
+        // Current speed for the character
+        double currentSpeed;
+
         // Keys for moving left and right
         sf::Keyboard::Key leftKey;
         sf::Keyboard::Key rightKey;

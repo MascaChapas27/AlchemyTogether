@@ -401,6 +401,10 @@ void Game::run(int alchemistController, int wizardController){
             alchemist.update(fallingItems,wizard);
 
             mainWindow.clear();
+
+            for(FallingItem& fallingItem : fallingItems){
+                mainWindow.draw(fallingItem);
+            }
             if(dancing){
 
                 if(wizard.isDead()) mainWindow.draw(wizard);
@@ -412,10 +416,6 @@ void Game::run(int alchemistController, int wizardController){
             } else {
                 mainWindow.draw(wizard);
                 mainWindow.draw(alchemist);
-            }
-
-            for(FallingItem& fallingItem : fallingItems){
-                mainWindow.draw(fallingItem);
             }
 
             mainWindow.draw(foregroundRectangle);

@@ -198,7 +198,7 @@ void Boss::attackCircles(std::list<FallingItem>& fallingItems)
 
 void Boss::attackRainLeftToRight(std::list<FallingItem>& fallingItems)
 {
-    if(attackAux < MAX_FPS*2){
+    if(attackAux <= MAX_FPS*2){
         if(attackAux%RAIN_LEFT_TO_RIGHT_LATENCY == 0){
             shootSound.play();
             double positionX = MAIN_WINDOW_WIDTH*((double)attackAux/(MAX_FPS*2));
@@ -222,7 +222,7 @@ void Boss::attackRainWithHoles(std::list<FallingItem>& fallingItems)
         int hole2 = (hole1 + NUM_FIRE_RAIN_WITH_HOLES/3) %NUM_FIRE_RAIN_WITH_HOLES;
         int hole3 = (hole2 + NUM_FIRE_RAIN_WITH_HOLES/3) %NUM_FIRE_RAIN_WITH_HOLES;
 
-        for(int i=0;i<NUM_FIRE_RAIN_WITH_HOLES;i++){
+        for(int i=0;i<=NUM_FIRE_RAIN_WITH_HOLES;i++){
             if(i == hole1 || i == hole2 || i == hole3) continue;
             double positionX = MAIN_WINDOW_WIDTH*((double)i/NUM_FIRE_RAIN_WITH_HOLES);
             FallingItem::fallingFire.setPosition(sf::Vector2f(positionX,-30));
@@ -256,7 +256,7 @@ void Boss::attackUniformRain(std::list<FallingItem>& fallingItems)
     if(attackAux == 0){
         shootSound.play();
 
-        for(int i=0;i<NUM_FIRE_UNIFORM_RAIN;i++){
+        for(int i=0;i<=NUM_FIRE_UNIFORM_RAIN;i++){
             double positionX = MAIN_WINDOW_WIDTH*((double)i/NUM_FIRE_UNIFORM_RAIN);
             FallingItem::fallingFire.setPosition(sf::Vector2f(positionX,-30));
             FallingItem::fallingFire.setCurrentSpeed(sf::Vector2f((-2+rand()%4)/10.0,0));
