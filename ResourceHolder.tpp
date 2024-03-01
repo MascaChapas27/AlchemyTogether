@@ -93,30 +93,30 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::wizard_side,"sprites/wizard-side.png");
     load(TextureID::wizard_hold,"sprites/wizard-hold.png");
     load(TextureID::wizard_walk,"sprites/wizard-walk.png");
-    load(TextureID::press_enter,"sprites/press-enter-en.png");
-    load(TextureID::press_escape,"sprites/press-escape-en.png");
+    load(TextureID::press_enter,SPANISH ? "sprites/press-enter-es.png" : "sprites/press-enter-en.png");
+    load(TextureID::press_escape,SPANISH ? "sprites/press-escape-es.png" : "sprites/press-escape-en.png");
     load(TextureID::time_frame,"sprites/time-frame.png");
     load(TextureID::alchemist_arrow,"sprites/alchemist-arrow.png");
     load(TextureID::wizard_arrow,"sprites/wizard-arrow.png");
     load(TextureID::alchemist_corpse,"sprites/alchemist-corpse.png");
     load(TextureID::wizard_corpse,"sprites/wizard-corpse.png");
 
-    load(TextureID::alchemist_inventory,"sprites/alchemist-inventory-en.png");
-    load(TextureID::wizard_inventory,"sprites/wizard-inventory-en.png");
-    load(TextureID::alchemist_revive,"sprites/alchemist-revive-en.png");
-    load(TextureID::wizard_revive,"sprites/wizard-revive-en.png");
-    load(TextureID::boss_health,"sprites/boss-health-en.png");
+    load(TextureID::alchemist_inventory,SPANISH ? "sprites/alchemist-inventory-es.png" : "sprites/alchemist-inventory-en.png");
+    load(TextureID::wizard_inventory,SPANISH ? "sprites/wizard-inventory-es.png" : "sprites/wizard-inventory-en.png");
+    load(TextureID::alchemist_revive,SPANISH ? "sprites/alchemist-revive-es.png" : "sprites/alchemist-revive-en.png");
+    load(TextureID::wizard_revive,SPANISH ? "sprites/wizard-revive-es.png" : "sprites/wizard-revive-en.png");
+    load(TextureID::boss_health,SPANISH ? "sprites/boss-health-es.png" : "sprites/boss-health-en.png");
 
     load(TextureID::alchemist_plus1,"sprites/alchemist-plus1.png");
     load(TextureID::wizard_plus1,"sprites/wizard-plus1.png");
     load(TextureID::boss_minus1,"sprites/boss-minus1.png");
     load(TextureID::boss_corpse,"sprites/boss-corpse.png");
-    load(TextureID::joystick_choose_alchemist,"sprites/joystick-choose-alchemist-en.png");
-    load(TextureID::joystick_choose_wizard,"sprites/joystick-choose-wizard-en.png");
-    load(TextureID::controls_background_keyboard_keyboard,"sprites/controls-background-keyboard-keyboard-en.png");
-    load(TextureID::controls_background_keyboard_joystick,"sprites/controls-background-keyboard-joystick-en.png");
-    load(TextureID::controls_background_joystick_keyboard,"sprites/controls-background-joystick-keyboard-en.png");
-    load(TextureID::controls_background_joystick_joystick,"sprites/controls-background-joystick-joystick-en.png");
+    load(TextureID::joystick_choose_alchemist,SPANISH ? "sprites/joystick-choose-alchemist-es.png" : "sprites/joystick-choose-alchemist-en.png");
+    load(TextureID::joystick_choose_wizard,SPANISH ? "sprites/joystick-choose-wizard-es.png" : "sprites/joystick-choose-wizard-en.png");
+    load(TextureID::controls_background_keyboard_keyboard,SPANISH ? "sprites/controls-background-keyboard-keyboard-es.png" : "sprites/controls-background-keyboard-keyboard-en.png");
+    load(TextureID::controls_background_keyboard_joystick,SPANISH ? "sprites/controls-background-keyboard-joystick-es.png" : "sprites/controls-background-keyboard-joystick-en.png");
+    load(TextureID::controls_background_joystick_keyboard,SPANISH ? "sprites/controls-background-joystick-keyboard-es.png" : "sprites/controls-background-joystick-keyboard-en.png");
+    load(TextureID::controls_background_joystick_joystick,SPANISH ? "sprites/controls-background-joystick-joystick-es.png" : "sprites/controls-background-joystick-joystick-en.png");
 
     load(TextureID::dead_heroes,"sprites/dead-heroes.png");
     load(TextureID::defeated_boss,"sprites/defeated-boss.png");

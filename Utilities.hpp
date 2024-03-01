@@ -60,6 +60,7 @@ extern sf::RenderWindow mainWindow;
 const float JOYSTICK_THRESHOLD = 20;
 
 const bool DEBUG = false;
+const bool SPANISH = false;
 
 const int MAIN_WINDOW_WIDTH = 800;
 const int MAIN_WINDOW_HEIGHT = 600;
