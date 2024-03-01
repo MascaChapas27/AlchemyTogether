@@ -66,7 +66,8 @@ void BadEndingCutscene::play(){
     talkingText.setFillColor(sf::Color::Blue);
     talkingText.setCharacterSize(20);
     advanceConversationSound.play();
-    finalText = "Lo suponía";
+    // finalText = "Lo suponía";
+    finalText = "Just as I thought";
     unsigned int currentText = 0;
     int wait = 0;
 
@@ -97,14 +98,16 @@ void BadEndingCutscene::play(){
                 case 0:
                     advanceConversationSound.play();
                     talkingText.setString("");
-                    finalText = "No érais más que un par de INÚTILES";
+                    // finalText = "No érais más que un par de INÚTILES";
+                    finalText = "You were just a couple of LOSERS";
                     currentLetter = 0;
                     currentText++;
                     break;
                 case 1:
                     advanceConversationSound.play();
                     talkingText.setString("");
-                    finalText = "Ahora NADIE me impedirá DESTRUIR ESTE PLANETA";
+                    // finalText = "Ahora NADIE me impedirá DESTRUIR ESTE PLANETA";
+                    finalText = "NOBODY will stop me from DESTROYING THIS PLANET";
                     currentLetter = 0;
                     currentText++;
                     break;

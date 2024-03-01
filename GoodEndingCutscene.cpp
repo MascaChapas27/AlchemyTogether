@@ -62,7 +62,8 @@ void GoodEndingCutscene::play(){
     talkingText.setFillColor(sf::Color::Blue);
     talkingText.setCharacterSize(20);
     advanceConversationSound.play();
-    finalText = "AaaaAaAaaaa mi espaldaaa";
+    // finalText = "AaaaAaAaaaa mi espaldaaa";
+    finalText = "AaaAAaArrgAGhh my baaack";
     unsigned int currentText = 0;
 
     // Indicates the current letter for the speaking character
@@ -88,14 +89,16 @@ void GoodEndingCutscene::play(){
                 case 0:
                     advanceConversationSound.play();
                     talkingText.setString("");
-                    finalText = "Está bien... no destruiré la Tierra...";
+                    // finalText = "Está bien... no destruiré la Tierra...";
+                    finalText = "Alright... I won't destroy the Earth...";
                     currentLetter = 0;
                     currentText++;
                     break;
                 case 1:
                     advanceConversationSound.play();
                     talkingText.setString("");
-                    finalText = "Por favor llevadme a un hospital";
+                    // finalText = "Por favor llevadme a un hospital";
+                    finalText = "Take me to a hospital please";
                     currentLetter = 0;
                     currentText++;
                     break;
