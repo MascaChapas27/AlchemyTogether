@@ -151,7 +151,7 @@ void Game::run(int alchemistController, int wizardController){
     clockText.setFont(FontHolder::getFontInstance()->get(FontID::WizardFont));
     clockText.setCharacterSize(20);
     clockText.setFillColor(sf::Color::Blue);
-    clockText.setPosition(50,44);
+    clockText.setPosition(63,44);
 
     int difficulty = 20;
 
@@ -252,7 +252,7 @@ void Game::run(int alchemistController, int wizardController){
 
         // Update the texts
         char clockString[20];
-        sprintf(clockString,"Tiempo: 00:%02d",(bossHere ? BOSS_TIME : GATHER_TIME) - (int)clock.getElapsedTime().asSeconds());
+        sprintf(clockString,"Time: 00:%02d",(bossHere ? BOSS_TIME : GATHER_TIME) - (int)clock.getElapsedTime().asSeconds());
         clockText.setString(clockString);
 
         auto iter = fallingItems.begin();

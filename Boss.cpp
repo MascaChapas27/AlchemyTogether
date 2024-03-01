@@ -2,6 +2,7 @@
 #include "Utilities.hpp"
 #include <iostream>
 #include "ResourceHolder.hpp"
+#include "math.h"
 
 Boss::Boss(){
     invincibilityCounter = -1;
