@@ -100,7 +100,7 @@ const int INVINCIBILITY_FRAMES = 200;
 const int INVINCINILITY_FLICKER = 2;
 const int BOSS_INVINCIBILITY_FRAMES = 30;
 
-const int ATTACK = 1000;
+const int ATTACK = 1;
 
 const int WIZARD_INITIAL_X = 590;
 const int WIZARD_INITIAL_Y = 548;
