@@ -251,7 +251,7 @@ void Game::run(int alchemistController, int wizardController){
         }
 
         // Update the texts
-        char clockString[20];
+        char clockString[30];
         sprintf(clockString,SPANISH ? "Tiempo: 00:%02d" : "Time: 00:%02d",(bossHere ? BOSS_TIME : GATHER_TIME) - (int)clock.getElapsedTime().asSeconds());
         clockText.setString(clockString);
 
