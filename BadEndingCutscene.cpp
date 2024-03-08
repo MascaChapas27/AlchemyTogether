@@ -53,7 +53,7 @@ void BadEndingCutscene::play(){
     nextScene = false;
 
     // Final message for the current character
-    std::string finalText;
+    std::wstring finalText;
 
     // Text and sfx of the current speaking character
     sf::Sound talkingSound;
@@ -66,8 +66,8 @@ void BadEndingCutscene::play(){
     talkingText.setFillColor(sf::Color::Blue);
     talkingText.setCharacterSize(20);
     advanceConversationSound.play();
-    if(SPANISH) finalText = "Lo suponía";
-    else finalText = "Just as I thought";
+    if(SPANISH) finalText = L"Lo suponÃ­a";
+    else finalText = L"Just as I thought";
     unsigned int currentText = 0;
     int wait = 0;
 
@@ -97,24 +97,24 @@ void BadEndingCutscene::play(){
                 switch(currentText){
                 case 0:
                     advanceConversationSound.play();
-                    talkingText.setString("");
-                    if(SPANISH) finalText = "No érais más que un par de INÚTILES";
-                    else finalText = "You were just a couple of LOSERS";
+                    talkingText.setString(L"");
+                    if(SPANISH) finalText = L"No Ã©rais mÃ¡s que un par de INÃšTILES";
+                    else finalText = L"You were just a couple of LOSERS";
                     currentLetter = 0;
                     currentText++;
                     break;
                 case 1:
                     advanceConversationSound.play();
-                    talkingText.setString("");
-                    if(SPANISH) finalText = "Ahora NADIE me impedirá DESTRUIR ESTE PLANETA";
-                    else finalText = "NOBODY will stop me from DESTROYING THIS PLANET";
+                    talkingText.setString(L"");
+                    if(SPANISH) finalText = L"Ahora NADIE me impedirÃ¡ DESTRUIR ESTE PLANETA";
+                    else finalText = L"NOBODY will stop me from DESTROYING THIS PLANET";
                     currentLetter = 0;
                     currentText++;
                     break;
                 case 2:
                     nextScene = true;
-                    talkingText.setString("");
-                    finalText = "";
+                    talkingText.setString(L"");
+                    finalText = L"";
                     currentLetter = 0;
                     rectangleCover.setFillColor(sf::Color(255,255,255,0));
                     breakingEarthSound.play();

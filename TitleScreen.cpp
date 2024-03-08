@@ -76,7 +76,7 @@ int TitleScreen::run(){
     cutscene0_background.setScale(2,2);
 
     // Final message for the current character
-    std::string finalText;
+    std::wstring finalText;
 
     // Text and sfx of the current speaking character
     sf::Sound talkingSound;
@@ -195,8 +195,8 @@ int TitleScreen::run(){
     talkingText.setFillColor(sf::Color::Blue);
     talkingText.setCharacterSize(20);
     advanceConversationSound.play();
-    if(SPANISH) finalText = "¡¡SALUDOS insignificantes terrícolas!!";
-    else finalText = "GREETINGS you meaningless earthlings!!";
+    if(SPANISH) finalText = L"Â¡Â¡SALUDOS insignificantes terrÃ­colas!!";
+    else finalText = L"GREETINGS you meaningless earthlings!!";
     currentLetter = 0;
     int currentText = 0;
     int wait = 0;
@@ -233,65 +233,65 @@ int TitleScreen::run(){
                     advanceConversationSound.play();
                     switch(currentText){
                     case 0:
-                        talkingText.setString("");
-                        if(SPANISH) finalText = "Me dedico a vagar por el UNIVERSO";
-                        else finalText = "It's my mission to wander the UNIVERSE";
+                        talkingText.setString(L"");
+                        if(SPANISH) finalText = L"Me dedico a vagar por el UNIVERSO";
+                        else finalText = L"It's my mission to wander the UNIVERSE";
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 1:
-                        talkingText.setString("");
-                        if(SPANISH) finalText = "Buscando planetas que DESTRUIR";
-                        else finalText = "Looking for planets to DESTROY";
+                        talkingText.setString(L"");
+                        if(SPANISH) finalText = L"Buscando planetas que DESTRUIR";
+                        else finalText = L"Looking for planets to DESTROY";
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 2:
-                        talkingText.setString("");
-                        if(SPANISH) finalText = "Y el vuestro... parece bastante DESTRUIBLE";
-                        else finalText = "And yours... looks very DESTROYABLE";
+                        talkingText.setString(L"");
+                        if(SPANISH) finalText = L"Y el vuestro... parece bastante DESTRUIBLE";
+                        else finalText = L"And yours... looks very DESTROYABLE";
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 3:
-                        talkingText.setString("");
-                        if(SPANISH) finalText = "(en mi humilde opinión)";
-                        else finalText = "(in my humble opinion)";
+                        talkingText.setString(L"");
+                        if(SPANISH) finalText = L"(en mi humilde opiniÃ³n)";
+                        else finalText = L"(in my humble opinion)";
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 4:
-                        talkingText.setString("");
-                        if(SPANISH) finalText = "¡¡Es por eso que DESTRUIRÉ este PLANETA!!";
-                        else finalText = "That's why i'm going to DESTROY this PLANET!!";
+                        talkingText.setString(L"");
+                        if(SPANISH) finalText = L"Â¡Â¡Es por eso que DESTRUIRÃ‰ este PLANETA!!";
+                        else finalText = L"That's why i'm going to DESTROY this PLANET!!";
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 5:
-                        talkingText.setString("");
-                        if(SPANISH) finalText = "A no ser que me lancéis LIBROS y MAGIA";
-                        else finalText = "Unless you throw BOOKS and MAGIC at me";
+                        talkingText.setString(L"");
+                        if(SPANISH) finalText = L"A no ser que me lancÃ©is LIBROS y MAGIA";
+                        else finalText = L"Unless you throw BOOKS and MAGIC at me";
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 6:
-                        talkingText.setString("");
-                        if(SPANISH) finalText = "(son mi DEBILIDAD)";
-                        else finalText = "(they're my WEAKNESSES)";
+                        talkingText.setString(L"");
+                        if(SPANISH) finalText = L"(son mi DEBILIDAD)";
+                        else finalText = L"(they're my WEAKNESSES)";
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 7:
-                        talkingText.setString("");
-                        if(SPANISH) finalText = "¡¡Pero confío en que eso NO PASARÁ!!";
-                        else finalText = "But I'm sure that WON'T HAPPEN!!";
+                        talkingText.setString(L"");
+                        if(SPANISH) finalText = L"Â¡Â¡Pero confÃ­o en que eso NO PASARÃ!!";
+                        else finalText = L"But I'm sure that WON'T HAPPEN!!";
                         currentLetter = 0;
                         currentText++;
                         break;
                     default:
                         nextCutscene = true;
-                        talkingText.setString("");
-                        finalText = "";
+                        talkingText.setString(L"");
+                        finalText = L"";
                         currentLetter = 0;
                         break;
                     }
@@ -451,8 +451,8 @@ int TitleScreen::run(){
     talkingText.setFillColor(sf::Color::Yellow);
     talkingText.setCharacterSize(20);
     advanceConversationSound.play();
-    if(SPANISH) finalText = "Tenemos que encontrar libros y magia como sea!! :(";
-    else finalText = "We need to find books and magic no matter what!! :(";
+    if(SPANISH) finalText = L"Tenemos que encontrar libros y magia como sea!! :(";
+    else finalText = L"We need to find books and magic no matter what!! :(";
     currentLetter = 0;
     currentText = 0;
 
@@ -482,28 +482,28 @@ int TitleScreen::run(){
                     advanceConversationSound.play();
                     switch(currentText){
                     case 0:
-                        talkingText.setString("");
+                        talkingText.setString(L"");
                         talkingSound.setBuffer(SoundHolder::getSoundInstance()->get(SoundID::alchemist_voice));
                         talkingText.setFont(FontHolder::getFontInstance()->get(FontID::AlchemistFont));
                         talkingText.setFillColor(sf::Color::White);
                         talkingText.setCharacterSize(30);
                         talkingText.move(0,-8);
-                        if(SPANISH) finalText = "y como se supone que vamos a encontrar de eso";
-                        else finalText = "and how are we supposed to find that";
+                        if(SPANISH) finalText = L"y como se supone que vamos a encontrar de eso";
+                        else finalText = L"and how are we supposed to find that";
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 1:
-                        talkingText.setString("");
-                        if(SPANISH) finalText = "estamos en mitad de ningun sitio";
-                        else finalText = "we are in the middle of nowhere";
+                        talkingText.setString(L"");
+                        if(SPANISH) finalText = L"estamos en mitad de ningun sitio";
+                        else finalText = L"we are in the middle of nowhere";
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 2:
-                        talkingText.setString("");
-                        if(SPANISH) finalText = "ni que los libros y la magia cayeran del cielo";
-                        else finalText = "books and magic dont just fall from the sky";
+                        talkingText.setString(L"");
+                        if(SPANISH) finalText = L"ni que los libros y la magia cayeran del cielo";
+                        else finalText = L"books and magic dont just fall from the sky";
                         currentLetter = 0;
                         currentText++;
                         break;
@@ -532,8 +532,8 @@ int TitleScreen::run(){
         mainWindow.display();
     }
 
-    if(SPANISH) talkingText.setString("ni que los libros y la magia cayeran del cielo");
-    else talkingText.setString("books and magic dont just fall from the sky");
+    if(SPANISH) talkingText.setString(L"ni que los libros y la magia cayeran del cielo");
+    else talkingText.setString(L"books and magic dont just fall from the sky");
 
     nextCutscene = false;
 

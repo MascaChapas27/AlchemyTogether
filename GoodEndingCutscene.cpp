@@ -49,7 +49,7 @@ void GoodEndingCutscene::play(){
     nextScene = false;
 
     // Final message for the current character
-    std::string finalText;
+    std::wstring finalText;
 
     // Text and sfx of the current speaking character
     sf::Sound talkingSound;
@@ -62,8 +62,8 @@ void GoodEndingCutscene::play(){
     talkingText.setFillColor(sf::Color::Blue);
     talkingText.setCharacterSize(20);
     advanceConversationSound.play();
-    if(SPANISH) finalText = "AaaaAaAaaaa mi espaldaaa";
-    else finalText = "AaaAAaArrgAGhh my baaack";
+    if(SPANISH) finalText = L"AaaaAaAaaaa mi espaldaaa";
+    else finalText = L"AaaAAaArrgAGhh my baaack";
     unsigned int currentText = 0;
 
     // Indicates the current letter for the speaking character
@@ -88,24 +88,24 @@ void GoodEndingCutscene::play(){
                 switch(currentText){
                 case 0:
                     advanceConversationSound.play();
-                    talkingText.setString("");
-                    if(SPANISH) finalText = "Está bien... no destruiré la Tierra...";
-                    else finalText = "Alright... I won't destroy the Earth...";
+                    talkingText.setString(L"");
+                    if(SPANISH) finalText = L"Estï¿½ bien... no destruirï¿½ la Tierra...";
+                    else finalText = L"Alright... I won't destroy the Earth...";
                     currentLetter = 0;
                     currentText++;
                     break;
                 case 1:
                     advanceConversationSound.play();
-                    talkingText.setString("");
-                    if(SPANISH) finalText = "Por favor llevadme a un hospital";
-                    else finalText = "Take me to a hospital please";
+                    talkingText.setString(L"");
+                    if(SPANISH) finalText = L"Por favor llevadme a un hospital";
+                    else finalText = L"Take me to a hospital please";
                     currentLetter = 0;
                     currentText++;
                     break;
                 case 2:
                     nextScene = true;
-                    talkingText.setString("");
-                    finalText = "";
+                    talkingText.setString(L"");
+                    finalText = L"";
                     currentLetter = 0;
                     rectangleCover.setFillColor(sf::Color(0,0,0,0));
                     currentText++;
