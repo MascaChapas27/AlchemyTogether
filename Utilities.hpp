@@ -8,11 +8,11 @@
 // Activar para ver las hitboxes
 const bool DEBUG = false;
 
-// Activar para poner el idioma a espaÒol
-const bool SPANISH = true;
+// Activar para poner el idioma a espa√±ol
+const bool SPANISH = false;
 
 // Activar para poner los controles de la recreativa y
-// otros assets (el idioma ser· espaÒol aunque SPANISH sea false)
+// otros assets (el idioma ser√° espa√±ol aunque SPANISH sea false)
 const bool RECREATIVA = true;
 
 enum class TextureID{
@@ -108,7 +108,7 @@ const int INVINCIBILITY_FRAMES = 200;
 const int INVINCINILITY_FLICKER = 2;
 const int BOSS_INVINCIBILITY_FRAMES = 30;
 
-const int ATTACK = 1000;
+const int ATTACK = 1;
 
 const int WIZARD_INITIAL_X = 590;
 const int WIZARD_INITIAL_Y = 548;
