@@ -36,5 +36,8 @@
 # Visual Studio Code stuff
 .vscode
 
+# Idea IDE stuff
+.idea/*
+
 # Executable
 AlchemyTogether
