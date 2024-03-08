@@ -73,7 +73,11 @@ void BadEndingCutscene::play(){
     talkingText.setCharacterSize(20);
     advanceConversationSound.play();
 
+    #ifdef _WIN32
+    if(RECREATIVA || SPANISH) finalText = L"Lo suponía";
+    #elif linux
     if(RECREATIVA || SPANISH) finalText = L"Lo suponÃ­a";
+    #endif
     else finalText = L"Just as I thought";
     unsigned int currentText = 0;
     int wait = 0;
@@ -107,7 +111,11 @@ void BadEndingCutscene::play(){
                     advanceConversationSound.play();
 
                     talkingText.setString(L"");
+                    #ifdef _WIN32
+                    if(RECREATIVA || SPANISH) finalText = L"No érais más que un par de INÚTILES";
+                    #elif linux
                     if(RECREATIVA || SPANISH) finalText = L"No Ã©rais mÃ¡s que un par de INÃTILES";
+                    #endif
                     else finalText = L"You were just a couple of LOSERS";
                     currentLetter = 0;
                     currentText++;
@@ -115,7 +123,11 @@ void BadEndingCutscene::play(){
                 case 1:
                     advanceConversationSound.play();
                     talkingText.setString(L"");
+                    #ifdef _WIN32
+                    if(RECREATIVA || SPANISH) finalText = L"Ahora NADIE me impedirá DESTRUIR ESTE PLANETA";
+                    #elif linux
                     if(RECREATIVA || SPANISH) finalText = L"Ahora NADIE me impedirÃ¡ DESTRUIR ESTE PLANETA";
+                    #endif
                     else finalText = L"NOBODY will stop me from DESTROYING THIS PLANET";
 
                     currentLetter = 0;

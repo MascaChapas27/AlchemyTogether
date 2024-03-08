@@ -208,7 +208,11 @@ int TitleScreen::run(){
     talkingText.setCharacterSize(20);
     advanceConversationSound.play();
 
+    #ifdef _WIN32
+    if(RECREATIVA || SPANISH) finalText = L"¡¡SALUDOS insignificantes terrícolas!!";
+    #elif linux
     if(RECREATIVA || SPANISH) finalText = L"Â¡Â¡SALUDOS insignificantes terrÃ­colas!!";
+    #endif
     else finalText = L"GREETINGS you meaningless earthlings!!";
 
     currentLetter = 0;
@@ -278,7 +282,11 @@ int TitleScreen::run(){
                     case 3:
 
                         talkingText.setString(L"");
+                        #ifdef _WIN32
+                        if(RECREATIVA || SPANISH) finalText = L"(en mi humilde opinión)";
+                        #elif linux
                         if(RECREATIVA || SPANISH) finalText = L"(en mi humilde opiniÃ³n)";
+                        #endif
                         else finalText = L"(in my humble opinion)";
 
                         currentLetter = 0;
@@ -287,8 +295,13 @@ int TitleScreen::run(){
                     case 4:
 
                         talkingText.setString(L"");
+
+                        #ifdef _WIN32
+                        if(RECREATIVA || SPANISH) finalText = L"¡¡Es por eso que DESTRUIRÉ este PLANETA!!";
+                        #elif linux
                         if(RECREATIVA || SPANISH) finalText = L"Â¡Â¡Es por eso que DESTRUIRÃ este PLANETA!!";
-                        else finalText = L"That's why i'm going to DESTROY this PLANET!!";
+                        #endif
+                        else finalText = L"That's why I'm going to DESTROY this PLANET!!";
 
                         currentLetter = 0;
                         currentText++;
@@ -296,7 +309,11 @@ int TitleScreen::run(){
                     case 5:
 
                         talkingText.setString(L"");
+                        #ifdef _WIN32
+                        if(RECREATIVA || SPANISH) finalText = L"A no ser que me lancéis LIBROS y MAGIA";
+                        #elif linux
                         if(RECREATIVA || SPANISH) finalText = L"A no ser que me lancÃ©is LIBROS y MAGIA";
+                        #endif
                         else finalText = L"Unless you throw BOOKS and MAGIC at me";
 
                         currentLetter = 0;
@@ -314,7 +331,12 @@ int TitleScreen::run(){
                     case 7:
 
                         talkingText.setString(L"");
+
+                        #ifdef _WIN32
+                        if(RECREATIVA || SPANISH) finalText = L"¡¡Pero confío en que eso NO PASARÁ!!";
+                        #elif linux
                         if(RECREATIVA || SPANISH) finalText = L"Â¡Â¡Pero confÃ­o en que eso NO PASARÃ!!";
+                        #endif
                         else finalText = L"But I'm sure that WON'T HAPPEN!!";
 
                         currentLetter = 0;

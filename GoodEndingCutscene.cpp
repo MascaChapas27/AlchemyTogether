@@ -97,9 +97,13 @@ void GoodEndingCutscene::play(){
                     advanceConversationSound.play();
 
                     talkingText.setString(L"");
+                    #ifdef _WIN32
+                    if(RECREATIVA || SPANISH) finalText = L"Está bien... no destruiré la Tierra...";
+                    #elif linux
                     if(RECREATIVA || SPANISH) finalText = L"Estï¿½ bien... no destruirï¿½ la Tierra...";
+                    #endif
                     else finalText = L"Alright... I won't destroy the Earth...";
-                    
+
                     currentLetter = 0;
                     currentText++;
                     break;
