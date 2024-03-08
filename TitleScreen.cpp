@@ -136,7 +136,7 @@ int TitleScreen::run(){
     while(!nextCutscene){
 
         titleSprite.move(0,-5);
-        pressEnterSprite.move(0,5);
+        pressEnterSprite.move(0,RECREATIVA ? 7 : 5);
 
         int correctRectangles = 0;
 
