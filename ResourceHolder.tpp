@@ -93,8 +93,8 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::wizard_side,"sprites/wizard-side.png");
     load(TextureID::wizard_hold,"sprites/wizard-hold.png");
     load(TextureID::wizard_walk,"sprites/wizard-walk.png");
-    load(TextureID::press_enter,SPANISH ? "sprites/press-enter-es.png" : "sprites/press-enter-en.png");
-    load(TextureID::press_escape,SPANISH ? "sprites/press-escape-es.png" : "sprites/press-escape-en.png");
+    load(TextureID::press_enter,RECREATIVA ? "sprites/press-enter-recreativa.png" : SPANISH ? "sprites/press-enter-es.png" : "sprites/press-enter-en.png");
+    load(TextureID::press_escape,RECREATIVA ? "sprites/press-escape-recreativa.png" : SPANISH ? "sprites/press-escape-es.png" : "sprites/press-escape-en.png");
     load(TextureID::time_frame,"sprites/time-frame.png");
     load(TextureID::alchemist_arrow,"sprites/alchemist-arrow.png");
     load(TextureID::wizard_arrow,"sprites/wizard-arrow.png");
@@ -113,7 +113,7 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::boss_corpse,"sprites/boss-corpse.png");
     load(TextureID::joystick_choose_alchemist,SPANISH ? "sprites/joystick-choose-alchemist-es.png" : "sprites/joystick-choose-alchemist-en.png");
     load(TextureID::joystick_choose_wizard,SPANISH ? "sprites/joystick-choose-wizard-es.png" : "sprites/joystick-choose-wizard-en.png");
-    load(TextureID::controls_background_keyboard_keyboard,SPANISH ? "sprites/controls-background-keyboard-keyboard-es.png" : "sprites/controls-background-keyboard-keyboard-en.png");
+    load(TextureID::controls_background_keyboard_keyboard,RECREATIVA ? "sprites/controls-background-recreativa.png" : SPANISH ? "sprites/controls-background-keyboard-keyboard-es.png" : "sprites/controls-background-keyboard-keyboard-en.png");
     load(TextureID::controls_background_keyboard_joystick,SPANISH ? "sprites/controls-background-keyboard-joystick-es.png" : "sprites/controls-background-keyboard-joystick-en.png");
     load(TextureID::controls_background_joystick_keyboard,SPANISH ? "sprites/controls-background-joystick-keyboard-es.png" : "sprites/controls-background-joystick-keyboard-en.png");
     load(TextureID::controls_background_joystick_joystick,SPANISH ? "sprites/controls-background-joystick-joystick-es.png" : "sprites/controls-background-joystick-joystick-en.png");

@@ -30,6 +30,12 @@ void BadEndingCutscene::play(){
 
         sf::Event event;
         while(mainWindow.pollEvent(event)){
+            if(!RECREATIVA){
+                if(event.type == sf::Event::KeyPressed){
+                    if(event.key.code == sf::Keyboard::Num6) exit(EXIT_SUCCESS);
+                    else if(event.key.code == sf::Keyboard::LControl || event.key.code == sf::Keyboard::A) nextScene = true;
+                }
+            }
             if(event.type == sf::Event::Closed){
                 mainWindow.close();
                 exit(EXIT_SUCCESS);
@@ -66,7 +72,8 @@ void BadEndingCutscene::play(){
     talkingText.setFillColor(sf::Color::Blue);
     talkingText.setCharacterSize(20);
     advanceConversationSound.play();
-    if(SPANISH) finalText = L"Lo suponía";
+
+    if(RECREATIVA || SPANISH) finalText = L"Lo suponÃ­a";
     else finalText = L"Just as I thought";
     unsigned int currentText = 0;
     int wait = 0;
@@ -89,16 +96,18 @@ void BadEndingCutscene::play(){
 
         sf::Event event;
         while(mainWindow.pollEvent(event)){
-            if(event.type == sf::Event::Closed){
+            if((RECREATIVA && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Num6) ||
+               (!RECREATIVA && event.type == sf::Event::Closed)){
                 mainWindow.close();
                 exit(EXIT_SUCCESS);
             }
-            if((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Return) || event.type == sf::Event::JoystickButtonPressed){
+            if((RECREATIVA && event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::LControl || event.key.code == sf::Keyboard::A)) || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Return) || event.type == sf::Event::JoystickButtonPressed){
                 switch(currentText){
                 case 0:
                     advanceConversationSound.play();
+
                     talkingText.setString(L"");
-                    if(SPANISH) finalText = L"No érais más que un par de INÚTILES";
+                    if(RECREATIVA || SPANISH) finalText = L"No Ã©rais mÃ¡s que un par de INÃTILES";
                     else finalText = L"You were just a couple of LOSERS";
                     currentLetter = 0;
                     currentText++;
@@ -106,8 +115,9 @@ void BadEndingCutscene::play(){
                 case 1:
                     advanceConversationSound.play();
                     talkingText.setString(L"");
-                    if(SPANISH) finalText = L"Ahora NADIE me impedirá DESTRUIR ESTE PLANETA";
+                    if(RECREATIVA || SPANISH) finalText = L"Ahora NADIE me impedirÃ¡ DESTRUIR ESTE PLANETA";
                     else finalText = L"NOBODY will stop me from DESTROYING THIS PLANET";
+
                     currentLetter = 0;
                     currentText++;
                     break;
@@ -142,7 +152,8 @@ void BadEndingCutscene::play(){
     while(rectangleCover.getFillColor() != sf::Color(255,255,255,0)){
         sf::Event event;
         while(mainWindow.pollEvent(event)){
-            if(event.type == sf::Event::Closed){
+            if((RECREATIVA && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Num6) ||
+               (!RECREATIVA && event.type == sf::Event::Closed)){
                 mainWindow.close();
                 exit(EXIT_SUCCESS);
             }

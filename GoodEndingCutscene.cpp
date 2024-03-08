@@ -26,6 +26,12 @@ void GoodEndingCutscene::play(){
 
         sf::Event event;
         while(mainWindow.pollEvent(event)){
+            if(!RECREATIVA){
+                if(event.type == sf::Event::KeyPressed){
+                    if(event.key.code == sf::Keyboard::Num6) exit(EXIT_SUCCESS);
+                    else if(event.key.code == sf::Keyboard::LControl || event.key.code == sf::Keyboard::A) nextScene = true;
+                }
+            }
             if(event.type == sf::Event::Closed){
                 mainWindow.close();
                 exit(EXIT_SUCCESS);
@@ -62,7 +68,7 @@ void GoodEndingCutscene::play(){
     talkingText.setFillColor(sf::Color::Blue);
     talkingText.setCharacterSize(20);
     advanceConversationSound.play();
-    if(SPANISH) finalText = L"AaaaAaAaaaa mi espaldaaa";
+    if(RECREATIVA || SPANISH) finalText = L"AaaaAaAaaaa mi espaldaaa";
     else finalText = L"AaaAAaArrgAGhh my baaack";
     unsigned int currentText = 0;
 
@@ -80,25 +86,30 @@ void GoodEndingCutscene::play(){
 
         sf::Event event;
         while(mainWindow.pollEvent(event)){
-            if(event.type == sf::Event::Closed){
+            if((RECREATIVA && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Num6) ||
+               (!RECREATIVA && event.type == sf::Event::Closed)){
                 mainWindow.close();
                 exit(EXIT_SUCCESS);
             }
-            if((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Return) || event.type == sf::Event::JoystickButtonPressed){
+            if((RECREATIVA && event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::LControl || event.key.code == sf::Keyboard::A)) || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Return) || event.type == sf::Event::JoystickButtonPressed){
                 switch(currentText){
                 case 0:
                     advanceConversationSound.play();
+
                     talkingText.setString(L"");
-                    if(SPANISH) finalText = L"Est� bien... no destruir� la Tierra...";
+                    if(RECREATIVA || SPANISH) finalText = L"Estï¿½ bien... no destruirï¿½ la Tierra...";
                     else finalText = L"Alright... I won't destroy the Earth...";
+                    
                     currentLetter = 0;
                     currentText++;
                     break;
                 case 1:
                     advanceConversationSound.play();
+
                     talkingText.setString(L"");
-                    if(SPANISH) finalText = L"Por favor llevadme a un hospital";
+                    if(RECREATIVA || SPANISH) finalText = L"Por favor llevadme a un hospital";
                     else finalText = L"Take me to a hospital please";
+
                     currentLetter = 0;
                     currentText++;
                     break;

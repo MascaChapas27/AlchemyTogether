@@ -50,3 +50,18 @@ bool rectangles_collide(sf::IntRect rect1, sf::IntRect rect2){
             (rect1.top < (rect2.top+rect2.height) &&
             ((rect1.top+rect1.height) > rect2.top)));
 }
+
+bool recreativa_pressing_button(std::string name)
+{
+    return name == ALCHEMIST_NAME ? sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) : sf::Keyboard::isKeyPressed(sf::Keyboard::A);
+}
+
+bool recreativa_moving_left(std::string name)
+{
+    return name == ALCHEMIST_NAME ? sf::Keyboard::isKeyPressed(sf::Keyboard::Left) : sf::Keyboard::isKeyPressed(sf::Keyboard::D);
+}
+
+bool recreativa_moving_right(std::string name)
+{
+    return name == ALCHEMIST_NAME ? sf::Keyboard::isKeyPressed(sf::Keyboard::Right) : sf::Keyboard::isKeyPressed(sf::Keyboard::G);
+}

@@ -99,8 +99,15 @@ int TitleScreen::run(){
         while(mainWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::KeyPressed){
-                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
-                else if(event.key.code == sf::Keyboard::Return) nextCutscene = true;
+
+                if(RECREATIVA){
+                    if(event.key.code == sf::Keyboard::X || event.key.code == sf::Keyboard::K) {MusicPlayer::getInstance()->stop(); return -1;}
+                    else if(event.key.code == sf::Keyboard::LControl || event.key.code == sf::Keyboard::A) nextCutscene = true;
+                    else if(event.key.code == sf::Keyboard::Num6) exit(EXIT_SUCCESS);
+                } else {
+                    if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
+                    else if(event.key.code == sf::Keyboard::Return) nextCutscene = true;
+                }
             } else if (event.type == sf::Event::JoystickButtonPressed){
                 MusicPlayer::getInstance()->stop();
                 return event.joystickButton.joystickId;
@@ -160,10 +167,15 @@ int TitleScreen::run(){
         // Code repetition ehehe
         sf::Event event;
         while(mainWindow.pollEvent(event)){
-            if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
-            else if (event.type == sf::Event::KeyPressed){
-                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
-            } else if (event.type == sf::Event::JoystickButtonPressed) {MusicPlayer::getInstance()->stop(); return event.joystickButton.joystickId;}
+            if(RECREATIVA){
+                if(event.key.code == sf::Keyboard::X || event.key.code == sf::Keyboard::K) {MusicPlayer::getInstance()->stop(); return -1;}
+                else if(event.key.code == sf::Keyboard::Num6) exit(EXIT_SUCCESS);
+            } else {
+                if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
+                else if (event.type == sf::Event::KeyPressed){
+                    if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
+                } else if (event.type == sf::Event::JoystickButtonPressed) {MusicPlayer::getInstance()->stop(); return event.joystickButton.joystickId;}
+            }
         }
 
         cutscene0_wizard.update();
@@ -195,8 +207,10 @@ int TitleScreen::run(){
     talkingText.setFillColor(sf::Color::Blue);
     talkingText.setCharacterSize(20);
     advanceConversationSound.play();
-    if(SPANISH) finalText = L"¡¡SALUDOS insignificantes terrícolas!!";
+
+    if(RECREATIVA || SPANISH) finalText = L"Â¡Â¡SALUDOS insignificantes terrÃ­colas!!";
     else finalText = L"GREETINGS you meaningless earthlings!!";
+
     currentLetter = 0;
     int currentText = 0;
     int wait = 0;
@@ -227,64 +241,82 @@ int TitleScreen::run(){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::JoystickButtonPressed) {MusicPlayer::getInstance()->stop(); return event.joystickButton.joystickId;}
             else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
-                else if(event.key.code == sf::Keyboard::Return){
+                if((!RECREATIVA && event.key.code == sf::Keyboard::Escape) ||
+                    (RECREATIVA && (event.key.code == sf::Keyboard::X || event.key.code == sf::Keyboard::K))){
+                    MusicPlayer::getInstance()->stop(); return -1;
+                } else if((!RECREATIVA && event.key.code == sf::Keyboard::Return) ||
+                           (RECREATIVA && (event.key.code == sf::Keyboard::LControl || event.key.code == sf::Keyboard::A))){
                     if(wait > 0) continue;
                     advanceConversationSound.play();
                     switch(currentText){
                     case 0:
                         talkingText.setString(L"");
-                        if(SPANISH) finalText = L"Me dedico a vagar por el UNIVERSO";
+                        if(RECREATIVA || SPANISH) finalText = L"Me dedico a vagar por el UNIVERSO";
                         else finalText = L"It's my mission to wander the UNIVERSE";
+
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 1:
+
                         talkingText.setString(L"");
-                        if(SPANISH) finalText = L"Buscando planetas que DESTRUIR";
+                        if(RECREATIVA || SPANISH) finalText = L"Buscando planetas que DESTRUIR";
                         else finalText = L"Looking for planets to DESTROY";
+
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 2:
+
                         talkingText.setString(L"");
-                        if(SPANISH) finalText = L"Y el vuestro... parece bastante DESTRUIBLE";
+                        if(RECREATIVA || SPANISH) finalText = L"Y el vuestro... parece bastante DESTRUIBLE";
                         else finalText = L"And yours... looks very DESTROYABLE";
+
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 3:
+
                         talkingText.setString(L"");
-                        if(SPANISH) finalText = L"(en mi humilde opinión)";
+                        if(RECREATIVA || SPANISH) finalText = L"(en mi humilde opiniÃ³n)";
                         else finalText = L"(in my humble opinion)";
+
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 4:
+
                         talkingText.setString(L"");
-                        if(SPANISH) finalText = L"¡¡Es por eso que DESTRUIRÉ este PLANETA!!";
+                        if(RECREATIVA || SPANISH) finalText = L"Â¡Â¡Es por eso que DESTRUIRÃ este PLANETA!!";
                         else finalText = L"That's why i'm going to DESTROY this PLANET!!";
+
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 5:
+
                         talkingText.setString(L"");
-                        if(SPANISH) finalText = L"A no ser que me lancéis LIBROS y MAGIA";
+                        if(RECREATIVA || SPANISH) finalText = L"A no ser que me lancÃ©is LIBROS y MAGIA";
                         else finalText = L"Unless you throw BOOKS and MAGIC at me";
+
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 6:
+
                         talkingText.setString(L"");
-                        if(SPANISH) finalText = L"(son mi DEBILIDAD)";
+                        if(RECREATIVA || SPANISH) finalText = L"(son mi DEBILIDAD)";
                         else finalText = L"(they're my WEAKNESSES)";
+
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 7:
+
                         talkingText.setString(L"");
-                        if(SPANISH) finalText = L"¡¡Pero confío en que eso NO PASARÁ!!";
+                        if(RECREATIVA || SPANISH) finalText = L"Â¡Â¡Pero confÃ­o en que eso NO PASARÃ!!";
                         else finalText = L"But I'm sure that WON'T HAPPEN!!";
+
                         currentLetter = 0;
                         currentText++;
                         break;
@@ -334,14 +366,27 @@ int TitleScreen::run(){
 
         sf::Event event;
         while(mainWindow.pollEvent(event)){
-            if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
-            else if (event.type == sf::Event::JoystickButtonPressed) {MusicPlayer::getInstance()->stop(); return event.joystickButton.joystickId;}
-            else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
-                else if(event.key.code == sf::Keyboard::Return){
-                    sf::Color currentColor = rectangleCover.getFillColor();
-                    currentColor.a=255;
-                    rectangleCover.setFillColor(currentColor);
+
+            if(RECREATIVA){
+                if (event.type == sf::Event::KeyPressed) {
+                    if(event.key.code == sf::Keyboard::Num5) exit(EXIT_SUCCESS);
+                    else if(event.key.code == sf::Keyboard::X || event.key.code == sf::Keyboard::K) {MusicPlayer::getInstance()->stop(); return -1;}
+                    else if(event.key.code == sf::Keyboard::LControl || event.key.code == sf::Keyboard::A){
+                        sf::Color currentColor = rectangleCover.getFillColor();
+                        currentColor.a=255;
+                        rectangleCover.setFillColor(currentColor);
+                    }
+                }
+            } else {
+                if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
+                else if (event.type == sf::Event::JoystickButtonPressed) {MusicPlayer::getInstance()->stop(); return event.joystickButton.joystickId;}
+                else if (event.type == sf::Event::KeyPressed) {
+                    if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
+                    else if(event.key.code == sf::Keyboard::Return){
+                        sf::Color currentColor = rectangleCover.getFillColor();
+                        currentColor.a=255;
+                        rectangleCover.setFillColor(currentColor);
+                    }
                 }
             }
         }
@@ -404,14 +449,27 @@ int TitleScreen::run(){
 
         sf::Event event;
         while(mainWindow.pollEvent(event)){
-            if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
-            else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
+
+            if(RECREATIVA){
+                if (event.type == sf::Event::KeyPressed) {
+                    if(event.key.code == sf::Keyboard::Num5) exit(EXIT_SUCCESS);
+                    else if(event.key.code == sf::Keyboard::X || event.key.code == sf::Keyboard::K) {MusicPlayer::getInstance()->stop(); return -1;}
+                    else if(event.key.code == sf::Keyboard::LControl || event.key.code == sf::Keyboard::A){
+                        sf::Color currentColor = rectangleCover.getFillColor();
+                        currentColor.a=0;
+                        rectangleCover.setFillColor(currentColor);
+                    }
+                }
+            } else {
+                if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
                 else if (event.type == sf::Event::JoystickButtonPressed) {MusicPlayer::getInstance()->stop(); return event.joystickButton.joystickId;}
-                else if(event.key.code == sf::Keyboard::Return){
-                    sf::Color currentColor = rectangleCover.getFillColor();
-                    currentColor.a=0;
-                    rectangleCover.setFillColor(currentColor);
+                else if (event.type == sf::Event::KeyPressed) {
+                    if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
+                    else if(event.key.code == sf::Keyboard::Return){
+                        sf::Color currentColor = rectangleCover.getFillColor();
+                        currentColor.a=0;
+                        rectangleCover.setFillColor(currentColor);
+                    }
                 }
             }
         }
@@ -451,8 +509,10 @@ int TitleScreen::run(){
     talkingText.setFillColor(sf::Color::Yellow);
     talkingText.setCharacterSize(20);
     advanceConversationSound.play();
-    if(SPANISH) finalText = L"Tenemos que encontrar libros y magia como sea!! :(";
+
+    if(RECREATIVA || SPANISH) finalText = L"Tenemos que encontrar libros y magia como sea!! :(";
     else finalText = L"We need to find books and magic no matter what!! :(";
+
     currentLetter = 0;
     currentText = 0;
 
@@ -476,9 +536,12 @@ int TitleScreen::run(){
             if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
             else if (event.type == sf::Event::JoystickButtonPressed) {MusicPlayer::getInstance()->stop(); return event.joystickButton.joystickId;}
             else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
-                else if(event.key.code == sf::Keyboard::Return){
-
+                if((!RECREATIVA && event.key.code == sf::Keyboard::Escape) ||
+                    (RECREATIVA && (event.key.code == sf::Keyboard::X || event.key.code == sf::Keyboard::K))){
+                    MusicPlayer::getInstance()->stop(); return -1;
+                } else if((!RECREATIVA && event.key.code == sf::Keyboard::Return) ||
+                           (RECREATIVA && (event.key.code == sf::Keyboard::LControl || event.key.code == sf::Keyboard::A))){
+                    if(wait > 0) continue;
                     advanceConversationSound.play();
                     switch(currentText){
                     case 0:
@@ -488,22 +551,28 @@ int TitleScreen::run(){
                         talkingText.setFillColor(sf::Color::White);
                         talkingText.setCharacterSize(30);
                         talkingText.move(0,-8);
-                        if(SPANISH) finalText = L"y como se supone que vamos a encontrar de eso";
+
+                        if(RECREATIVA || SPANISH) finalText = L"y como se supone que vamos a encontrar de eso";
                         else finalText = L"and how are we supposed to find that";
+
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 1:
+
                         talkingText.setString(L"");
-                        if(SPANISH) finalText = L"estamos en mitad de ningun sitio";
+                        if(RECREATIVA || SPANISH) finalText = L"estamos en mitad de ningun sitio";
                         else finalText = L"we are in the middle of nowhere";
+
                         currentLetter = 0;
                         currentText++;
                         break;
                     case 2:
+
                         talkingText.setString(L"");
-                        if(SPANISH) finalText = L"ni que los libros y la magia cayeran del cielo";
+                        if(RECREATIVA || SPANISH) finalText = L"ni que los libros y la magia cayeran del cielo";
                         else finalText = L"books and magic dont just fall from the sky";
+
                         currentLetter = 0;
                         currentText++;
                         break;
@@ -532,7 +601,7 @@ int TitleScreen::run(){
         mainWindow.display();
     }
 
-    if(SPANISH) talkingText.setString(L"ni que los libros y la magia cayeran del cielo");
+    if(RECREATIVA || SPANISH) talkingText.setString(L"ni que los libros y la magia cayeran del cielo");
     else talkingText.setString(L"books and magic dont just fall from the sky");
 
     nextCutscene = false;
@@ -577,11 +646,20 @@ int TitleScreen::run(){
 
         sf::Event event;
         while(mainWindow.pollEvent(event)){
-            if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
-            else if (event.type == sf::Event::KeyPressed) {
-                if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
+
+            if(RECREATIVA){
+                if (event.type == sf::Event::KeyPressed) {
+                    if(event.key.code == sf::Keyboard::Num5) exit(EXIT_SUCCESS);
+                    else if(event.key.code == sf::Keyboard::X || event.key.code == sf::Keyboard::K) {MusicPlayer::getInstance()->stop(); return -1;}
+                    else if(event.key.code == sf::Keyboard::LControl || event.key.code == sf::Keyboard::A) nextCutscene = true;
+                }
+            } else {
+                if(event.type == sf::Event::Closed) exit(EXIT_SUCCESS);
                 else if (event.type == sf::Event::JoystickButtonPressed) {MusicPlayer::getInstance()->stop(); return event.joystickButton.joystickId;}
-                else if(event.key.code == sf::Keyboard::Return) nextCutscene = true;
+                else if (event.type == sf::Event::KeyPressed) {
+                    if(event.key.code == sf::Keyboard::Escape) {MusicPlayer::getInstance()->stop(); return -1;}
+                    else if(event.key.code == sf::Keyboard::Return) nextCutscene = true;
+                }
             }
         }
 
