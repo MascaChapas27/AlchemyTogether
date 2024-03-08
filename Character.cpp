@@ -72,7 +72,15 @@ int Character::update(std::list<FallingItem>& fallingItems, Character& buddy)
 
     bool moved = false;
     if(showSigns){
-        if(controller == -1){
+        if(RECREATIVA){
+            if(recreativa_moving_left(name)){
+                moved = true;
+                currentSpeed-=SPEED_STEP;
+            } else if(recreativa_moving_right(name)){
+                moved = true;
+                currentSpeed+=SPEED_STEP;
+            }
+        } else if(controller == -1){
             if(sf::Keyboard::isKeyPressed(leftKey)){
                 moved = true;
                 currentSpeed-=SPEED_STEP;
@@ -230,7 +238,7 @@ int Character::update(std::list<FallingItem>& fallingItems, Character& buddy)
 
     // Five, shoot
     if(shooting && showSigns){
-        if(shootingCooldown == 0 && currentItems > 0 && (controller == -1 ? sf::Keyboard::isKeyPressed(shootingKey) : joystick_pressing_any_button(controller))){
+        if(shootingCooldown == 0 && currentItems > 0 && (RECREATIVA ? recreativa_pressing_button(name) : controller == -1 ? sf::Keyboard::isKeyPressed(shootingKey) : joystick_pressing_any_button(controller))){
             shootSound.play();
             if(name == ALCHEMIST_NAME){
                 FallingItem::fallingBook.setPosition(walkingAnimation.getPosition().x+walkingAnimation.getHitbox().width+10,walkingAnimation.getPosition().y-walkingAnimation.getHitbox().height);

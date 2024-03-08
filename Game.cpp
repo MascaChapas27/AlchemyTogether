@@ -163,9 +163,10 @@ void Game::run(int alchemistController, int wizardController){
 
         sf::Event event;
         while(mainWindow.pollEvent(event)){
-            if(event.type == sf::Event::Closed){
+            if((RECREATIVA && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Num6) ||
+               (!RECREATIVA && event.type == sf::Event::Closed)){
                 mainWindow.close();
-                exit(0);
+                exit(EXIT_SUCCESS);
             }
         }
 
@@ -307,9 +308,10 @@ void Game::run(int alchemistController, int wizardController){
         while(foregroundRectangle.getFillColor().a < 255){
             sf::Event event;
             while(mainWindow.pollEvent(event)){
-                if(event.type == sf::Event::Closed){
+                if((RECREATIVA && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Num6) ||
+                   (!RECREATIVA && event.type == sf::Event::Closed)){
                     mainWindow.close();
-                    exit(0);
+                    exit(EXIT_SUCCESS);
                 }
             }
 
@@ -366,9 +368,10 @@ void Game::run(int alchemistController, int wizardController){
         while(foregroundRectangle.getFillColor().a < 255){
             sf::Event event;
             while(mainWindow.pollEvent(event)){
-                if(event.type == sf::Event::Closed){
+                if((RECREATIVA && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Num6) ||
+                   (!RECREATIVA && event.type == sf::Event::Closed)){
                     mainWindow.close();
-                    exit(0);
+                    exit(EXIT_SUCCESS);
                 }
             }
 

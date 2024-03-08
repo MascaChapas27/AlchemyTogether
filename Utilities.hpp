@@ -5,6 +5,16 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 
+// Activar para ver las hitboxes
+const bool DEBUG = false;
+
+// Activar para poner el idioma a español
+const bool SPANISH = true;
+
+// Activar para poner los controles de la recreativa y
+// otros assets (el idioma será español aunque SPANISH sea false)
+const bool RECREATIVA = true;
+
 enum class TextureID{
 
     title,press_enter,press_escape,
@@ -58,9 +68,6 @@ const int NUM_FIRE_UNIFORM_RAIN = 7;
 extern sf::RenderWindow mainWindow;
 
 const float JOYSTICK_THRESHOLD = 20;
-
-const bool DEBUG = false;
-const bool SPANISH = false;
 
 const int MAIN_WINDOW_WIDTH = 800;
 const int MAIN_WINDOW_HEIGHT = 600;
@@ -158,5 +165,9 @@ bool joystick_moving_left(int joystick);
 bool joystick_moving_right(int joystick);
 
 bool rectangles_collide(sf::IntRect rect1, sf::IntRect rect2);
+
+bool recreativa_pressing_button(std::string name);
+bool recreativa_moving_left(std::string name);
+bool recreativa_moving_right(std::string name);
 
 #endif // __UTILITIES_HPP__
