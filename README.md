@@ -39,11 +39,29 @@ Once the cloning is done, type the following command to navigate to the director
 cd AlchemyTogether
 ```
 
-## 3. Compiling the project
+## 3. Check constants
+
+In `Utilities.hpp` there are three constants that change the way the game is displayed:
+
+```cpp
+// Activar para ver las hitboxes
+const bool DEBUG = false;
+
+// Activar para poner el idioma a español
+const bool SPANISH = true;
+
+// Activar para poner los controles de la recreativa y
+// otros assets (el idioma será español aunque SPANISH sea false)
+const bool RECREATIVA = true;
+```
+
+The most important here is `SPANISH`. Set it to `true` if you want the game to be in Spanish or `false` if you want it in English. Also, make sure `RECREATIVA` is set to `false` if you want to play on PC.
+
+## 4. Compile the project
 
 Type `make` to compile the project. If something bad happens, error messages will appear. Please, go to the [Issues section](https://github.com/MascaChapas27/AlchemyTogether/issues), click on the "New Issue" button and paste the message. I would also appreciate it if you told me what distribution you are using and which version.
 
-## 4. Running the project
+## 5. Run the project
 
 Type `make run` to execute the program. It should work if there were no compilation errors during step 3, but anything could happen. Again, if it doesn't work, you can create an Issue and paste the error message you got.
 
