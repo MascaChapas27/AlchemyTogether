@@ -101,18 +101,18 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::alchemist_corpse,"sprites/alchemist-corpse.png");
     load(TextureID::wizard_corpse,"sprites/wizard-corpse.png");
 
-    load(TextureID::alchemist_inventory,SPANISH ? "sprites/alchemist-inventory-es.png" : "sprites/alchemist-inventory-en.png");
-    load(TextureID::wizard_inventory,SPANISH ? "sprites/wizard-inventory-es.png" : "sprites/wizard-inventory-en.png");
-    load(TextureID::alchemist_revive,SPANISH ? "sprites/alchemist-revive-es.png" : "sprites/alchemist-revive-en.png");
-    load(TextureID::wizard_revive,SPANISH ? "sprites/wizard-revive-es.png" : "sprites/wizard-revive-en.png");
-    load(TextureID::boss_health,SPANISH ? "sprites/boss-health-es.png" : "sprites/boss-health-en.png");
+    load(TextureID::alchemist_inventory,SPANISH || RECREATIVA ? "sprites/alchemist-inventory-es.png" : "sprites/alchemist-inventory-en.png");
+    load(TextureID::wizard_inventory,SPANISH || RECREATIVA ? "sprites/wizard-inventory-es.png" : "sprites/wizard-inventory-en.png");
+    load(TextureID::alchemist_revive,SPANISH || RECREATIVA ? "sprites/alchemist-revive-es.png" : "sprites/alchemist-revive-en.png");
+    load(TextureID::wizard_revive,SPANISH || RECREATIVA ? "sprites/wizard-revive-es.png" : "sprites/wizard-revive-en.png");
+    load(TextureID::boss_health,SPANISH || RECREATIVA ? "sprites/boss-health-es.png" : "sprites/boss-health-en.png");
 
     load(TextureID::alchemist_plus1,"sprites/alchemist-plus1.png");
     load(TextureID::wizard_plus1,"sprites/wizard-plus1.png");
     load(TextureID::boss_minus1,"sprites/boss-minus1.png");
     load(TextureID::boss_corpse,"sprites/boss-corpse.png");
-    load(TextureID::joystick_choose_alchemist,SPANISH ? "sprites/joystick-choose-alchemist-es.png" : "sprites/joystick-choose-alchemist-en.png");
-    load(TextureID::joystick_choose_wizard,SPANISH ? "sprites/joystick-choose-wizard-es.png" : "sprites/joystick-choose-wizard-en.png");
+    load(TextureID::joystick_choose_alchemist,SPANISH || RECREATIVA ? "sprites/joystick-choose-alchemist-es.png" : "sprites/joystick-choose-alchemist-en.png");
+    load(TextureID::joystick_choose_wizard,SPANISH || RECREATIVA ? "sprites/joystick-choose-wizard-es.png" : "sprites/joystick-choose-wizard-en.png");
     load(TextureID::controls_background_keyboard_keyboard,RECREATIVA ? "sprites/controls-background-recreativa.png" : SPANISH ? "sprites/controls-background-keyboard-keyboard-es.png" : "sprites/controls-background-keyboard-keyboard-en.png");
     load(TextureID::controls_background_keyboard_joystick,SPANISH ? "sprites/controls-background-keyboard-joystick-es.png" : "sprites/controls-background-keyboard-joystick-en.png");
     load(TextureID::controls_background_joystick_keyboard,SPANISH ? "sprites/controls-background-joystick-keyboard-es.png" : "sprites/controls-background-joystick-keyboard-en.png");
