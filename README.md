@@ -16,7 +16,7 @@ In order to compile Alchemy Together you need the following programs:
 2. g++
 3. make
 
-The installation method depends on the distribution. Try running those commands on `bash`. You might have them installed, or maybe you won't and a line will be displayed, telling you how to install them.
+The installation method depends on the distribution. Try running those commands on `bash`. You might have them installed, or maybe you don't and a line will be displayed, telling you how to install them.
 
 If this line doesn't appear, you usually just need to type:
 
