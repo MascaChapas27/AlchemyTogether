@@ -1,6 +1,26 @@
-AlchemyTogether:
-	chmod 777 linux-SFML-2.6.1/lib/*
-	LD_LIBRARY_PATH=linux-SFML-2.6.1/lib g++ -std=c++14 -o AlchemyTogether *.cpp -I linux-SFML-2.6.1/include -L linux-SFML-2.6.1/lib -lsfml-system -lsfml-graphics -lsfml-window -lsfml-audio
+NOMBREPROYECTO=AlchemyTogether
+
+$(NOMBREPROYECTO):
+ifeq ($(OS),Windows_NT)
+	g++ -Wall -pipe -O3 *.cpp -g -o $(NOMBREPROYECTO).exe -I C:\SFML-2.6.1\include -L C:\SFML-2.6.1\lib -lsfml-system -lsfml-graphics -lsfml-window -lsfml-audio
+else
+	g++ -Wall -pipe -O3 *.cpp -g -o $(NOMBREPROYECTO).out -lsfml-system -lsfml-graphics -lsfml-window -lsfml-audio
+endif
 
 run:
-	LD_LIBRARY_PATH=linux-SFML-2.6.1/lib ./AlchemyTogether
+ifeq ($(OS),Windows_NT)
+	.\$(NOMBREPROYECTO).exe
+else
+	./$(NOMBREPROYECTO).out
+endif
+
+rerun:
+	make -B
+	make run
+
+debug:
+ifeq ($(OS),Windows_NT)
+	gdb .\$(NOMBREPROYECTO).exe
+else
+	gdb ./$(NOMBREPROYECTO).out
+endif

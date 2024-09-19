@@ -21,7 +21,7 @@ class Animation : public sf::Drawable{
         bool pingPong;
 
         // If set to true, we are advancing the photograms in reverse order
-        // (only makes sens with pingPong set to true)
+        // (only makes sense with pingPong set to true)
         bool goingDown;
 
         // How many frames will it take to move the animation from one

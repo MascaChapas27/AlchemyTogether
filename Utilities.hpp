@@ -9,11 +9,11 @@
 const bool DEBUG = false;
 
 // Activar para poner el idioma a español
-const bool SPANISH = false;
+const bool SPANISH = true;
 
 // Activar para poner los controles de la recreativa y
 // otros assets (el idioma será español aunque SPANISH sea false)
-const bool RECREATIVA = true;
+const bool RECREATIVA = false;
 
 enum class TextureID{
 
